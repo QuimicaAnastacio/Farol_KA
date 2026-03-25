@@ -12,6 +12,25 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);height:100vh;overflow:hidden;display:flex}
 
+/* Login */
+#loginScreen{position:fixed;inset:0;background:linear-gradient(135deg,#0D2240 0%,#1e3a5f 100%);display:flex;align-items:center;justify-content:center;z-index:99999;flex-direction:column}
+.login-box{background:#fff;border-radius:20px;padding:40px 36px;width:360px;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+.login-logo{text-align:center;margin-bottom:28px}
+.login-logo h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--nv)}
+.login-logo h1 span{color:#2563EB}
+.login-logo small{font-size:10px;color:var(--mt);letter-spacing:2px;text-transform:uppercase;display:block;margin-top:2px}
+.login-field{margin-bottom:14px}
+.login-field label{font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:5px}
+.login-field input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #E5E7EB;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border .15s}
+.login-field input:focus{border-color:var(--ac)}
+.login-err{font-size:11px;color:var(--rd);text-align:center;margin-bottom:10px;min-height:16px;font-weight:600}
+.login-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--nv);color:#fff;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;margin-top:4px}
+.login-btn:hover{background:var(--n2)}
+#appShell{display:none;width:100%;height:100%;flex-direction:row}
+#appShell.visible{display:flex}
+.zeus-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(96,165,250,.2);color:#60A5FA;border-radius:100px;padding:2px 8px;font-size:9px;font-weight:700;letter-spacing:.5px}
+.sb-logo-img{width:100%;max-height:38px;object-fit:contain;margin-bottom:6px;border-radius:6px;cursor:pointer}
+
 /* Sidebar */
 .sb{width:200px;background:var(--nv);display:flex;flex-direction:column;padding:16px 0;flex-shrink:0}
 .sb-lg{padding:0 14px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
@@ -125,8 +144,36 @@ tr.is{background:rgba(220,38,38,.02)}
 </head>
 <body>
 
+<!-- TELA DE LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">
+      <h1>Química <span>Anastácio</span></h1>
+      <small>Painel OTIF · Acesso Restrito</small>
+    </div>
+    <div class="login-field">
+      <label>Usuário</label>
+      <input type="text" id="loginUser" placeholder="Seu usuário" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-field">
+      <label>Senha</label>
+      <input type="password" id="loginPass" placeholder="Sua senha" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="login-err" id="loginErr"></div>
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+  </div>
+</div>
+
+<!-- APP PRINCIPAL -->
+<div id="appShell">
 <aside class="sb">
-  <div class="sb-lg"><h2>Química <span>Anastácio</span></h2><small>Painel OTIF</small></div>
+  <div class="sb-lg">
+  <div id="sbLogoWrap" style="display:none;margin-bottom:6px"><img id="sbLogoImg" class="sb-logo-img" onclick="zeusUploadSbLogo()" title="Clique para trocar o logo"></div>
+  <h2>Química <span>Anastácio</span></h2>
+  <small>Painel OTIF</small>
+  <div id="zeusBadgeWrap" style="display:none;margin-top:4px"><span class="zeus-badge">⚡ Zeus</span></div>
+  <div id="sbLogoBtn" style="display:none;margin-top:6px"><button onclick="zeusUploadSbLogo()" style="font-size:9px;padding:3px 8px;border-radius:5px;border:1px dashed rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.4);cursor:pointer;font-family:DM Sans,sans-serif">+ Logo</button></div>
+</div>
   <nav id="navArea"></nav>
   <div class="sb-bt">
     <label>Cliente</label>
@@ -146,6 +193,8 @@ tr.is{background:rgba(220,38,38,.02)}
   </div>
   <div id="mainContent"></div>
 </div>
+
+</div><!-- /appShell -->
 
 <div id="mdl" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9000;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
   <div style="background:#fff;border-radius:14px;padding:24px;width:560px;max-width:92vw;max-height:85vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)">
@@ -275,7 +324,18 @@ function addMonthCol(){ const y=gY(),ex=RCS.filter(r=>r.cid===window._selC&&r.y=
 // Indicators
 function openAddInd(){ document.getElementById("mdlT").textContent="Adicionar Farol"; document.getElementById("mdlB").innerHTML=`<input id="newIndLabel" class="in" placeholder="Texto do farol..."><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="bt bp" onclick="doAddInd()">Adicionar</button></div>`; document.getElementById("mdl").style.display="flex"; }
 function doAddInd(){ const l=document.getElementById("newIndLabel").value.trim(); if(!l)return; const k="i_"+Date.now(); IND.push({key:k,label:l}); RCS.forEach(r=>r[k]=1); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("✓ Adicionado!"); }
-function openEditInd(){ document.getElementById("mdlT").textContent="Editar Faróis"; let h='<div style="display:flex;flex-direction:column;gap:6px">'; IND.forEach((ind,i)=>h+=`<div style="display:flex;gap:6px;align-items:center"><input id="eidx${i}" class="in" value="${ind.label}" style="flex:1;font-size:11px"><button class="ib dg" onclick="removeInd(${i})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>`); h+=`</div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="bt bp" onclick="doSaveInd()">Salvar</button></div>`; document.getElementById("mdlB").innerHTML=h; document.getElementById("mdl").style.display="flex"; }
+function openEditInd(){ document.getElementById("mdlT").textContent="Editar Faróis"; let h='<div style="display:flex;flex-direction:column;gap:6px">'; IND.forEach((ind,i)=>h+=`<div style="display:flex;gap:6px;align-items:center"><input id="eidx${i}" class="in" value="${ind.label}" style="flex:1;font-size:11px"><button class="ib dg" onclick="removeInd(${i})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>`); h+=`</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><button class="bt bo" onclick="addIndFromEdit()">+ Novo Farol</button><button class="bt bp" onclick="doSaveInd()">Salvar</button></div>`; document.getElementById("mdlB").innerHTML=h; document.getElementById("mdl").style.display="flex"; }
+
+function addIndFromEdit(){
+  // Salva os labels digitados antes de abrir o campo
+  IND.forEach((ind,i)=>{const v=document.getElementById("eidx"+i);if(v&&v.value.trim())ind.label=v.value.trim()});
+  const newKey="i_"+Date.now();
+  IND.push({key:newKey,label:""});
+  openEditInd();
+  // Focar no último campo
+  setTimeout(()=>{const last=document.getElementById("eidx"+(IND.length-1));if(last){last.focus();last.placeholder="Novo farol..."}},50);
+}
+
 function doSaveInd(){ IND.forEach((ind,i)=>{const v=document.getElementById("eidx"+i); if(v&&v.value.trim())ind.label=v.value.trim()}); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("✓ Salvo!"); }
 function removeInd(i){ if(!confirm("Excluir?"))return; IND.splice(i,1); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); }
 
@@ -414,8 +474,59 @@ function renderAll(){
   mc.innerHTML = H;
 }
 
+
+// ═══ LOGIN & ZEUS ═══
+const ZEUS_USER = "Zeus";
+const ZEUS_PASS = "Anastacio@2026";
+let _isZeus = false;
+
+function doLogin(){
+  const u = document.getElementById("loginUser").value.trim();
+  const p = document.getElementById("loginPass").value;
+  const err = document.getElementById("loginErr");
+  if(u === ZEUS_USER && p === ZEUS_PASS){
+    _isZeus = true;
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("appShell").classList.add("visible");
+    document.getElementById("zeusBadgeWrap").style.display = "block";
+    document.getElementById("sbLogoBtn").style.display = "block";
+    // Mostrar logo se já tiver salvo
+    const logo = localStorage.getItem("sb_logo_anastacio");
+    if(logo){ showSbLogo(logo); }
+    err.textContent = "";
+    initApp();
+  } else {
+    err.textContent = "Usuário ou senha incorretos.";
+    document.getElementById("loginPass").value = "";
+  }
+}
+
+function zeusUploadSbLogo(){
+  if(!_isZeus) return;
+  const inp = document.createElement("input");
+  inp.type = "file"; inp.accept = "image/*";
+  inp.onchange = e => {
+    const f = e.target.files[0]; if(!f) return;
+    const r = new FileReader();
+    r.onload = ev => {
+      localStorage.setItem("sb_logo_anastacio", ev.target.result);
+      showSbLogo(ev.target.result);
+      toast("✓ Logo salvo!");
+    };
+    r.readAsDataURL(f);
+  };
+  inp.click();
+}
+
+function showSbLogo(src){
+  const wrap = document.getElementById("sbLogoWrap");
+  const img = document.getElementById("sbLogoImg");
+  img.src = src;
+  wrap.style.display = "block";
+}
+
 // ═══ INIT ═══
-(async function(){
+async function initApp(){
   // Build nav
   document.getElementById("navArea").innerHTML = NAV.map((p,i)=>`<button class="nb${i===0?' on':''}" onclick="goPage('${p.id}')">${p.icon} ${p.lbl}</button>`).join('');
 
@@ -438,7 +549,7 @@ function renderAll(){
 
   // First render
   renderAll();
-})();
+}
 </script>
 </body>
 </html>
