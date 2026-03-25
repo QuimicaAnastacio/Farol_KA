@@ -30,6 +30,29 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);heigh
 #appShell.visible{display:flex}
 .zeus-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(96,165,250,.2);color:#60A5FA;border-radius:100px;padding:2px 8px;font-size:9px;font-weight:700;letter-spacing:.5px}
 .sb-logo-img{width:100%;max-height:38px;object-fit:contain;margin-bottom:6px;border-radius:6px;cursor:pointer}
+/* Zeus panel */
+.zeus-section{margin-bottom:24px}
+.zeus-section h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;color:var(--nv);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
+.user-card{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1px solid var(--bd);border-radius:10px;margin-bottom:8px}
+.user-card .uc-info{display:flex;flex-direction:column;gap:2px}
+.user-card .uc-name{font-size:13px;font-weight:700;color:var(--nv)}
+.user-card .uc-email{font-size:11px;color:var(--mt)}
+.user-card .uc-actions{display:flex;gap:6px}
+.badge-pending{background:var(--yb);color:var(--yl);padding:2px 8px;border-radius:100px;font-size:9px;font-weight:700}
+.badge-active{background:var(--gb);color:var(--gn);padding:2px 8px;border-radius:100px;font-size:9px;font-weight:700}
+.badge-rejected{background:var(--rb);color:var(--rd);padding:2px 8px;border-radius:100px;font-size:9px;font-weight:700}
+.color-swatch{width:36px;height:36px;border-radius:8px;border:2px solid #E5E7EB;cursor:pointer;overflow:hidden;padding:0}
+.color-swatch input[type=color]{width:150%;height:150%;margin:-20%;border:none;cursor:pointer;background:none;padding:0}
+.theme-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bd)}
+.theme-row:last-child{border-bottom:none}
+.theme-label{font-size:12px;font-weight:600;color:var(--t2)}
+.theme-sub{font-size:10px;color:var(--mt);margin-top:1px}
+/* Solicitacao de acesso na tela de login */
+.login-switch{text-align:center;margin-top:16px;font-size:11px;color:var(--mt)}
+.login-switch a{color:var(--ac);font-weight:700;cursor:pointer;text-decoration:none}
+.login-switch a:hover{text-decoration:underline}
+#requestPanel{display:none}
+
 
 /* Sidebar */
 .sb{width:200px;background:var(--nv);display:flex;flex-direction:column;padding:16px 0;flex-shrink:0}
@@ -161,6 +184,17 @@ tr.is{background:rgba(220,38,38,.02)}
     </div>
     <div class="login-err" id="loginErr"></div>
     <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-switch">Não tem acesso? <a onclick="toggleRequestPanel()">Solicitar acesso</a></div>
+  </div>
+  <!-- Painel de solicitação -->
+  <div class="login-box" id="requestPanel" style="margin-top:16px;display:none">
+    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:var(--nv);margin-bottom:16px">Solicitar Acesso</div>
+    <div class="login-field"><label>Nome completo</label><input type="text" id="reqName" placeholder="Seu nome" class="login-field-in"></div>
+    <div class="login-field"><label>E-mail</label><input type="email" id="reqEmail" placeholder="seu@email.com" class="login-field-in"></div>
+    <div class="login-field"><label>Senha desejada</label><input type="password" id="reqPass" placeholder="Mínimo 6 caracteres" class="login-field-in"></div>
+    <div class="login-err" id="reqErr"></div>
+    <button class="login-btn" onclick="doRequestAccess()">Enviar Solicitação</button>
+    <div class="login-switch"><a onclick="toggleRequestPanel()">← Voltar ao login</a></div>
   </div>
 </div>
 
@@ -222,6 +256,9 @@ const NAV=[
   {id:"clients",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',lbl:"Clientes"},
   {id:"copy",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',lbl:"Copiar Relatório"},
   {id:"import",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',lbl:"Importar Excel"},
+  // Zeus only
+  {id:"zeus_users",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',lbl:"Usuários",zeusOnly:true},
+  {id:"zeus_design",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>',lbl:"Personalizar",zeusOnly:true},
 ];
 
 // ═══ DATA (defaults) ═══
@@ -471,6 +508,78 @@ function renderAll(){
     </div></div>`;
   }
 
+
+  // ═══ ZEUS — USUÁRIOS ═══
+  if(P==="zeus_users"){
+    const pending = USERS.filter(u=>u.status==='pending');
+    const active  = USERS.filter(u=>u.status==='active');
+    const rejected= USERS.filter(u=>u.status==='rejected');
+    H=`<div class="ph"><div><h1>⚡ Gerenciar Usuários</h1><p>Aprove ou recuse solicitações de acesso</p></div></div>`;
+    if(pending.length){
+      H+=`<div class="zeus-section"><h3>🕐 Aguardando Aprovação (${pending.length})</h3>`;
+      pending.forEach(u=>{
+        H+=`<div class="user-card"><div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-email">${u.email}</div></div><div class="uc-actions"><span class="badge-pending">Pendente</span><button class="bt bgr" onclick="approveUser('${u.id}')">✓ Aprovar</button><button class="bt" style="background:var(--rb);color:var(--rd)" onclick="rejectUser('${u.id}')">✕ Recusar</button></div></div>`;
+      });
+      H+=`</div>`;
+    }
+    H+=`<div class="zeus-section"><h3>✅ Usuários Ativos (${active.length})</h3>`;
+    if(active.length){
+      active.forEach(u=>{
+        H+=`<div class="user-card"><div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-email">${u.email}</div></div><div class="uc-actions"><span class="badge-active">Ativo</span><button class="bt" style="background:var(--rb);color:var(--rd);font-size:10px" onclick="revokeUser('${u.id}')">Revogar</button></div></div>`;
+      });
+    } else { H+=`<div style="color:var(--mt);font-size:12px;padding:10px 0">Nenhum usuário ativo.</div>`; }
+    H+=`</div>`;
+    if(rejected.length){
+      H+=`<div class="zeus-section"><h3>❌ Recusados (${rejected.length})</h3>`;
+      rejected.forEach(u=>{
+        H+=`<div class="user-card"><div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-email">${u.email}</div></div><div class="uc-actions"><span class="badge-rejected">Recusado</span><button class="bt bo" onclick="approveUser('${u.id}')">Reativar</button></div></div>`;
+      });
+      H+=`</div>`;
+    }
+  }
+
+  // ═══ ZEUS — PERSONALIZAR ═══
+  if(P==="zeus_design"){
+    const th = loadTheme();
+    H=`<div class="ph"><div><h1>🎨 Personalizar Sistema</h1><p>Altere cores, logo e fontes do painel</p></div></div>
+    <div class="cd cp" style="max-width:600px">
+      <div class="zeus-section">
+        <h3>Logo do Menu Lateral</h3>
+        <div style="display:flex;align-items:center;gap:14px">
+          <div style="width:80px;height:50px;border:2px dashed #D1D5DB;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--sf)">
+            ${localStorage.getItem('sb_logo_anastacio')?`<img src="${localStorage.getItem('sb_logo_anastacio')}" style="max-width:100%;max-height:100%;object-fit:contain">`:'<span style="font-size:10px;color:var(--mt)">Sem logo</span>'}
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button class="bt bp" onclick="zeusUploadSbLogo()">📁 Trocar Logo</button>
+            <button class="bt bo" onclick="zeusRemoveLogo()" style="font-size:10px">Remover</button>
+          </div>
+        </div>
+      </div>
+      <div class="zeus-section">
+        <h3>Cores do Sistema</h3>
+        <div class="theme-row"><div><div class="theme-label">Cor Principal (Menu/Botões)</div><div class="theme-sub">Fundo do menu lateral e botões primários</div></div><div class="color-swatch"><input type="color" value="${th.nv||'#0D2240'}" oninput="applyColor('--nv',this.value)" onchange="saveThemeColor('nv',this.value)"></div></div>
+        <div class="theme-row"><div><div class="theme-label">Cor de Destaque (Azul)</div><div class="theme-sub">Links, botões secundários, foco</div></div><div class="color-swatch"><input type="color" value="${th.ac||'#2563EB'}" oninput="applyColor('--ac',this.value)" onchange="saveThemeColor('ac',this.value)"></div></div>
+        <div class="theme-row"><div><div class="theme-label">Cor Verde (Conforme)</div><div class="theme-sub">Indicadores positivos e badges</div></div><div class="color-swatch"><input type="color" value="${th.gn||'#16A34A'}" oninput="applyColor('--gn',this.value)" onchange="saveThemeColor('gn',this.value)"></div></div>
+        <div class="theme-row"><div><div class="theme-label">Cor de Fundo</div><div class="theme-sub">Fundo geral do sistema</div></div><div class="color-swatch"><input type="color" value="${th.bg||'#F4F6FA'}" oninput="applyColor('--bg',this.value)" onchange="saveThemeColor('bg',this.value)"></div></div>
+      </div>
+      <div class="zeus-section">
+        <h3>Tipografia</h3>
+        <div class="theme-row"><div><div class="theme-label">Fonte Principal</div></div>
+          <select class="fsel" onchange="applyFont(this.value)" style="width:160px">
+            <option value="DM Sans" ${(th.font||'DM Sans')==='DM Sans'?'selected':''}>DM Sans (padrão)</option>
+            <option value="Inter" ${th.font==='Inter'?'selected':''}>Inter</option>
+            <option value="Roboto" ${th.font==='Roboto'?'selected':''}>Roboto</option>
+            <option value="Poppins" ${th.font==='Poppins'?'selected':''}>Poppins</option>
+            <option value="Open Sans" ${th.font==='Open Sans'?'selected':''}>Open Sans</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="bt bo" onclick="resetTheme()">↺ Restaurar Padrão</button>
+      </div>
+    </div>`;
+  }
+
   mc.innerHTML = H;
 }
 
@@ -480,26 +589,7 @@ const ZEUS_USER = "Zeus";
 const ZEUS_PASS = "Anastacio@2026";
 let _isZeus = false;
 
-function doLogin(){
-  const u = document.getElementById("loginUser").value.trim();
-  const p = document.getElementById("loginPass").value;
-  const err = document.getElementById("loginErr");
-  if(u === ZEUS_USER && p === ZEUS_PASS){
-    _isZeus = true;
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("appShell").classList.add("visible");
-    document.getElementById("zeusBadgeWrap").style.display = "block";
-    document.getElementById("sbLogoBtn").style.display = "block";
-    // Mostrar logo se já tiver salvo
-    const logo = localStorage.getItem("sb_logo_anastacio");
-    if(logo){ showSbLogo(logo); }
-    err.textContent = "";
-    initApp();
-  } else {
-    err.textContent = "Usuário ou senha incorretos.";
-    document.getElementById("loginPass").value = "";
-  }
-}
+
 
 function zeusUploadSbLogo(){
   if(!_isZeus) return;
@@ -525,10 +615,154 @@ function showSbLogo(src){
   wrap.style.display = "block";
 }
 
+
+// ═══ USUÁRIOS (salvo no Supabase via USERS array) ═══
+let USERS = [];
+
+async function loadUsers(){
+  try {
+    const r = await fetch(`${SUPABASE_URL}/rest/v1/usuarios?order=created_at.asc`,{
+      headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`}
+    });
+    if(r.ok) USERS = await r.json();
+  } catch(e){ USERS = JSON.parse(localStorage.getItem('otif_users')||'[]'); }
+}
+
+async function saveUsers(){
+  localStorage.setItem('otif_users', JSON.stringify(USERS));
+  // Tenta salvar no Supabase também
+  try {
+    for(const u of USERS){
+      await fetch(`${SUPABASE_URL}/rest/v1/usuarios`,{
+        method:'POST',
+        headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Content-Type":"application/json","Prefer":"resolution=merge-duplicates"},
+        body: JSON.stringify([{id:u.id,name:u.name,email:u.email,pass:u.pass,status:u.status}])
+      });
+    }
+  } catch(e){}
+}
+
+function toggleRequestPanel(){
+  const p = document.getElementById("requestPanel");
+  p.style.display = p.style.display === 'none' ? 'block' : 'none';
+}
+
+async function doRequestAccess(){
+  const name  = document.getElementById("reqName").value.trim();
+  const email = document.getElementById("reqEmail").value.trim();
+  const pass  = document.getElementById("reqPass").value;
+  const err   = document.getElementById("reqErr");
+  if(!name||!email||!pass){ err.textContent="Preencha todos os campos."; return; }
+  if(pass.length < 6){ err.textContent="Senha mínimo 6 caracteres."; return; }
+  await loadUsers();
+  if(USERS.find(u=>u.email===email)){ err.textContent="Este e-mail já foi cadastrado."; return; }
+  const newUser = { id: "u_"+Date.now(), name, email, pass, status:"pending" };
+  USERS.push(newUser);
+  await saveUsers();
+  err.style.color="var(--gn)";
+  err.textContent="✓ Solicitação enviada! Aguarde aprovação.";
+  document.getElementById("reqName").value="";
+  document.getElementById("reqEmail").value="";
+  document.getElementById("reqPass").value="";
+}
+
+async function doLogin(){
+  const u   = document.getElementById("loginUser").value.trim();
+  const p   = document.getElementById("loginPass").value;
+  const err = document.getElementById("loginErr");
+  // Zeus
+  if(u === ZEUS_USER && p === ZEUS_PASS){
+    _isZeus = true;
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("appShell").classList.add("visible");
+    document.getElementById("zeusBadgeWrap").style.display = "block";
+    document.getElementById("sbLogoBtn").style.display = "block";
+    const logo = localStorage.getItem("sb_logo_anastacio");
+    if(logo){ showSbLogo(logo); }
+    err.textContent = "";
+    await loadUsers();
+    initApp();
+    return;
+  }
+  // Usuário comum
+  await loadUsers();
+  const found = USERS.find(usr => usr.email === u || usr.name === u);
+  if(!found){ err.textContent = "Usuário não encontrado."; return; }
+  if(found.status === 'pending'){ err.textContent = "Acesso ainda não aprovado pelo administrador."; return; }
+  if(found.status === 'rejected'){ err.textContent = "Seu acesso foi recusado. Entre em contato com o administrador."; return; }
+  if(found.pass !== p){ err.textContent = "Senha incorreta."; return; }
+  _isZeus = false;
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("appShell").classList.add("visible");
+  err.textContent = "";
+  initApp();
+}
+
+function approveUser(id){
+  const u = USERS.find(x=>x.id===id);
+  if(u){ u.status='active'; saveUsers(); renderAll(); toast(`✓ ${u.name} aprovado!`); }
+}
+function rejectUser(id){
+  const u = USERS.find(x=>x.id===id);
+  if(u){ u.status='rejected'; saveUsers(); renderAll(); toast(`${u.name} recusado.`); }
+}
+function revokeUser(id){
+  if(!confirm("Revogar acesso deste usuário?")) return;
+  const u = USERS.find(x=>x.id===id);
+  if(u){ u.status='rejected'; saveUsers(); renderAll(); toast("Acesso revogado."); }
+}
+
+// ═══ TEMA / PERSONALIZAÇÃO ═══
+function loadTheme(){
+  return JSON.parse(localStorage.getItem('otif_theme')||'{}');
+}
+function applyColor(varName, value){
+  document.documentElement.style.setProperty(varName, value);
+  // Sincronizar cor secundária para nv
+  if(varName==='--nv') document.documentElement.style.setProperty('--n2', value+'dd');
+}
+function saveThemeColor(key, value){
+  const th = loadTheme(); th[key]=value;
+  localStorage.setItem('otif_theme', JSON.stringify(th));
+}
+function applyFont(font){
+  document.body.style.fontFamily = `'${font}', sans-serif`;
+  const th = loadTheme(); th.font=font;
+  localStorage.setItem('otif_theme', JSON.stringify(th));
+  // Carrega do Google Fonts se necessário
+  if(!['DM Sans'].includes(font)){
+    const link=document.createElement('link');
+    link.rel='stylesheet';
+    link.href=`https://fonts.googleapis.com/css2?family=${font.replace(' ','+')}:wght@400;500;600;700&display=swap`;
+    document.head.appendChild(link);
+  }
+}
+function resetTheme(){
+  if(!confirm("Restaurar todas as cores e fontes padrão?")) return;
+  localStorage.removeItem('otif_theme');
+  location.reload();
+}
+function applyStoredTheme(){
+  const th = loadTheme();
+  if(th.nv) applyColor('--nv', th.nv);
+  if(th.ac) applyColor('--ac', th.ac);
+  if(th.gn) applyColor('--gn', th.gn);
+  if(th.bg) applyColor('--bg', th.bg);
+  if(th.font) applyFont(th.font);
+}
+function zeusRemoveLogo(){
+  localStorage.removeItem('sb_logo_anastacio');
+  document.getElementById("sbLogoWrap").style.display="none";
+  toast("Logo removido.");
+  renderAll();
+}
+
 // ═══ INIT ═══
 async function initApp(){
+  applyStoredTheme();
   // Build nav
-  document.getElementById("navArea").innerHTML = NAV.map((p,i)=>`<button class="nb${i===0?' on':''}" onclick="goPage('${p.id}')">${p.icon} ${p.lbl}</button>`).join('');
+  const visibleNav = NAV.filter(p => !p.zeusOnly || _isZeus);
+  document.getElementById("navArea").innerHTML = visibleNav.map((p,i)=>`<button class="nb${i===0?' on':''}" onclick="goPage('${p.id}')">${p.icon} ${p.lbl}</button>`).join('');
 
   // Year selector
   const ys=document.getElementById("yearSel");
@@ -543,6 +777,7 @@ async function initApp(){
 
   // Load data
   await loadData();
+  if(_isZeus) await loadUsers();
 
   // Set initial client
   if(CLS.length) window._selC = CLS[0].id;
