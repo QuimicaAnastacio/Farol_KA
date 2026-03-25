@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistema OTIF — Química Anastácio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root{--bg:#F4F6FA;--wh:#FFF;--sf:#F8F9FC;--bd:rgba(0,0,0,.07);--tx:#1A1D2B;--t2:#4A5068;--mt:#8690A8;--nv:#0D2240;--n2:#162D50;--ac:#2563EB;--ab:rgba(37,99,235,.08);--gn:#16A34A;--gb:#DCFCE7;--gr:rgba(22,163,74,.2);--rd:#DC2626;--rb:#FEE2E2;--rr:rgba(220,38,38,.18);--yl:#D97706;--yb:#FEF3C7;--ra:16px;--sh:0 1px 3px rgba(0,0,0,.04)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);height:100vh;overflow:hidden;display:flex}
+
+/* Sidebar */
+.sb{width:200px;background:var(--nv);display:flex;flex-direction:column;padding:16px 0;flex-shrink:0}
+.sb-lg{padding:0 14px 16px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-lg h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:#fff}
+.sb-lg h2 span{color:#60A5FA}
+.sb-lg small{font-size:8px;color:rgba(255,255,255,.3);letter-spacing:2px;text-transform:uppercase}
+.sb nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto}
+.nb{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;background:transparent;color:rgba(255,255,255,.4);transition:all .15s;text-align:left;width:100%}
+.nb:hover{color:rgba(255,255,255,.7);background:rgba(255,255,255,.04)}
+.nb.on{background:rgba(96,165,250,.15);color:#60A5FA}
+.sb-bt{padding:10px 12px 6px;border-top:1px solid rgba(255,255,255,.08)}
+.sb-bt label{font-size:8px;color:rgba(255,255,255,.3);letter-spacing:1px;text-transform:uppercase;display:block;margin-bottom:4px}
+.sb-bt select{width:100%;padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;font-size:11px;font-family:'DM Sans',sans-serif;outline:none}
+.sb-bt select option{background:var(--nv);color:#fff}
+
+/* Main */
+.mw{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 24px;background:#fff;border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px;flex-wrap:wrap}
+.tf{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.fsel{padding:5px 26px 5px 8px;border-radius:6px;border:1px solid #E5E7EB;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;color:var(--tx);background:#fff url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%234A5068' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 6px center;appearance:none;outline:none;cursor:pointer}
+
+/* Content */
+#mainContent{flex:1;overflow:auto;padding:20px 24px 36px}
+
+/* Cards */
+.cd{background:#fff;border:1px solid var(--bd);border-radius:var(--ra);box-shadow:var(--sh)}.cp{padding:20px}
+
+/* KPIs */
+.kg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.kp{position:relative;overflow:hidden;padding:16px 18px}.kp::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%}
+.kp.g::before{background:var(--gn)}.kp.b::before{background:var(--ac)}.kp.r::before{background:var(--rd)}
+.kl{font-size:9px;color:var(--mt);text-transform:uppercase;letter-spacing:.8px;font-weight:700;margin-bottom:8px}
+.kv{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;line-height:1}
+.ks{font-size:10px;color:var(--mt);margin-top:4px}
+
+/* Charts */
+.cg{display:grid;grid-template-columns:5fr 3fr;gap:10px;margin-bottom:16px}
+.bw{display:flex;align-items:flex-end;gap:6px;height:130px;border-bottom:2px solid #EEF1F6}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end}
+.bv{font-size:9px;font-weight:700;font-family:'Plus Jakarta Sans',sans-serif}
+.br{width:100%;max-width:32px;border-radius:5px 5px 0 0;min-height:2px}
+.br.f{background:linear-gradient(180deg,#22c55e,#16a34a)}.br.p{background:linear-gradient(180deg,#fbbf24,#d97706)}
+.bm{font-size:8px;color:var(--mt);font-weight:600;text-transform:uppercase;padding-top:6px}
+.dw{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:10px}
+.dr{position:relative;width:110px;height:110px}.dr svg{transform:rotate(-90deg)}
+.dc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dc .dv{font-family:'Plus Jakarta Sans',sans-serif;font-size:24px;font-weight:800;color:var(--gn);line-height:1}
+.dc .dl{font-size:8px;color:var(--mt);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.lg{display:flex;gap:12px}.lg span{font-size:10px;color:var(--t2);display:flex;align-items:center;gap:4px}
+.lg i{width:8px;height:8px;border-radius:2px;display:inline-block}
+
+/* Tables */
+.th{padding:12px 16px;border-bottom:1px solid var(--bd);background:var(--sf);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+table{width:100%;border-collapse:collapse}
+th{padding:8px 10px;font-size:8.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--mt);font-weight:700;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:8px 10px;font-size:11px;vertical-align:middle;border-bottom:1px solid rgba(0,0,0,.03)}
+tr.is{background:rgba(220,38,38,.02)}
+
+/* Status */
+.st{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:all .12s;border:1px solid transparent}
+.st.ok{background:var(--gb);color:var(--gn);border-color:var(--gr)}.st.fl{background:var(--rb);color:var(--rd);border-color:var(--rr)}
+.st:hover{transform:scale(1.15)}
+
+/* OTIF input */
+.oe{width:50px;padding:3px 4px;border-radius:5px;border:1px solid #D1D5DB;font-size:12px;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;text-align:center;outline:none}
+.oe.ok{color:var(--gn)}.oe.lo{color:var(--yl)}
+
+/* Buttons */
+.bt{display:inline-flex;align-items:center;gap:5px;padding:7px 16px;border-radius:8px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .12s}
+.bp{background:var(--nv);color:#fff}.bp:hover{background:var(--n2)}
+.bo{background:#fff;color:var(--t2);border:1px solid #E5E7EB}
+.bgr{background:var(--gn);color:#fff}
+
+/* Inputs */
+.in{padding:7px 12px;border-radius:8px;border:1px solid #E5E7EB;font-size:12px;font-family:'DM Sans',sans-serif;outline:none;width:100%}.in:focus{border-color:var(--ac)}
+
+/* Clients */
+.cc{display:flex;align-items:center;gap:12px;padding:14px 18px;margin-bottom:8px}.cc.off{opacity:.4}
+.la{width:50px;height:50px;border-radius:10px;border:2px dashed #D1D5DB;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;flex-shrink:0;background:var(--sf)}
+.la img{width:100%;height:100%;object-fit:contain}.la:hover{border-color:var(--ac)}
+.ib{width:30px;height:30px;border-radius:7px;border:1px solid #E5E7EB;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer}.ib:hover{border-color:var(--ac);background:var(--ab)}.ib.dg{border-color:#FCA5A5}.ib.dg:hover{background:var(--rb)}
+
+/* Page header */
+.ph h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--nv)}
+.ph p{font-size:11px;color:var(--mt);margin-top:2px}.ph{margin-bottom:18px;display:flex;justify-content:space-between;align-items:flex-start}
+
+/* Form table */
+.ft{width:100%;border-collapse:collapse}.ft th,.ft td{padding:8px 12px;border:1px solid var(--bd);text-align:center;font-size:11px}
+.ft th{background:var(--sf);font-weight:700;color:var(--nv);font-size:9px;text-transform:uppercase;letter-spacing:.4px}
+.ft td.inn{text-align:left;font-weight:600;color:var(--tx);font-size:10px;background:#FAFBFD;min-width:200px;white-space:normal;line-height:1.3}
+
+/* Consolidado */
+.cv{font-weight:800;font-size:14px;text-align:center;padding:6px}
+.cv.gn{background:var(--gb);color:var(--gn)}.cv.rd{background:var(--rb);color:var(--rd)}.cv.yl{background:var(--yb);color:var(--yl)}
+
+/* Actions table */
+.at{width:100%;border-collapse:collapse;font-size:11px}
+.at th{padding:8px;font-size:8px;text-transform:uppercase;letter-spacing:.5px;color:var(--mt);font-weight:700;text-align:left;border-bottom:2px solid var(--bd);background:var(--sf);white-space:nowrap}
+.at td{padding:6px 8px;border-bottom:1px solid var(--bd);vertical-align:top}
+
+/* Misc */
+.cl{height:56px;object-fit:contain}
+.ep{border:2px solid #E5E7EB;border-radius:var(--ra);padding:24px 20px;background:#fff}
+.eh{text-align:center;padding-bottom:14px;border-bottom:1px solid #EEF1F6;margin-bottom:14px}
+.to{position:fixed;top:16px;right:16px;z-index:9999;padding:10px 18px;border-radius:10px;background:var(--nv);color:#fff;font-size:12px;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.15);transform:translateX(120%);transition:transform .3s ease}.to.sh{transform:translateX(0)}
+.mc{padding:4px 9px;border-radius:100px;border:1px solid #E5E7EB;font-size:9px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;background:#fff;color:var(--t2);display:inline-block;user-select:none}
+.mc.on{background:var(--nv);color:#fff;border-color:var(--nv)}.mc:hover:not(.on){border-color:var(--ac)}
+.dz{border:2px dashed #D1D5DB;border-radius:var(--ra);padding:30px;text-align:center;cursor:pointer;background:#FAFBFD}.dz:hover{border-color:var(--ac);background:var(--ab)}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:100px}
+</style>
+</head>
+<body>
+
+<aside class="sb">
+  <div class="sb-lg"><h2>Química <span>Anastácio</span></h2><small>Painel OTIF</small></div>
+  <nav id="navArea"></nav>
+  <div class="sb-bt">
+    <label>Cliente</label>
+    <select id="clientSel" onchange="window._selC=this.value;renderAll()"></select>
+  </div>
+</aside>
+
+<div class="mw">
+  <div class="topbar">
+    <div class="tf">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8690A8" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+      <select id="yearSel" class="fsel" onchange="renderAll()"></select>
+      <span style="font-size:10px;color:var(--mt);font-weight:600">Meses:</span>
+      <div id="mChips" style="display:flex;gap:3px;flex-wrap:wrap"></div>
+    </div>
+    <div style="font-size:11px;color:var(--mt)" id="dateNow"></div>
+  </div>
+  <div id="mainContent"></div>
+</div>
+
+<div id="mdl" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9000;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:14px;padding:24px;width:560px;max-width:92vw;max-height:85vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <h2 id="mdlT" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:#0D2240;margin:0"></h2>
+      <button onclick="document.getElementById('mdl').style.display='none'" style="background:none;border:none;cursor:pointer;color:#8690A8;font-size:18px">✕</button>
+    </div>
+    <div id="mdlB"></div>
+  </div>
+</div>
+<div class="to" id="toastEl"></div>
+
+<script src="github-storage.js"></script>
+<script>
+// ═══ CONSTANTS ═══
+const MS=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+const SH=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+const YRS=[2023,2024,2025,2026];
+const NAV=[
+  {id:"dashboard",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',lbl:"Dashboard"},
+  {id:"form",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',lbl:"Preenchimento"},
+  {id:"consolidado",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></svg>',lbl:"Consolidado"},
+  {id:"acoes",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',lbl:"Ações"},
+  {id:"fnc",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',lbl:"FNC"},
+  {id:"clients",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',lbl:"Clientes"},
+  {id:"copy",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',lbl:"Copiar Relatório"},
+  {id:"import",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',lbl:"Importar Excel"},
+];
+
+// ═══ DATA (defaults) ═══
+let IND=[
+  {key:"tabela_preco",label:"Atualização da tabela de preço em vigência (trimestral)"},
+  {key:"analise_demanda",label:"Análise e retorno de atendimento da demanda no prazo esperado"},
+  {key:"agendamento",label:"Confirmação de agendamento de entrega no prazo esperado"},
+  {key:"prazo_entrega",label:"Atendimento do prazo para entrega"},
+  {key:"qtd_entrega",label:"Atendimento da quantidade para entrega"},
+  {key:"otif_ind",label:"Indicador OTIF Anastácio"},
+  {key:"carga",label:"Carga entregue atende as particularidades e políticas de fornecimento"},
+  {key:"comunicacao",label:"Facilidade de comunicação (reclamações, elogios, sugestões e dúvidas)"},
+  {key:"forecast",label:"Variação do forecast da demanda negociada em até 10%"},
+];
+let CLS=[{id:"kenvue",name:"Kenvue",logo:null,active:true}];
+let RCS=[];
+let ACOES=[];
+let FNCS=[];
+
+// Default records
+function defaultRecs(){
+  return [
+    {cid:"kenvue",y:2025,m:0,tabela_preco:1,analise_demanda:1,agendamento:1,prazo_entrega:1,qtd_entrega:1,otif_ind:1,carga:1,comunicacao:1,forecast:1,otif:100},
+    {cid:"kenvue",y:2025,m:1,tabela_preco:1,analise_demanda:1,agendamento:1,prazo_entrega:1,qtd_entrega:1,otif_ind:1,carga:1,comunicacao:1,forecast:1,otif:100},
+    {cid:"kenvue",y:2025,m:2,tabela_preco:1,analise_demanda:1,agendamento:1,prazo_entrega:0,qtd_entrega:1,otif_ind:1,carga:1,comunicacao:1,forecast:1,otif:100},
+    {cid:"kenvue",y:2025,m:3,tabela_preco:1,analise_demanda:1,agendamento:1,prazo_entrega:0,qtd_entrega:1,otif_ind:1,carga:1,comunicacao:1,forecast:1,otif:100},
+    {cid:"kenvue",y:2025,m:4,tabela_preco:1,analise_demanda:1,agendamento:1,prazo_entrega:0,qtd_entrega:1,otif_ind:1,carga:1,comunicacao:1,forecast:1,otif:89},
+    {cid:"kenvue",y:2025,m:5,tabela_preco:1,analise_demanda:1,agendamento:1,prazo_entrega:1,qtd_entrega:1,otif_ind:1,carga:1,comunicacao:1,forecast:1,otif:100},
+    {cid:"kenvue",y:2025,m:6,tabela_preco:1,analise_demanda:1,agendamento:1,prazo_entrega:1,qtd_entrega:1,otif_ind:1,carga:0,comunicacao:1,forecast:1,otif:100},
+    {cid:"kenvue",y:2025,m:7,tabela_preco:1,analise_demanda:1,agendamento:1,prazo_entrega:1,qtd_entrega:1,otif_ind:1,carga:1,comunicacao:1,forecast:1,otif:100},
+  ];
+}
+
+// ═══ STATE ═══
+window._selC = "kenvue";
+window._curP = "dashboard";
+window._selMs = new Set([0,1,2,3,4,5,6,7,8,9,10,11]);
+
+// ═══ STORAGE (GitHub API) ═══
+let _saving = false;
+let _saveTimer = null;
+
+async function loadData(){
+  if (githubConfigValid()) {
+    const data = await githubLoad();
+    if (data) {
+      if (data.clientes && data.clientes.length) CLS = data.clientes;
+      if (data.registros && data.registros.length) RCS = data.registros;
+      if (data.indicadores && data.indicadores.length) IND = data.indicadores;
+      if (data.acoes) ACOES = data.acoes;
+      if (data.fncs) FNCS = data.fncs;
+    }
+  }
+  if (!RCS.length) RCS = defaultRecs();
+}
+
+// Debounce: salva 1.5s após última alteração (evita muitos commits)
+async function saveData(){
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(async () => {
+    if (!githubConfigValid()) {
+      console.warn("GitHub não configurado. Dados apenas em memória.");
+      return;
+    }
+    if (_saving) return;
+    _saving = true;
+    const data = {
+      clientes: CLS,
+      indicadores: IND,
+      registros: RCS,
+      acoes: ACOES,
+      fncs: FNCS
+    };
+    const ok = await githubSave(data);
+    _saving = false;
+    if (ok) {
+      console.log("✓ Salvo no GitHub");
+    } else {
+      toast("⚠️ Erro ao salvar no GitHub");
+    }
+  }, 1500);
+}
+
+// ═══ HELPERS ═══
+function gY(){ return parseInt(document.getElementById("yearSel").value)||2025; }
+function gC(){ return CLS.find(c=>c.id===window._selC) || CLS[0]; }
+function gR(){ return RCS.filter(r=>r.cid===window._selC && r.y===gY() && window._selMs.has(r.m)).sort((a,b)=>a.m-b.m); }
+
+let _tt;
+function toast(m){ const e=document.getElementById("toastEl"); e.textContent=m; e.classList.add("sh"); clearTimeout(_tt); _tt=setTimeout(()=>e.classList.remove("sh"),2500); }
+
+function sH(ok,ri,k){ return `<span class="st ${ok?'ok':'fl'}" onclick="toggleIndicator(${ri},'${k}')">${ok?'✓':'✕'}</span>`; }
+
+// ═══ ACTIONS ═══
+function toggleIndicator(ri,k){ const rs=gR(); if(!rs[ri])return; const i=RCS.indexOf(rs[ri]); if(i<0)return; RCS[i][k]=RCS[i][k]?0:1; saveData(); renderAll(); }
+function editOtif(ri,v){ const rs=gR(); if(!rs[ri])return; const i=RCS.indexOf(rs[ri]); if(i<0)return; RCS[i].otif=Math.min(100,Math.max(0,+v||0)); saveData(); renderAll(); }
+function deleteMonthCol(m){ RCS=RCS.filter(r=>!(r.cid===window._selC&&r.y===gY()&&r.m===m)); saveData(); renderAll(); toast("Excluído"); }
+function addMonthCol(){ const y=gY(),ex=RCS.filter(r=>r.cid===window._selC&&r.y===y).map(r=>r.m),n=[0,1,2,3,4,5,6,7,8,9,10,11].find(m=>!ex.includes(m)); if(n===undefined){toast("12 meses já existem!");return} const rc={cid:window._selC,y,m:n,otif:100}; IND.forEach(i=>rc[i.key]=1); RCS.push(rc); window._selMs.add(n); saveData(); renderMonthChips(); renderAll(); toast(`${MS[n]} adicionado`); }
+
+// Indicators
+function openAddInd(){ document.getElementById("mdlT").textContent="Adicionar Farol"; document.getElementById("mdlB").innerHTML=`<input id="newIndLabel" class="in" placeholder="Texto do farol..."><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="bt bp" onclick="doAddInd()">Adicionar</button></div>`; document.getElementById("mdl").style.display="flex"; }
+function doAddInd(){ const l=document.getElementById("newIndLabel").value.trim(); if(!l)return; const k="i_"+Date.now(); IND.push({key:k,label:l}); RCS.forEach(r=>r[k]=1); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("✓ Adicionado!"); }
+function openEditInd(){ document.getElementById("mdlT").textContent="Editar Faróis"; let h='<div style="display:flex;flex-direction:column;gap:6px">'; IND.forEach((ind,i)=>h+=`<div style="display:flex;gap:6px;align-items:center"><input id="eidx${i}" class="in" value="${ind.label}" style="flex:1;font-size:11px"><button class="ib dg" onclick="removeInd(${i})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>`); h+=`</div><div style="display:flex;justify-content:flex-end;margin-top:12px"><button class="bt bp" onclick="doSaveInd()">Salvar</button></div>`; document.getElementById("mdlB").innerHTML=h; document.getElementById("mdl").style.display="flex"; }
+function doSaveInd(){ IND.forEach((ind,i)=>{const v=document.getElementById("eidx"+i); if(v&&v.value.trim())ind.label=v.value.trim()}); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("✓ Salvo!"); }
+function removeInd(i){ if(!confirm("Excluir?"))return; IND.splice(i,1); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); }
+
+// Clients
+function addClient(){ const inp=document.getElementById("newClientInput"); const n=inp.value.trim(); if(!n)return; CLS.push({id:n.toLowerCase().replace(/\s+/g,"-")+"-"+Date.now(),name:n,logo:null,active:true}); inp.value=""; saveData(); renderAll(); toast(`✓ "${n}" adicionado`); }
+function editClientName(id){ const c=CLS.find(x=>x.id===id); if(!c)return; const n=prompt("Novo nome:",c.name); if(n&&n.trim()){c.name=n.trim();saveData();renderAll();} }
+function toggleClientActive(id){ const c=CLS.find(x=>x.id===id); if(c){c.active=!c.active;saveData();renderAll();} }
+function deleteClient(id){ if(!confirm("Excluir?"))return; CLS=CLS.filter(c=>c.id!==id); RCS=RCS.filter(r=>r.cid!==id); if(window._selC===id&&CLS.length)window._selC=CLS[0].id; saveData();renderAll(); }
+function uploadLogo(id){ const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=e=>{const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=ev=>{const c=CLS.find(x=>x.id===id);if(c){c.logo=ev.target.result;saveData();renderAll();toast("Logo salvo!")}}; r.readAsDataURL(f)}; inp.click(); }
+
+// Ações
+function addAcao(){ ACOES.push({id:Date.now(),mes:"",cliente:gC()?.name||"",desvio:"",material:"",embalagem:"",volume:"",dataDesvio:"",responsavel:"",fnc:"",planoAcao:""}); saveData(); renderAll(); }
+function deleteAcao(id){ ACOES=ACOES.filter(a=>a.id!==id); saveData(); renderAll(); }
+function updateAcao(id,field,val){ const a=ACOES.find(x=>x.id===id); if(a){a[field]=val; saveData();} }
+
+// Month chips
+function toggleMonth(m){ window._selMs.has(m)?window._selMs.delete(m):window._selMs.add(m); renderMonthChips(); renderAll(); }
+function selectAllMonths(){ window._selMs=new Set([0,1,2,3,4,5,6,7,8,9,10,11]); renderMonthChips(); renderAll(); }
+function renderMonthChips(){ document.getElementById("mChips").innerHTML=`<span class="mc ${window._selMs.size===12?'on':''}" onclick="selectAllMonths()">Todos</span>`+SH.map((s,i)=>`<span class="mc ${window._selMs.has(i)?'on':''}" onclick="toggleMonth(${i})">${s}</span>`).join(''); }
+
+// Export
+function exportExcel(){ const cl=gC(),rs=gR(),y=gY(); const hd=["Mês",...IND.map(i=>i.label),"OTIF %"],dt=[hd]; rs.forEach(r=>{const rw=[MS[r.m]];IND.forEach(i=>rw.push(i.key==="otif_ind"?r.otif+"%":(r[i.key]?"Conforme":"Não Conforme")));rw.push(r.otif+"%");dt.push(rw)}); const ws=XLSX.utils.aoa_to_sheet(dt),wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"OTIF"); if(ACOES.length){const ad=[["Mês","Cliente","Desvio","Material","Embalagem","Volume","Data","Responsável","FNC","Plano"],...ACOES.map(a=>[a.mes,a.cliente,a.desvio,a.material,a.embalagem,a.volume,a.dataDesvio,a.responsavel,a.fnc,a.planoAcao])];XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ad),"Ações")} XLSX.writeFile(wb,`OTIF_${cl?cl.name.replace(/\s/g,'_'):''}_${y}.xlsx`); toast("📊 Exportado!"); }
+
+// Import
+function handleImport(e){ const f=e.target.files[0]; if(!f)return; const rd=new FileReader(); rd.onload=ev=>{try{const wb=XLSX.read(ev.target.result,{type:'binary'}); let msg=[]; const acoesSheet=wb.SheetNames.find(s=>s.toLowerCase().includes("ações")||s.toLowerCase().includes("acoes")||s.toLowerCase().includes("acao")); if(acoesSheet){const data=XLSX.utils.sheet_to_json(wb.Sheets[acoesSheet],{defval:""});data.forEach(row=>{ACOES.push({id:Date.now()+Math.random(),mes:row["MÊS"]||row["Mês"]||row["mes"]||"",cliente:row["CLIENTE"]||row["Cliente"]||"",desvio:row["DESVIO"]||row["Desvio"]||row["C"]||"",material:row["MATERIAL"]||row["Material"]||"",embalagem:row["EMBALAGEM"]||row["Embalagem"]||"",volume:String(row["VOLUME"]||row["Volume"]||""),dataDesvio:row["DATA DO DESVIO"]||row["Data Desvio"]||"",responsavel:row["RESPONSÁVEL"]||row["Responsavel"]||"",fnc:String(row["FNC/PROTOCOLO"]||row["FNC"]||""),planoAcao:row["PLANO DE AÇÃO"]||row["Plano de Ação"]||""})});msg.push(`${data.length} ações`)} const fncSheet=wb.SheetNames.find(s=>s.toLowerCase().includes("fnc")||s.toLowerCase().includes("registro")); if(fncSheet){const data=XLSX.utils.sheet_to_json(wb.Sheets[fncSheet],{defval:""});FNCS=data.map(r=>({id:Date.now()+Math.random(),...r}));msg.push(`${data.length} FNC`)} saveData();renderAll();toast(msg.length?`✓ Importado: ${msg.join(', ')}`:"Importado")}catch(ex){toast("Erro: "+ex.message)}}; rd.readAsBinaryString(f); }
+
+// Capture
+async function copyImage(){ const btn=document.getElementById("btnCopy"); btn.textContent="⏳..."; btn.disabled=true; try{const c=await html2canvas(document.getElementById("previewArea"),{backgroundColor:"#fff",scale:2,useCORS:true,allowTaint:true,logging:false}); c.toBlob(async bl=>{try{await navigator.clipboard.write([new ClipboardItem({"image/png":bl})]);document.getElementById("copyTip").style.display="block";setTimeout(()=>document.getElementById("copyTip").style.display="none",5000);toast("✓ Copiada!")}catch(e){window.open(URL.createObjectURL(bl),"_blank")} btn.textContent="📋 Copiar Imagem";btn.disabled=false},"image/png")}catch(e){toast("Erro");btn.textContent="📋 Copiar Imagem";btn.disabled=false} }
+async function downloadImage(){ try{const c=await html2canvas(document.getElementById("previewArea"),{backgroundColor:"#fff",scale:2,useCORS:true,allowTaint:true,logging:false}); const cl=gC(),l=document.createElement("a");l.download=`OTIF_${cl?cl.name.replace(/\s/g,'_'):''}_${gY()}.png`;l.href=c.toDataURL("image/png");l.click();toast("💾 Baixada!")}catch(e){toast("Erro")} }
+
+// ═══ NAVIGATION ═══
+function goPage(id){ window._curP=id; document.querySelectorAll(".nb").forEach((b,i)=>b.classList.toggle("on",NAV[i].id===id)); renderAll(); }
+
+// ═══ MAIN RENDER ═══
+function renderAll(){
+  const cl=gC(), rs=gR(), y=gY(), mc=document.getElementById("mainContent");
+
+  // Update client selector
+  const csel=document.getElementById("clientSel");
+  const activeCls=CLS.filter(c=>c.active);
+  csel.innerHTML=activeCls.map(c=>`<option value="${c.id}"${c.id===window._selC?' selected':''}>${c.name}</option>`).join('');
+  if(!activeCls.find(c=>c.id===window._selC)&&activeCls.length){ window._selC=activeCls[0].id; }
+
+  let H='';
+  const P=window._curP;
+
+  // ═══ DASHBOARD ═══
+  if(P==="dashboard"){
+    const iNO=IND.filter(i=>i.key!=="otif_ind"),tE=rs.length*iNO.length,tO=rs.reduce((s,r)=>s+iNO.filter(i=>r[i.key]).length,0),tF=tE-tO,avg=rs.length?(rs.reduce((s,r)=>s+r.otif,0)/rs.length).toFixed(1):"0",cr=tE?((tO/tE)*100).toFixed(0):"0";
+    const ci=2*Math.PI*44,of=ci-(cr/100)*ci;
+    H=`<div class="ph"><div><h1>Performance OTIF — ${cl?cl.name:''}</h1><p>On Time, In Full · ${y}</p></div>${cl&&cl.logo?`<img src="${cl.logo}" class="cl">`:`<span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--nv)">${cl?cl.name:''}</span>`}</div>
+    <div class="kg"><div class="cd kp g"><div class="kl">OTIF Médio</div><div class="kv">${avg}%</div><div class="ks">Meta: 95%</div></div><div class="cd kp b"><div class="kl">Meses</div><div class="kv">${rs.length}</div><div class="ks">${y}</div></div><div class="cd kp g"><div class="kl">Conformidades</div><div class="kv">${tO}</div><div class="ks">de ${tE} · ${cr}%</div></div><div class="cd kp r"><div class="kl">Não Conformidades</div><div class="kv">${tF}</div><div class="ks">itens com falha</div></div></div>
+    <div class="cg"><div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Evolução OTIF Mensal</div><div class="bw">${rs.map(r=>`<div class="bc"><span class="bv">${r.otif}%</span><div class="br ${r.otif===100?'f':'p'}" style="height:${Math.max(r.otif*1.2,5)}%"></div><span class="bm">${SH[r.m]}</span></div>`).join('')||'<span style="color:var(--mt);padding:20px">Sem dados</span>'}</div></div>
+    <div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Conformidade</div><div class="dw"><div class="dr"><svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="44" fill="none" stroke="#EEF1F6" stroke-width="11"/><circle cx="55" cy="55" r="44" fill="none" stroke="var(--gn)" stroke-width="11" stroke-dasharray="${ci}" stroke-dashoffset="${of}" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:center"/></svg><div class="dc"><span class="dv">${cr}%</span><span class="dl">Conforme</span></div></div><div class="lg"><span><i style="background:var(--gn)"></i>${tO}</span><span><i style="background:var(--rd)"></i>${tF}</span></div></div></div></div>
+    <div class="cd" style="overflow:hidden"><div class="th">Detalhamento</div><div style="overflow-x:auto"><table><thead><tr><th>Mês</th>${IND.map(i=>`<th style="max-width:80px;white-space:normal;line-height:1.2">${i.label.length>28?i.label.substring(0,26)+'…':i.label}</th>`).join('')}<th style="text-align:right">OTIF</th></tr></thead><tbody>${rs.map((r,ri)=>`<tr class="${(IND.some(i=>i.key!=="otif_ind"&&!r[i.key])||r.otif<100)?'is':''}"><td style="font-weight:700;color:var(--nv)">${MS[r.m]}</td>${IND.map(i=>i.key==="otif_ind"?`<td style="font-weight:800;color:${r.otif===100?'var(--gn)':'var(--yl)'}">${r.otif}%</td>`:`<td>${sH(r[i.key],ri,i.key)}</td>`).join('')}<td style="text-align:right;font-weight:800;color:${r.otif===100?'var(--gn)':'var(--yl)'}">${r.otif}%</td></tr>`).join('')}</tbody></table></div></div>`;
+  }
+
+  // ═══ PREENCHIMENTO ═══
+  if(P==="form"){
+    H=`<div class="ph"><div><h1>Preenchimento — ${cl?cl.name:''}</h1><p>Faróis nas linhas · Meses nas colunas · Clique ✓/✕</p></div></div>
+    <div class="cd" style="overflow:hidden"><div class="th"><span>${cl?cl.name:''} · ${y}</span><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="bt bo" onclick="addMonthCol()">+ Mês</button><button class="bt bo" onclick="openAddInd()">+ Farol</button><button class="bt bo" onclick="openEditInd()">✎ Faróis</button><button class="bt bo" onclick="exportExcel()">📊 Excel</button></div></div>
+    <div style="overflow-x:auto"><table class="ft"><thead><tr><th style="text-align:left;min-width:200px">Indicador</th>${rs.map(r=>`<th>${SH[r.m]}<br><span class="mc" onclick="deleteMonthCol(${r.m})" style="font-size:7px;padding:1px 5px;margin-top:3px;color:var(--rd);border-color:var(--rr);cursor:pointer">✕</span></th>`).join('')}</tr></thead><tbody>${IND.map(ind=>`<tr><td class="inn">${ind.label}</td>${rs.map((r,ri)=>ind.key==="otif_ind"?`<td><input type="number" class="oe ${r.otif===100?'ok':'lo'}" value="${r.otif}" min="0" max="100" onchange="editOtif(${ri},this.value)"></td>`:`<td>${sH(r[ind.key],ri,ind.key)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`;
+  }
+
+  // ═══ CONSOLIDADO ═══
+  if(P==="consolidado"){
+    const allCls=CLS.filter(c=>c.active), iNO=IND.filter(i=>i.key!=="otif_ind");
+    let gRow='',rRow='',gTot=0,rTot=0;
+    allCls.forEach(c=>{
+      const cR=RCS.filter(r=>r.cid===c.id&&r.y===y&&window._selMs.has(r.m));
+      let g=0,rd=0; cR.forEach(r=>iNO.forEach(i=>{if(r[i.key])g++;else rd++}));
+      gRow+=`<td class="cv gn">${g}</td>`; rRow+=`<td class="cv rd">${rd}</td>`; gTot+=g; rTot+=rd;
+    });
+    const tot=gTot+rTot;
+    H=`<div class="ph"><div><h1>Consolidado — Farol ${y}</h1><p>Resumo verde/vermelho por cliente</p></div></div>
+    <div class="cd" style="overflow:hidden"><div class="th" style="background:var(--yb);color:var(--nv);font-size:14px;font-weight:800;justify-content:center">FAROL ${y}</div><div style="overflow-x:auto"><table><thead><tr><th>Farol</th>${allCls.map(c=>`<th style="text-align:center">${c.name}</th>`).join('')}<th style="text-align:center">Total</th><th style="text-align:center">%</th></tr></thead><tbody>
+    <tr style="background:var(--gb)"><td style="font-weight:700;color:var(--gn)">Verde</td>${gRow}<td class="cv gn">${gTot}</td><td class="cv gn">${tot?(gTot/tot*100).toFixed(1):'0'}%</td></tr>
+    <tr style="background:var(--rb)"><td style="font-weight:700;color:var(--rd)">Vermelho</td>${rRow}<td class="cv rd">${rTot}</td><td class="cv rd">${tot?(rTot/tot*100).toFixed(1):'0'}%</td></tr>
+    <tr><td></td>${allCls.map(()=>'<td></td>').join('')}<td class="cv" style="font-weight:800">${tot}</td><td class="cv yl" style="font-weight:800">${tot?(gTot/tot*100).toFixed(0):'0'}%</td></tr>
+    </tbody></table></div></div>`;
+  }
+
+  // ═══ AÇÕES ═══
+  if(P==="acoes"){
+    H=`<div class="ph"><div><h1>Ações / Desvios</h1><p>${ACOES.length} registros</p></div></div>
+    <div class="cd" style="overflow:hidden"><div class="th"><span>Registros</span><button class="bt bp" onclick="addAcao()">+ Nova Ação</button></div>
+    <div style="overflow-x:auto"><table class="at"><thead><tr><th>Mês</th><th>Cliente</th><th>Desvio</th><th>Material</th><th>Embalagem</th><th>Volume</th><th>Data</th><th>Responsável</th><th>FNC</th><th>Plano de Ação</th><th></th></tr></thead><tbody>`;
+    ACOES.forEach(a=>{
+      H+=`<tr>${['mes','cliente','desvio','material','embalagem','volume','dataDesvio','responsavel','fnc','planoAcao'].map(f=>`<td><input class="in" value="${a[f]||''}" onchange="updateAcao(${a.id},'${f}',this.value)" style="width:${f==='desvio'||f==='planoAcao'?'160':'70'}px;font-size:10px;padding:4px"></td>`).join('')}<td><button class="ib dg" onclick="deleteAcao(${a.id})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></td></tr>`;
+    });
+    H+=`</tbody></table></div></div>`;
+    if(!ACOES.length) H+=`<div style="text-align:center;padding:30px;color:var(--mt)">Nenhuma ação. Clique "+ Nova Ação" ou importe uma planilha.</div>`;
+  }
+
+  // ═══ FNC ═══
+  if(P==="fnc"){
+    const keys=FNCS.length?Object.keys(FNCS[0]).filter(k=>k!=="id"):[];
+    H=`<div class="ph"><div><h1>Registros FNC</h1><p>${FNCS.length} registros</p></div></div>
+    <div class="cd" style="overflow:hidden"><div class="th">${FNCS.length} registros</div><div style="overflow-x:auto"><table class="at"><thead><tr>${keys.map(k=>`<th>${k}</th>`).join('')}</tr></thead><tbody>${FNCS.slice(0,200).map(f=>`<tr>${keys.map(k=>`<td style="font-size:10px;max-width:180px">${f[k]||''}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`;
+    if(!FNCS.length) H+=`<div style="text-align:center;padding:30px;color:var(--mt)">Nenhum registro. Importe via "Importar Excel".</div>`;
+  }
+
+  // ═══ CLIENTES ═══
+  if(P==="clients"){
+    H=`<div class="ph"><div><h1>Clientes</h1><p>Gerencie clientes</p></div></div>
+    <div class="cd cp" style="display:flex;gap:8px;align-items:center;margin-bottom:14px"><input id="newClientInput" class="in" placeholder="Novo cliente..." style="flex:1" onkeydown="if(event.key==='Enter')addClient()"><button class="bt bp" onclick="addClient()">+ Adicionar</button></div>
+    ${CLS.map(c=>`<div class="cd cc ${c.active?'':'off'}"><div class="la" onclick="uploadLogo('${c.id}')">${c.logo?`<img src="${c.logo}">`:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B0B8CC" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`}</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--nv)">${c.name}</div><div style="font-size:9px;color:var(--mt)">${c.active?'Ativo':'Inativo'}</div></div><div style="display:flex;gap:4px"><button class="ib" onclick="editClientName('${c.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A5068" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib" onclick="toggleClientActive('${c.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="${c.active?'#16A34A':'#8690A8'}" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></button><button class="ib dg" onclick="deleteClient('${c.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></div></div>`).join('')}`;
+  }
+
+  // ═══ COPIAR RELATÓRIO ═══
+  if(P==="copy"){
+    let lg=cl&&cl.logo?`<img src="${cl.logo}" style="height:50px;margin-bottom:8px" crossorigin="anonymous">`:'';
+    let tbl=`<table style="width:100%;border-collapse:collapse"><thead><tr><th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:left;border-bottom:1px solid #EEF1F6;background:#F8F9FC">Mês</th>${IND.map(i=>`<th style="padding:8px;font-size:7px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:center;border-bottom:1px solid #EEF1F6;background:#F8F9FC;max-width:80px;white-space:normal;line-height:1.2">${i.label}</th>`).join('')}<th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:right;border-bottom:1px solid #EEF1F6;background:#F8F9FC">OTIF</th></tr></thead><tbody>`;
+    rs.forEach(r=>{tbl+=`<tr style="border-bottom:1px solid #EEF1F6"><td style="padding:8px;font-weight:700;color:#0D2240;font-size:11px">${MS[r.m]}</td>${IND.map(i=>i.key==="otif_ind"?`<td style="padding:8px;text-align:center;font-weight:800;color:${r.otif===100?'#16A34A':'#D97706'}">${r.otif}%</td>`:`<td style="padding:8px;text-align:center"><span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:700;background:${r[i.key]?'#DCFCE7':'#FEE2E2'};color:${r[i.key]?'#16A34A':'#DC2626'}">${r[i.key]?'✓':'✕'}</span></td>`).join('')}<td style="padding:8px;text-align:right;font-weight:800;font-size:13px;color:${r.otif===100?'#16A34A':'#D97706'}">${r.otif}%</td></tr>`});
+    tbl+='</tbody></table>';
+    H=`<div class="ph"><div><h1>Copiar Relatório — ${cl?cl.name:''}</h1><p>Copie a imagem para colar no email</p></div></div>
+    <div class="cd cp" style="margin-bottom:14px"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bt bp" onclick="copyImage()" id="btnCopy" style="padding:10px 24px">📋 Copiar Imagem</button><button class="bt bgr" onclick="downloadImage()" style="padding:10px 24px">💾 Baixar PNG</button><button class="bt bo" onclick="exportExcel()" style="padding:10px 24px">📊 Excel</button></div><div id="copyTip" style="margin-top:10px;padding:10px 14px;border-radius:8px;background:#DCFCE7;color:#16A34A;font-size:12px;font-weight:600;display:none">✓ Copiada! Cole com Ctrl+V</div></div>
+    <div class="ep" id="previewArea" style="background:#fff"><div class="eh">${lg}<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:#0D2240">Relatório OTIF — ${y}</div><div style="font-size:11px;color:#8690A8">${cl?cl.name:''} · Química Anastácio</div></div>${tbl}</div>`;
+  }
+
+  // ═══ IMPORTAR EXCEL ═══
+  if(P==="import"){
+    H=`<div class="ph"><div><h1>Importar Planilha Excel</h1><p>Importe abas Ações e FNC da planilha do SharePoint</p></div></div>
+    <div class="cd cp"><div class="dz" onclick="document.getElementById('fileImport').click()">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8690A8" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <p style="color:var(--mt);font-size:13px;margin-top:8px">Clique para selecionar o arquivo .xlsx</p>
+    </div>
+    <input type="file" id="fileImport" accept=".xlsx,.xls" style="display:none" onchange="handleImport(event)">
+    <div style="margin-top:14px;padding:12px;background:var(--sf);border-radius:8px;font-size:11px;color:var(--t2);line-height:1.6">
+      <strong>Abas reconhecidas:</strong><br>
+      • <strong>Ações</strong> — Mês, Cliente, Desvio, Material, Embalagem, Volume, Data, Responsável, FNC, Plano de Ação<br>
+      • <strong>FNC</strong> — Importa todas as colunas
+    </div></div>`;
+  }
+
+  mc.innerHTML = H;
+}
+
+// ═══ INIT ═══
+(async function(){
+  // Build nav
+  document.getElementById("navArea").innerHTML = NAV.map((p,i)=>`<button class="nb${i===0?' on':''}" onclick="goPage('${p.id}')">${p.icon} ${p.lbl}</button>`).join('');
+
+  // Year selector
+  const ys=document.getElementById("yearSel");
+  YRS.forEach(y=>{const o=document.createElement("option");o.value=y;o.textContent=y;ys.appendChild(o)});
+  ys.value="2025";
+
+  // Date
+  document.getElementById("dateNow").textContent=new Date().toLocaleDateString("pt-BR");
+
+  // Month chips
+  renderMonthChips();
+
+  // Load data
+  await loadData();
+
+  // Set initial client
+  if(CLS.length) window._selC = CLS[0].id;
+
+  // First render
+  renderAll();
+})();
+</script>
+</body>
+</html>
