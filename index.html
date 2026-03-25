@@ -162,14 +162,14 @@ tr.is{background:rgba(220,38,38,.02)}
 
 <script>
 const SUPABASE_URL = "https://gccapgdlgouixlznrkrb.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjY2FwZ2RsZ291aXhsem5ya3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NjI0NzksImV4cCI6MjA5MDAzODQ3OX0.DSqv9LPZxsBq_aantFaF75TiONntqiJWydtiJ6Lrkck";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjY2FwZ2RsZ291aXhsem5ya3JiIiwicm9sZSI": "anon","iat":1774462479,"exp":2090038479}.DSqv9LPZxsBq_aantFaF75TiONntqiJWydtiJ6Lrkck";
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-console.log("Supabase conectado:", supabase);
+console.log("Supabase conectado:", supabaseClient);
 
 async function salvarTeste() {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseClient
     .from('usuarios')
     .insert([
       {
