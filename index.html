@@ -541,42 +541,101 @@ function renderAll(){
   // ═══ ZEUS — PERSONALIZAR ═══
   if(P==="zeus_design"){
     const th = loadTheme();
-    H=`<div class="ph"><div><h1>🎨 Personalizar Sistema</h1><p>Altere cores, logo e fontes do painel</p></div></div>
-    <div class="cd cp" style="max-width:600px">
-      <div class="zeus-section">
-        <h3>Logo do Menu Lateral</h3>
-        <div style="display:flex;align-items:center;gap:14px">
-          <div style="width:80px;height:50px;border:2px dashed #D1D5DB;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--sf)">
-            ${localStorage.getItem('sb_logo_anastacio')?`<img src="${localStorage.getItem('sb_logo_anastacio')}" style="max-width:100%;max-height:100%;object-fit:contain">`:'<span style="font-size:10px;color:var(--mt)">Sem logo</span>'}
+    const sbLogo = localStorage.getItem('sb_logo_anastacio');
+    const sysName = localStorage.getItem('otif_sysname') || 'Química Anastácio';
+    const sysYears = JSON.parse(localStorage.getItem('otif_years') || JSON.stringify(YRS));
+    const navItems = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
+
+    H=`<div class="ph"><div><h1>🎨 Personalizar Sistema</h1><p>Configure visual, navegação e dados do painel</p></div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:900px">
+
+      <!-- Logo -->
+      <div class="cd cp zeus-section" style="grid-column:1/3">
+        <h3>🖼️ Logo do Menu Lateral</h3>
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="width:90px;height:56px;border:2px dashed #D1D5DB;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--sf)">
+            ${sbLogo?`<img src="${sbLogo}" style="max-width:100%;max-height:100%;object-fit:contain">`:'<span style="font-size:10px;color:var(--mt)">Sem logo</span>'}
           </div>
-          <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;gap:8px">
             <button class="bt bp" onclick="zeusUploadSbLogo()">📁 Trocar Logo</button>
-            <button class="bt bo" onclick="zeusRemoveLogo()" style="font-size:10px">Remover</button>
+            ${sbLogo?`<button class="bt bo" onclick="zeusRemoveLogo()">Remover</button>`:''}
           </div>
         </div>
       </div>
-      <div class="zeus-section">
-        <h3>Cores do Sistema</h3>
-        <div class="theme-row"><div><div class="theme-label">Cor Principal (Menu/Botões)</div><div class="theme-sub">Fundo do menu lateral e botões primários</div></div><div class="color-swatch"><input type="color" value="${th.nv||'#0D2240'}" oninput="applyColor('--nv',this.value)" onchange="saveThemeColor('nv',this.value)"></div></div>
-        <div class="theme-row"><div><div class="theme-label">Cor de Destaque (Azul)</div><div class="theme-sub">Links, botões secundários, foco</div></div><div class="color-swatch"><input type="color" value="${th.ac||'#2563EB'}" oninput="applyColor('--ac',this.value)" onchange="saveThemeColor('ac',this.value)"></div></div>
-        <div class="theme-row"><div><div class="theme-label">Cor Verde (Conforme)</div><div class="theme-sub">Indicadores positivos e badges</div></div><div class="color-swatch"><input type="color" value="${th.gn||'#16A34A'}" oninput="applyColor('--gn',this.value)" onchange="saveThemeColor('gn',this.value)"></div></div>
-        <div class="theme-row"><div><div class="theme-label">Cor de Fundo</div><div class="theme-sub">Fundo geral do sistema</div></div><div class="color-swatch"><input type="color" value="${th.bg||'#F4F6FA'}" oninput="applyColor('--bg',this.value)" onchange="saveThemeColor('bg',this.value)"></div></div>
+
+      <!-- Nome do sistema -->
+      <div class="cd cp zeus-section">
+        <h3>✏️ Nome do Sistema</h3>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="sysNameInp" class="in" value="${sysName}" style="flex:1">
+          <button class="bt bp" onclick="saveSysName()">Salvar</button>
+        </div>
+        <div style="font-size:10px;color:var(--mt);margin-top:6px">Aparece no menu lateral e no título da página</div>
       </div>
-      <div class="zeus-section">
-        <h3>Tipografia</h3>
-        <div class="theme-row"><div><div class="theme-label">Fonte Principal</div></div>
-          <select class="fsel" onchange="applyFont(this.value)" style="width:160px">
-            <option value="DM Sans" ${(th.font||'DM Sans')==='DM Sans'?'selected':''}>DM Sans (padrão)</option>
-            <option value="Inter" ${th.font==='Inter'?'selected':''}>Inter</option>
-            <option value="Roboto" ${th.font==='Roboto'?'selected':''}>Roboto</option>
-            <option value="Poppins" ${th.font==='Poppins'?'selected':''}>Poppins</option>
-            <option value="Open Sans" ${th.font==='Open Sans'?'selected':''}>Open Sans</option>
-          </select>
+
+      <!-- Fonte -->
+      <div class="cd cp zeus-section">
+        <h3>🔤 Fonte do Sistema</h3>
+        <select class="in" onchange="applyFont(this.value)" style="width:100%">
+          <option value="DM Sans" ${(th.font||'DM Sans')==='DM Sans'?'selected':''}>DM Sans (padrão)</option>
+          <option value="Inter" ${th.font==='Inter'?'selected':''}>Inter</option>
+          <option value="Roboto" ${th.font==='Roboto'?'selected':''}>Roboto</option>
+          <option value="Poppins" ${th.font==='Poppins'?'selected':''}>Poppins</option>
+          <option value="Open Sans" ${th.font==='Open Sans'?'selected':''}>Open Sans</option>
+        </select>
+      </div>
+
+      <!-- Cores -->
+      <div class="cd cp zeus-section" style="grid-column:1/3">
+        <h3>🎨 Cores do Sistema</h3>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0">
+          <div class="theme-row" style="padding-right:20px"><div><div class="theme-label">Cor Principal (Menu)</div><div class="theme-sub">Fundo do menu lateral e botões primários</div></div><div class="color-swatch"><input type="color" value="${th.nv||'#0D2240'}" oninput="applyColor('--nv',this.value)" onchange="saveThemeColor('nv',this.value)"></div></div>
+          <div class="theme-row" style="padding-left:20px"><div><div class="theme-label">Cor de Destaque</div><div class="theme-sub">Links, botões secundários, foco</div></div><div class="color-swatch"><input type="color" value="${th.ac||'#2563EB'}" oninput="applyColor('--ac',this.value)" onchange="saveThemeColor('ac',this.value)"></div></div>
+          <div class="theme-row" style="padding-right:20px"><div><div class="theme-label">Cor Verde (Conforme)</div><div class="theme-sub">Indicadores positivos e badges</div></div><div class="color-swatch"><input type="color" value="${th.gn||'#16A34A'}" oninput="applyColor('--gn',this.value)" onchange="saveThemeColor('gn',this.value)"></div></div>
+          <div class="theme-row" style="padding-left:20px"><div><div class="theme-label">Cor de Fundo</div><div class="theme-sub">Fundo geral do sistema</div></div><div class="color-swatch"><input type="color" value="${th.bg||'#F4F6FA'}" oninput="applyColor('--bg',this.value)" onchange="saveThemeColor('bg',this.value)"></div></div>
         </div>
       </div>
-      <div style="display:flex;gap:8px;margin-top:8px">
-        <button class="bt bo" onclick="resetTheme()">↺ Restaurar Padrão</button>
+
+      <!-- Anos -->
+      <div class="cd cp zeus-section">
+        <h3>📅 Anos Disponíveis no Filtro</h3>
+        <div id="yearsListZeus" style="display:flex;flex-direction:column;gap:6px">
+          ${sysYears.map(y=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--sf);border-radius:8px;font-size:13px;font-weight:700"><span>${y}</span><button class="ib dg" onclick="zeusRemoveYear(${y})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></div>`).join('')}
+        </div>
+        <div style="display:flex;gap:6px;margin-top:10px">
+          <input id="newYearInp" class="in" type="number" placeholder="Ex: 2027" style="width:100px">
+          <button class="bt bp" onclick="zeusAddYear()">+ Adicionar</button>
+        </div>
       </div>
+
+      <!-- Menu / Navegação -->
+      <div class="cd cp zeus-section">
+        <h3>🗂️ Ordem e Visibilidade do Menu</h3>
+        <div id="navOrderList" style="display:flex;flex-direction:column;gap:6px">
+          ${navItems.map((n,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--sf);border-radius:8px">
+            <div style="display:flex;flex-direction:column;gap:2px">
+              <button onclick="zeusNavUp(${i})" style="background:none;border:none;cursor:pointer;color:var(--mt);font-size:10px;padding:0;line-height:1">▲</button>
+              <button onclick="zeusNavDown(${i})" style="background:none;border:none;cursor:pointer;color:var(--mt);font-size:10px;padding:0;line-height:1">▼</button>
+            </div>
+            <span style="flex:1;font-size:12px;font-weight:600">${n.lbl}</span>
+            <button class="ib dg" onclick="zeusNavRemove(${i})" title="Ocultar"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
+          </div>`).join('')}
+        </div>
+        <div style="margin-top:10px">
+          <select id="navAddSel" class="in" style="width:100%;margin-bottom:6px">
+            ${NAV.filter(n=>!n.zeusOnly&&!navItems.find(x=>x.id===n.id)).map(n=>`<option value="${n.id}">${n.lbl}</option>`).join('')||'<option disabled>Todos já estão no menu</option>'}
+          </select>
+          <button class="bt bp" onclick="zeusNavAdd()" style="width:100%">+ Adicionar ao Menu</button>
+        </div>
+      </div>
+
+      <!-- Restaurar -->
+      <div class="cd cp" style="grid-column:1/3;display:flex;justify-content:flex-end">
+        <button class="bt bo" onclick="resetTheme()">↺ Restaurar Tudo ao Padrão</button>
+      </div>
+
+    </div>\`;
+  }    </div>
     </div>`;
   }
 
@@ -757,16 +816,108 @@ function zeusRemoveLogo(){
   renderAll();
 }
 
+
+// ═══ ZEUS — FUNÇÕES DE PERSONALIZAÇÃO EXTRA ═══
+function saveSysName(){
+  const v = document.getElementById("sysNameInp").value.trim();
+  if(!v) return;
+  localStorage.setItem('otif_sysname', v);
+  // Atualizar sidebar
+  document.querySelector('.sb-lg h2').innerHTML = v.replace(' ', ' <span>') + '</span>';
+  document.title = 'Sistema OTIF — ' + v;
+  toast("✓ Nome salvo!");
+}
+
+function zeusAddYear(){
+  const inp = document.getElementById("newYearInp");
+  const y = parseInt(inp.value);
+  if(!y || y < 2000 || y > 2099){ toast("Ano inválido!"); return; }
+  const years = JSON.parse(localStorage.getItem('otif_years') || JSON.stringify(YRS));
+  if(years.includes(y)){ toast("Ano já existe!"); return; }
+  years.push(y); years.sort();
+  localStorage.setItem('otif_years', JSON.stringify(years));
+  // Atualizar selector de anos
+  const ys = document.getElementById("yearSel");
+  const opt = document.createElement("option");
+  opt.value = y; opt.textContent = y;
+  ys.appendChild(opt);
+  inp.value = "";
+  toast("✓ Ano " + y + " adicionado!");
+  renderAll();
+}
+
+function zeusRemoveYear(y){
+  if(!confirm("Remover o ano " + y + " do filtro?")) return;
+  const years = JSON.parse(localStorage.getItem('otif_years') || JSON.stringify(YRS));
+  const updated = years.filter(x => x !== y);
+  localStorage.setItem('otif_years', JSON.stringify(updated));
+  // Remover do selector
+  const ys = document.getElementById("yearSel");
+  Array.from(ys.options).forEach(o => { if(parseInt(o.value)===y) ys.removeChild(o); });
+  toast("Ano " + y + " removido.");
+  renderAll();
+}
+
+function zeusNavUp(i){
+  const nav = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
+  if(i===0) return;
+  [nav[i-1], nav[i]] = [nav[i], nav[i-1]];
+  localStorage.setItem('otif_nav', JSON.stringify(nav));
+  rebuildNav(); renderAll();
+}
+
+function zeusNavDown(i){
+  const nav = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
+  if(i===nav.length-1) return;
+  [nav[i], nav[i+1]] = [nav[i+1], nav[i]];
+  localStorage.setItem('otif_nav', JSON.stringify(nav));
+  rebuildNav(); renderAll();
+}
+
+function zeusNavRemove(i){
+  const nav = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
+  if(nav.length<=1){ toast("Precisa ter ao menos 1 item no menu!"); return; }
+  nav.splice(i,1);
+  localStorage.setItem('otif_nav', JSON.stringify(nav));
+  rebuildNav(); renderAll();
+}
+
+function zeusNavAdd(){
+  const sel = document.getElementById("navAddSel");
+  if(!sel || !sel.value) return;
+  const nav = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
+  const item = NAV.find(n=>n.id===sel.value);
+  if(!item || nav.find(n=>n.id===item.id)) return;
+  nav.push(item);
+  localStorage.setItem('otif_nav', JSON.stringify(nav));
+  rebuildNav(); renderAll(); toast("✓ " + item.lbl + " adicionado!");
+}
+
+function rebuildNav(){
+  const storedNav = JSON.parse(localStorage.getItem('otif_nav') || 'null');
+  const visibleNav = storedNav
+    ? [...storedNav, ...NAV.filter(n=>n.zeusOnly && _isZeus)]
+    : NAV.filter(p => !p.zeusOnly || _isZeus);
+  document.getElementById("navArea").innerHTML = visibleNav.map((p,i)=>
+    `<button class="nb${window._curP===p.id?' on':''}" onclick="goPage('${p.id}')">${p.icon} ${p.lbl}</button>`
+  ).join('');
+}
+
+function applyStoredNav(){
+  const storedNav = JSON.parse(localStorage.getItem('otif_nav') || 'null');
+  if(storedNav) localStorage.setItem('otif_nav', JSON.stringify(storedNav));
+}
+
 // ═══ INIT ═══
 async function initApp(){
   applyStoredTheme();
   // Build nav
-  const visibleNav = NAV.filter(p => !p.zeusOnly || _isZeus);
-  document.getElementById("navArea").innerHTML = visibleNav.map((p,i)=>`<button class="nb${i===0?' on':''}" onclick="goPage('${p.id}')">${p.icon} ${p.lbl}</button>`).join('');
+  rebuildNav();
 
   // Year selector
   const ys=document.getElementById("yearSel");
-  YRS.forEach(y=>{const o=document.createElement("option");o.value=y;o.textContent=y;ys.appendChild(o)});
+  const activeYears = JSON.parse(localStorage.getItem('otif_years') || JSON.stringify(YRS));
+  activeYears.forEach(y=>{const o=document.createElement("option");o.value=y;o.textContent=y;ys.appendChild(o)});
   ys.value="2025";
 
   // Date
