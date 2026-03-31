@@ -720,11 +720,11 @@ function renderAll(){
         <h3>🖼️ Logo do Menu Lateral</h3>
         <div style="display:flex;align-items:center;gap:16px">
           <div style="width:90px;height:56px;border:2px dashed #D1D5DB;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--sf)">
-            ${sbLogo?`<img src="${sbLogo}" style="max-width:100%;max-height:100%;object-fit:contain">`:'<span style="font-size:10px;color:var(--mt)">Sem logo</span>'}
+            ${sbLogo?'<img src="'+sbLogo+'" style="max-width:100%;max-height:100%;object-fit:contain">'  :'<span style="font-size:10px;color:var(--mt)">Sem logo</span>'}
           </div>
           <div style="display:flex;gap:8px">
             <button class="bt bp" onclick="zeusUploadSbLogo()">📁 Trocar Logo</button>
-            ${sbLogo?`<button class="bt bo" onclick="zeusRemoveLogo()">Remover</button>`:''}
+            ${sbLogo?'<button class="bt bo" onclick="zeusRemoveLogo()">Remover</button>':''}
           </div>
         </div>
       </div>
@@ -800,8 +800,6 @@ function renderAll(){
         <button class="bt bo" onclick="resetTheme()">↺ Restaurar Tudo ao Padrão</button>
       </div>
 
-    </div>\`;
-  }    </div>
     </div>`;
   }
 
