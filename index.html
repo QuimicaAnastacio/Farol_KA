@@ -12,47 +12,24 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);height:100vh;overflow:hidden;display:flex}
 
-/* Login */
-#loginScreen{position:fixed;inset:0;background:linear-gradient(135deg,#0D2240 0%,#1e3a5f 100%);display:flex;align-items:center;justify-content:center;z-index:99999;flex-direction:column}
+/* ── LOGIN ── */
+#loginScreen{position:fixed;inset:0;background:linear-gradient(135deg,#0D2240 0%,#1e3a5f 100%);display:flex;align-items:center;justify-content:center;z-index:99999}
 .login-box{background:#fff;border-radius:20px;padding:40px 36px;width:360px;box-shadow:0 24px 80px rgba(0,0,0,.3)}
 .login-logo{text-align:center;margin-bottom:28px}
 .login-logo h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;color:var(--nv)}
 .login-logo h1 span{color:#2563EB}
 .login-logo small{font-size:10px;color:var(--mt);letter-spacing:2px;text-transform:uppercase;display:block;margin-top:2px}
-.login-field{margin-bottom:14px}
-.login-field label{font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:5px}
-.login-field input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #E5E7EB;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border .15s}
-.login-field input:focus{border-color:var(--ac)}
-.login-err{font-size:11px;color:var(--rd);text-align:center;margin-bottom:10px;min-height:16px;font-weight:600}
-.login-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--nv);color:#fff;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s;margin-top:4px}
+.lf{margin-bottom:14px}
+.lf label{font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:5px}
+.lf input{width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #E5E7EB;font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border .15s}
+.lf input:focus{border-color:var(--ac)}
+#loginErr{font-size:11px;color:var(--rd);text-align:center;margin-bottom:10px;min-height:16px;font-weight:600}
+.login-btn{width:100%;padding:12px;border-radius:10px;border:none;background:var(--nv);color:#fff;font-size:13px;font-weight:700;font-family:'DM Sans',sans-serif;cursor:pointer;transition:background .15s}
 .login-btn:hover{background:var(--n2)}
+
+/* ── APP ── */
 #appShell{display:none;width:100%;height:100%;flex-direction:row}
 #appShell.visible{display:flex}
-.zeus-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(96,165,250,.2);color:#60A5FA;border-radius:100px;padding:2px 8px;font-size:9px;font-weight:700;letter-spacing:.5px}
-.sb-logo-img{width:100%;max-height:38px;object-fit:contain;margin-bottom:6px;border-radius:6px;cursor:pointer}
-/* Zeus panel */
-.zeus-section{margin-bottom:24px}
-.zeus-section h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:800;color:var(--nv);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--bd)}
-.user-card{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:#fff;border:1px solid var(--bd);border-radius:10px;margin-bottom:8px}
-.user-card .uc-info{display:flex;flex-direction:column;gap:2px}
-.user-card .uc-name{font-size:13px;font-weight:700;color:var(--nv)}
-.user-card .uc-email{font-size:11px;color:var(--mt)}
-.user-card .uc-actions{display:flex;gap:6px}
-.badge-pending{background:var(--yb);color:var(--yl);padding:2px 8px;border-radius:100px;font-size:9px;font-weight:700}
-.badge-active{background:var(--gb);color:var(--gn);padding:2px 8px;border-radius:100px;font-size:9px;font-weight:700}
-.badge-rejected{background:var(--rb);color:var(--rd);padding:2px 8px;border-radius:100px;font-size:9px;font-weight:700}
-.color-swatch{width:36px;height:36px;border-radius:8px;border:2px solid #E5E7EB;cursor:pointer;overflow:hidden;padding:0}
-.color-swatch input[type=color]{width:150%;height:150%;margin:-20%;border:none;cursor:pointer;background:none;padding:0}
-.theme-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bd)}
-.theme-row:last-child{border-bottom:none}
-.theme-label{font-size:12px;font-weight:600;color:var(--t2)}
-.theme-sub{font-size:10px;color:var(--mt);margin-top:1px}
-/* Solicitacao de acesso na tela de login */
-.login-switch{text-align:center;margin-top:16px;font-size:11px;color:var(--mt)}
-.login-switch a{color:var(--ac);font-weight:700;cursor:pointer;text-decoration:none}
-.login-switch a:hover{text-decoration:underline}
-#requestPanel{display:none}
-
 
 /* Sidebar */
 .sb{width:200px;background:var(--nv);display:flex;flex-direction:column;padding:16px 0;flex-shrink:0}
@@ -60,6 +37,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);heigh
 .sb-lg h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:#fff}
 .sb-lg h2 span{color:#60A5FA}
 .sb-lg small{font-size:8px;color:rgba(255,255,255,.3);letter-spacing:2px;text-transform:uppercase}
+.sb-logo-img{width:100%;max-height:38px;object-fit:contain;margin-bottom:6px;border-radius:6px;cursor:pointer}
+.zeus-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(96,165,250,.2);color:#60A5FA;border-radius:100px;padding:2px 8px;font-size:9px;font-weight:700;letter-spacing:.5px;margin-top:4px}
 .sb nav{flex:1;padding:10px 8px;display:flex;flex-direction:column;gap:1px;overflow-y:auto}
 .nb{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;background:transparent;color:rgba(255,255,255,.4);transition:all .15s;text-align:left;width:100%}
 .nb:hover{color:rgba(255,255,255,.7);background:rgba(255,255,255,.04)}
@@ -74,8 +53,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--tx);heigh
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 24px;background:#fff;border-bottom:1px solid var(--bd);flex-shrink:0;gap:8px;flex-wrap:wrap}
 .tf{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .fsel{padding:5px 26px 5px 8px;border-radius:6px;border:1px solid #E5E7EB;font-size:11px;font-weight:600;font-family:'DM Sans',sans-serif;color:var(--tx);background:#fff url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%234A5068' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 6px center;appearance:none;outline:none;cursor:pointer}
-
-/* Content */
 #mainContent{flex:1;overflow:auto;padding:20px 24px 36px}
 
 /* Cards */
@@ -163,36 +140,57 @@ tr.is{background:rgba(220,38,38,.02)}
 .mc.on{background:var(--nv);color:#fff;border-color:var(--nv)}.mc:hover:not(.on){border-color:var(--ac)}
 .dz{border:2px dashed #D1D5DB;border-radius:var(--ra);padding:30px;text-align:center;cursor:pointer;background:#FAFBFD}.dz:hover{border-color:var(--ac);background:var(--ab)}
 ::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#D1D5DB;border-radius:100px}
+
+/* Zeus */
+.user-card{display:flex;align-items:center;gap:14px;padding:14px 18px;background:#fff;border:1px solid var(--bd);border-radius:12px;margin-bottom:8px}
+.uc-info{flex:1}
+.uc-name{font-size:13px;font-weight:700;color:var(--nv)}
+.uc-email{font-size:11px;color:var(--mt);margin-top:2px}
+.badge{padding:2px 10px;border-radius:100px;font-size:9px;font-weight:700}
+.badge-admin{background:#EDE9FE;color:#7C3AED}
+.badge-editor{background:var(--yb);color:var(--yl)}
+.badge-viewer{background:var(--ab);color:var(--ac)}
+.theme-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bd)}
+.theme-row:last-child{border-bottom:none}
+.theme-label{font-size:12px;font-weight:600;color:var(--t2)}
+.theme-sub{font-size:10px;color:var(--mt);margin-top:1px}
+.color-swatch{width:36px;height:36px;border-radius:8px;border:2px solid #E5E7EB;overflow:hidden;cursor:pointer;padding:0}
+.color-swatch input[type=color]{width:150%;height:150%;margin:-20%;border:none;cursor:pointer;background:none;padding:0}
 </style>
 </head>
 <body>
 
-<!-- TELA DE LOGIN -->
+<!-- ── TELA DE LOGIN ── -->
 <div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">
+      <div id="loginLogoImg" style="display:none;margin-bottom:10px"></div>
       <h1>Química <span>Anastácio</span></h1>
       <small>Painel OTIF · Acesso Restrito</small>
     </div>
-    <div class="login-field">
+    <div class="lf">
       <label>E-mail</label>
-      <input type="email" id="loginUser" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')doLogin()">
+      <input type="email" id="loginEmail" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')document.getElementById('loginPass').focus()">
     </div>
-    <div class="login-err" id="loginErr"></div>
+    <div class="lf">
+      <label>Senha</label>
+      <input type="password" id="loginPass" placeholder="Sua senha" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div id="loginErr"></div>
     <button class="login-btn" onclick="doLogin()">Entrar</button>
   </div>
 </div>
 
-<!-- APP PRINCIPAL -->
+<!-- ── APP PRINCIPAL ── -->
 <div id="appShell">
+
 <aside class="sb">
   <div class="sb-lg">
-  <div id="sbLogoWrap" style="display:none;margin-bottom:6px"><img id="sbLogoImg" class="sb-logo-img" onclick="zeusUploadSbLogo()" title="Clique para trocar o logo"></div>
-  <h2>Química <span>Anastácio</span></h2>
-  <small>Painel OTIF</small>
-  <div id="zeusBadgeWrap" style="display:none;margin-top:4px"><span class="zeus-badge">⚡ Zeus</span></div>
-  <div id="sbLogoBtn" style="display:none;margin-top:6px"><button onclick="zeusUploadSbLogo()" style="font-size:9px;padding:3px 8px;border-radius:5px;border:1px dashed rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.4);cursor:pointer;font-family:DM Sans,sans-serif">+ Logo</button></div>
-</div>
+    <div id="sbLogoWrap" style="display:none"><img id="sbLogoImg" class="sb-logo-img" title="Logo"></div>
+    <h2>Química <span>Anastácio</span></h2>
+    <small>Painel OTIF</small>
+    <div id="zeusBadgeWrap" style="display:none"><span class="zeus-badge">Zeus</span></div>
+  </div>
   <nav id="navArea"></nav>
   <div class="sb-bt">
     <label>Cliente</label>
@@ -219,7 +217,7 @@ tr.is{background:rgba(220,38,38,.02)}
   <div style="background:#fff;border-radius:14px;padding:24px;width:560px;max-width:92vw;max-height:85vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <h2 id="mdlT" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:#0D2240;margin:0"></h2>
-      <button onclick="document.getElementById('mdl').style.display='none'" style="background:none;border:none;cursor:pointer;color:#8690A8;font-size:18px">✕</button>
+      <button onclick="document.getElementById('mdl').style.display='none'" style="background:none;border:none;cursor:pointer;color:#8690A8;font-size:18px">x</button>
     </div>
     <div id="mdlB"></div>
   </div>
@@ -227,223 +225,168 @@ tr.is{background:rgba(220,38,38,.02)}
 <div class="to" id="toastEl"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-//  supabase-storage.js — Química Anastácio · Sistema OTIF
-//  Substitui o github-storage.js
-// ═══════════════════════════════════════════════════════
+// ═══════════════════════════════════════
+// SUPABASE CONFIG
+// ═══════════════════════════════════════
+var SUPABASE_URL = "https://gccapgdlgouixlznrkrb.supabase.co";
+var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjY2FwZ2RsZ291aXhsem5ya3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NjI0NzksImV4cCI6MjA5MDAzODQ3OX0.DSqv9LPZxsBq_aantFaF75TiONntqiJWydtiJ6Lrkck";
 
-// ▶ CONFIGURE AQUI com seus dados do Supabase:
-const SUPABASE_URL = "https://gccapgdlgouixlznrkrb.supabase.co";
-const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdjY2FwZ2RsZ291aXhsem5ya3JiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ0NjI0NzksImV4cCI6MjA5MDAzODQ3OX0.DSqv9LPZxsBq_aantFaF75TiONntqiJWydtiJ6Lrkck";
-
-// ─── Helpers de fetch para a API REST do Supabase ───────
-function sbFetch(path, options = {}) {
-  return fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    ...options,
-    headers: {
-      "apikey": SUPABASE_KEY,
-      "Authorization": `Bearer ${SUPABASE_KEY}`,
-      "Content-Type": "application/json",
-      "Prefer": "return=representation",
-      ...(options.headers || {})
-    }
+function sbHeaders(extra) {
+  var h = {
+    "apikey": SUPABASE_KEY,
+    "Authorization": "Bearer " + SUPABASE_KEY,
+    "Content-Type": "application/json",
+    "Prefer": "return=representation"
+  };
+  if (extra) { Object.keys(extra).forEach(function(k){ h[k] = extra[k]; }); }
+  return h;
+}
+function sbGet(path) {
+  return fetch(SUPABASE_URL + "/rest/v1/" + path, { headers: sbHeaders() }).then(function(r){ return r.json(); });
+}
+function sbUpsert(table, data) {
+  var body = Array.isArray(data) ? data : [data];
+  return fetch(SUPABASE_URL + "/rest/v1/" + table, {
+    method: "POST",
+    headers: sbHeaders({ "Prefer": "resolution=merge-duplicates,return=representation" }),
+    body: JSON.stringify(body)
+  }).then(function(r){ return r.json(); });
+}
+function sbDelete(table, filter) {
+  return fetch(SUPABASE_URL + "/rest/v1/" + table + "?" + filter, {
+    method: "DELETE",
+    headers: sbHeaders()
   });
 }
 
-function sbGet(path) {
-  return sbFetch(path).then(r => r.json());
+// ═══════════════════════════════════════
+// AUTH — ZEUS & USUÁRIOS
+// ═══════════════════════════════════════
+var ZEUS_EMAIL = "amanda.almeida@anastacio.com";
+var ZEUS_PASS  = "Anastacio@2026";
+var _isZeus    = false;
+var _userRole  = null;
+var USERS      = [];
+
+function doLogin() {
+  var email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  var pass  = document.getElementById("loginPass").value;
+  var err   = document.getElementById("loginErr");
+  err.textContent = "";
+
+  if (!email || !pass) { err.textContent = "Preencha e-mail e senha."; return; }
+
+  // Zeus
+  if (email === ZEUS_EMAIL.toLowerCase() && pass === ZEUS_PASS) {
+    _isZeus   = true;
+    _userRole = "zeus";
+    enterApp();
+    return;
+  }
+
+  // Usuários cadastrados
+  loadUsers().then(function() {
+    var found = null;
+    for (var i = 0; i < USERS.length; i++) {
+      if (USERS[i].email.toLowerCase() === email) { found = USERS[i]; break; }
+    }
+    if (!found) { err.textContent = "E-mail nao encontrado."; return; }
+    if (found.status === "inactive") { err.textContent = "Acesso desativado. Fale com o administrador."; return; }
+    if (found.pass !== pass) { err.textContent = "Senha incorreta."; return; }
+    _isZeus   = false;
+    _userRole = found.role;
+    enterApp();
+  });
 }
 
-function sbUpsert(table, data) {
-  const body = Array.isArray(data) ? data : [data];
-  return sbFetch(table, {
+function enterApp() {
+  document.getElementById("loginScreen").style.display = "none";
+  document.getElementById("appShell").classList.add("visible");
+  if (_isZeus) {
+    document.getElementById("zeusBadgeWrap").style.display = "block";
+  }
+  var logo = localStorage.getItem("otif_logo");
+  if (logo) {
+    document.getElementById("sbLogoImg").src = logo;
+    document.getElementById("sbLogoWrap").style.display = "block";
+    var li = document.getElementById("loginLogoImg");
+    li.innerHTML = '<img src="' + logo + '" style="max-height:48px;object-fit:contain">';
+    li.style.display = "block";
+  }
+  applyStoredTheme();
+  initApp();
+}
+
+// Carregar usuários do Supabase (com fallback em localStorage)
+function loadUsers() {
+  return fetch(SUPABASE_URL + "/rest/v1/usuarios?order=created_at.asc", {
+    headers: sbHeaders()
+  }).then(function(r) {
+    if (r.ok) return r.json();
+    throw new Error("Falha");
+  }).then(function(data) {
+    USERS = data || [];
+  }).catch(function() {
+    var saved = localStorage.getItem("otif_users");
+    USERS = saved ? JSON.parse(saved) : [];
+  });
+}
+
+// Salvar usuário no Supabase
+function saveUser(u) {
+  var body = JSON.stringify([{ id: u.id, name: u.name, email: u.email, pass: u.pass, role: u.role, status: u.status }]);
+  fetch(SUPABASE_URL + "/rest/v1/usuarios", {
     method: "POST",
-    headers: { "Prefer": "resolution=merge-duplicates,return=representation" },
-    body: JSON.stringify(body)
-  }).then(r => r.json());
+    headers: sbHeaders({ "Prefer": "resolution=merge-duplicates" }),
+    body: body
+  }).catch(function(){});
+  localStorage.setItem("otif_users", JSON.stringify(USERS));
 }
 
-function sbDelete(table, filter) {
-  return sbFetch(`${table}?${filter}`, { method: "DELETE" }).then(r => r.ok);
+function deleteUserRemote(id) {
+  fetch(SUPABASE_URL + "/rest/v1/usuarios?id=eq." + id, {
+    method: "DELETE",
+    headers: sbHeaders()
+  }).catch(function(){});
+  localStorage.setItem("otif_users", JSON.stringify(USERS));
 }
 
-// ─── Validação ───────────────────────────────────────────
-function supabaseConfigValid() {
-  return (
-    SUPABASE_URL &&
-    !SUPABASE_URL.includes("SEU_PROJECT_URL") &&
-    SUPABASE_KEY &&
-    !SUPABASE_KEY.includes("SUA_ANON_KEY")
-  );
-}
-
-// Para manter compatibilidade com o código do index.html
-// (ele chama githubConfigValid)
-function githubConfigValid() {
-  return supabaseConfigValid();
-}
-
-// ─── CARREGAR todos os dados ──────────────────────────────
-async function githubLoad() {
-  if (!supabaseConfigValid()) return null;
-  try {
-    const [clientes, indicadores, registrosRaw, acoesRaw, fncsRaw] = await Promise.all([
-      sbGet("clientes?order=created_at.asc"),
-      sbGet("indicadores?order=ordem.asc"),
-      sbGet("registros?select=*"),
-      sbGet("acoes?order=created_at.asc"),
-      sbGet("fncs?select=*"),
-    ]);
-
-    // Converte registros: expande o campo JSONB "dados" de volta para colunas
-    const registros = (registrosRaw || []).map(r => ({
-      cid: r.cid,
-      y: r.y,
-      m: r.m,
-      otif: r.otif,
-      ...(r.dados || {})
-    }));
-
-    // Converte ações: snake_case → camelCase
-    const acoes = (acoesRaw || []).map(a => ({
-      id: a.id,
-      mes: a.mes || "",
-      cliente: a.cliente || "",
-      desvio: a.desvio || "",
-      material: a.material || "",
-      embalagem: a.embalagem || "",
-      volume: a.volume || "",
-      dataDesvio: a.data_desvio || "",
-      responsavel: a.responsavel || "",
-      fnc: a.fnc || "",
-      planoAcao: a.plano_acao || ""
-    }));
-
-    // Converte FNCs: expande o campo JSONB "dados"
-    const fncs = (fncsRaw || []).map(f => ({ id: f.id, ...(f.dados || {}) }));
-
-    return {
-      clientes: clientes || [],
-      indicadores: indicadores || [],
-      registros,
-      acoes,
-      fncs
-    };
-  } catch (err) {
-    console.error("Erro ao carregar do Supabase:", err);
-    return null;
-  }
-}
-
-// ─── SALVAR todos os dados ────────────────────────────────
-async function githubSave(data) {
-  if (!supabaseConfigValid()) return false;
-  try {
-    // 1. Clientes
-    if (data.clientes && data.clientes.length) {
-      await sbUpsert("clientes", data.clientes.map(c => ({
-        id: c.id,
-        name: c.name,
-        logo: c.logo || null,
-        active: c.active !== false
-      })));
-    }
-
-    // 2. Indicadores
-    if (data.indicadores && data.indicadores.length) {
-      await sbUpsert("indicadores", data.indicadores.map((ind, i) => ({
-        key: ind.key,
-        label: ind.label,
-        ordem: i
-      })));
-    }
-
-    // 3. Registros — empacota os faróis no campo JSONB "dados"
-    if (data.registros && data.registros.length) {
-      const registros = data.registros.map(r => {
-        const { cid, y, m, otif, ...rest } = r;
-        return { cid, y, m, otif, dados: rest };
-      });
-      await sbUpsert("registros", registros);
-    }
-
-    // 4. Ações — camelCase → snake_case
-    if (data.acoes) {
-      // Apaga tudo e reinserere (simples para este volume de dados)
-      await sbFetch("acoes?id=gt.0", { method: "DELETE" });
-      if (data.acoes.length) {
-        await sbUpsert("acoes", data.acoes.map(a => ({
-          id: a.id,
-          mes: a.mes || "",
-          cliente: a.cliente || "",
-          desvio: a.desvio || "",
-          material: a.material || "",
-          embalagem: a.embalagem || "",
-          volume: a.volume || "",
-          data_desvio: a.dataDesvio || "",
-          responsavel: a.responsavel || "",
-          fnc: a.fnc || "",
-          plano_acao: a.planoAcao || ""
-        })));
-      }
-    }
-
-    // 5. FNCs — empacota tudo no campo JSONB "dados"
-    if (data.fncs) {
-      await sbFetch("fncs?id=gt.0", { method: "DELETE" });
-      if (data.fncs.length) {
-        await sbUpsert("fncs", data.fncs.map(f => {
-          const { id, ...rest } = f;
-          return { id, dados: rest };
-        }));
-      }
-    }
-
-    return true;
-  } catch (err) {
-    console.error("Erro ao salvar no Supabase:", err);
-    return false;
-  }
-}
-
-</script>
-<script>
-// ═══ CONSTANTS ═══
-const MS=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
-const SH=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
-const YRS=[2023,2024,2025,2026];
-const NAV=[
-  {id:"dashboard",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',lbl:"Dashboard"},
-  {id:"form",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',lbl:"Preenchimento"},
-  {id:"consolidado",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></svg>',lbl:"Consolidado"},
-  {id:"acoes",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',lbl:"Ações"},
-  {id:"fnc",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',lbl:"FNC"},
-  {id:"clients",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',lbl:"Clientes"},
-  {id:"copy",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',lbl:"Copiar Relatório"},
-  {id:"import",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',lbl:"Importar Excel"},
-  // Zeus only
-  {id:"zeus_users",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',lbl:"Usuários",adminOnly:true},
-  {id:"zeus_design",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>',lbl:"Personalizar",zeusOnly:true},
+// ═══════════════════════════════════════
+// CONSTANTS
+// ═══════════════════════════════════════
+var MS  = ["Janeiro","Fevereiro","Marco","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+var SH  = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+var YRS = [2023,2024,2025,2026];
+var NAV = [
+  {id:"dashboard",  zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>', lbl:"Dashboard"},
+  {id:"form",       zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', lbl:"Preenchimento"},
+  {id:"consolidado",zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></svg>', lbl:"Consolidado"},
+  {id:"acoes",      zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', lbl:"Acoes"},
+  {id:"fnc",        zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', lbl:"FNC"},
+  {id:"clients",    zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>', lbl:"Clientes"},
+  {id:"copy",       zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>', lbl:"Copiar Relatorio"},
+  {id:"import",     zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>', lbl:"Importar Excel"},
+  {id:"zeus_users", zeus:true,  icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', lbl:"Usuarios"},
+  {id:"zeus_design",zeus:true,  icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>', lbl:"Personalizar"},
 ];
 
-// ═══ DATA (defaults) ═══
-let IND=[
-  {key:"tabela_preco",label:"Atualização da tabela de preço em vigência (trimestral)"},
-  {key:"analise_demanda",label:"Análise e retorno de atendimento da demanda no prazo esperado"},
-  {key:"agendamento",label:"Confirmação de agendamento de entrega no prazo esperado"},
-  {key:"prazo_entrega",label:"Atendimento do prazo para entrega"},
-  {key:"qtd_entrega",label:"Atendimento da quantidade para entrega"},
-  {key:"otif_ind",label:"Indicador OTIF Anastácio"},
-  {key:"carga",label:"Carga entregue atende as particularidades e políticas de fornecimento"},
-  {key:"comunicacao",label:"Facilidade de comunicação (reclamações, elogios, sugestões e dúvidas)"},
-  {key:"forecast",label:"Variação do forecast da demanda negociada em até 10%"},
+// DATA
+var IND=[
+  {key:"tabela_preco",  label:"Atualizacao da tabela de preco em vigencia (trimestral)"},
+  {key:"analise_demanda",label:"Analise e retorno de atendimento da demanda no prazo esperado"},
+  {key:"agendamento",   label:"Confirmacao de agendamento de entrega no prazo esperado"},
+  {key:"prazo_entrega", label:"Atendimento do prazo para entrega"},
+  {key:"qtd_entrega",   label:"Atendimento da quantidade para entrega"},
+  {key:"otif_ind",      label:"Indicador OTIF Anastacio"},
+  {key:"carga",         label:"Carga entregue atende as particularidades e politicas de fornecimento"},
+  {key:"comunicacao",   label:"Facilidade de comunicacao (reclamacoes, elogios, sugestoes e duvidas)"},
+  {key:"forecast",      label:"Variacao do forecast da demanda negociada em ate 10%"},
 ];
-let CLS=[{id:"kenvue",name:"Kenvue",logo:null,active:true}];
-let RCS=[];
-let ACOES=[];
-let FNCS=[];
+var CLS=[{id:"kenvue",name:"Kenvue",logo:null,active:true}];
+var RCS=[];
+var ACOES=[];
+var FNCS=[];
 
-// Default records
 function defaultRecs(){
   return [
     {cid:"kenvue",y:2025,m:0,tabela_preco:1,analise_demanda:1,agendamento:1,prazo_entrega:1,qtd_entrega:1,otif_ind:1,carga:1,comunicacao:1,forecast:1,otif:100},
@@ -457,725 +400,473 @@ function defaultRecs(){
   ];
 }
 
-// ═══ STATE ═══
+// STATE
 window._selC = "kenvue";
 window._curP = "dashboard";
 window._selMs = new Set([0,1,2,3,4,5,6,7,8,9,10,11]);
 
-// ═══ STORAGE (GitHub API) ═══
-let _saving = false;
-let _saveTimer = null;
+// ═══════════════════════════════════════
+// SUPABASE DATA LOAD/SAVE
+// ═══════════════════════════════════════
+var _saving = false;
+var _saveTimer = null;
 
-async function loadData(){
-  if (githubConfigValid()) {
-    const data = await githubLoad();
-    if (data) {
-      if (data.clientes && data.clientes.length) CLS = data.clientes;
-      if (data.registros && data.registros.length) RCS = data.registros;
-      if (data.indicadores && data.indicadores.length) IND = data.indicadores;
-      if (data.acoes) ACOES = data.acoes;
-      if (data.fncs) FNCS = data.fncs;
+async function loadData() {
+  try {
+    var results = await Promise.all([
+      sbGet("clientes?order=created_at.asc"),
+      sbGet("indicadores?order=ordem.asc"),
+      sbGet("registros?select=*"),
+      sbGet("acoes?order=created_at.asc"),
+      sbGet("fncs?select=*")
+    ]);
+    var clientes = results[0], indicadores = results[1], registrosRaw = results[2], acoesRaw = results[3], fncsRaw = results[4];
+
+    if (clientes && clientes.length) CLS = clientes;
+    if (indicadores && indicadores.length) IND = indicadores;
+    if (registrosRaw && registrosRaw.length) {
+      RCS = registrosRaw.map(function(r) {
+        var obj = { cid: r.cid, y: r.y, m: r.m, otif: r.otif };
+        if (r.dados) Object.keys(r.dados).forEach(function(k){ obj[k] = r.dados[k]; });
+        return obj;
+      });
     }
+    if (acoesRaw && acoesRaw.length) {
+      ACOES = acoesRaw.map(function(a) {
+        return { id: a.id, mes: a.mes||"", cliente: a.cliente||"", desvio: a.desvio||"", material: a.material||"", embalagem: a.embalagem||"", volume: a.volume||"", dataDesvio: a.data_desvio||"", responsavel: a.responsavel||"", fnc: a.fnc||"", planoAcao: a.plano_acao||"" };
+      });
+    }
+    if (fncsRaw && fncsRaw.length) {
+      FNCS = fncsRaw.map(function(f) {
+        var obj = { id: f.id };
+        if (f.dados) Object.keys(f.dados).forEach(function(k){ obj[k] = f.dados[k]; });
+        return obj;
+      });
+    }
+  } catch(e) {
+    console.warn("Erro ao carregar do Supabase:", e);
   }
   if (!RCS.length) RCS = defaultRecs();
 }
 
-// Debounce: salva 1.5s após última alteração (evita muitos commits)
-async function saveData(){
+async function saveData() {
   clearTimeout(_saveTimer);
-  _saveTimer = setTimeout(async () => {
-    if (!githubConfigValid()) {
-      console.warn("GitHub não configurado. Dados apenas em memória.");
-      return;
-    }
+  _saveTimer = setTimeout(async function() {
     if (_saving) return;
     _saving = true;
-    const data = {
-      clientes: CLS,
-      indicadores: IND,
-      registros: RCS,
-      acoes: ACOES,
-      fncs: FNCS
-    };
-    const ok = await githubSave(data);
-    _saving = false;
-    if (ok) {
-      console.log("✓ Salvo no GitHub");
-    } else {
-      toast("⚠️ Erro ao salvar no GitHub");
+    try {
+      if (CLS.length) await sbUpsert("clientes", CLS.map(function(c){ return { id: c.id, name: c.name, logo: c.logo||null, active: c.active!==false }; }));
+      if (IND.length) await sbUpsert("indicadores", IND.map(function(ind, i){ return { key: ind.key, label: ind.label, ordem: i }; }));
+      if (RCS.length) {
+        var regs = RCS.map(function(r) {
+          var dados = {};
+          Object.keys(r).forEach(function(k){ if (k !== "cid" && k !== "y" && k !== "m" && k !== "otif") dados[k] = r[k]; });
+          return { cid: r.cid, y: r.y, m: r.m, otif: r.otif, dados: dados };
+        });
+        await sbUpsert("registros", regs);
+      }
+      await sbDelete("acoes", "id=gt.0");
+      if (ACOES.length) {
+        await sbUpsert("acoes", ACOES.map(function(a){ return { id: a.id, mes: a.mes||"", cliente: a.cliente||"", desvio: a.desvio||"", material: a.material||"", embalagem: a.embalagem||"", volume: a.volume||"", data_desvio: a.dataDesvio||"", responsavel: a.responsavel||"", fnc: a.fnc||"", plano_acao: a.planoAcao||"" }; }));
+      }
+      await sbDelete("fncs", "id=gt.0");
+      if (FNCS.length) {
+        await sbUpsert("fncs", FNCS.map(function(f){ var id = f.id; var dados = {}; Object.keys(f).forEach(function(k){ if (k !== "id") dados[k] = f[k]; }); return { id: id, dados: dados }; }));
+      }
+    } catch(e) {
+      toast("Erro ao salvar");
     }
+    _saving = false;
   }, 1500);
 }
 
-// ═══ HELPERS ═══
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
 function gY(){ return parseInt(document.getElementById("yearSel").value)||2025; }
-function gC(){ return CLS.find(c=>c.id===window._selC) || CLS[0]; }
-function gR(){ return RCS.filter(r=>r.cid===window._selC && r.y===gY() && window._selMs.has(r.m)).sort((a,b)=>a.m-b.m); }
+function gC(){ return CLS.find(function(c){ return c.id===window._selC; }) || CLS[0]; }
+function gR(){ return RCS.filter(function(r){ return r.cid===window._selC && r.y===gY() && window._selMs.has(r.m); }).sort(function(a,b){ return a.m-b.m; }); }
+var _tt;
+function toast(m){ var e=document.getElementById("toastEl"); e.textContent=m; e.classList.add("sh"); clearTimeout(_tt); _tt=setTimeout(function(){ e.classList.remove("sh"); },2500); }
+function sH(ok,ri,k){ return '<span class="st '+(ok?'ok':'fl')+'" onclick="toggleIndicator('+ri+',\''+k+'\')">'+(ok?'v':'x')+'</span>'; }
 
-let _tt;
-function toast(m){ const e=document.getElementById("toastEl"); e.textContent=m; e.classList.add("sh"); clearTimeout(_tt); _tt=setTimeout(()=>e.classList.remove("sh"),2500); }
+// ═══════════════════════════════════════
+// ACTIONS
+// ═══════════════════════════════════════
+function toggleIndicator(ri,k){ var rs=gR(); if(!rs[ri])return; var i=RCS.indexOf(rs[ri]); if(i<0)return; RCS[i][k]=RCS[i][k]?0:1; saveData(); renderAll(); }
+function editOtif(ri,v){ var rs=gR(); if(!rs[ri])return; var i=RCS.indexOf(rs[ri]); if(i<0)return; RCS[i].otif=Math.min(100,Math.max(0,+v||0)); saveData(); renderAll(); }
+function deleteMonthCol(m){ RCS=RCS.filter(function(r){ return !(r.cid===window._selC&&r.y===gY()&&r.m===m); }); saveData(); renderAll(); toast("Excluido"); }
+function addMonthCol(){ var y=gY(),ex=RCS.filter(function(r){ return r.cid===window._selC&&r.y===y; }).map(function(r){ return r.m; }),n=[0,1,2,3,4,5,6,7,8,9,10,11].find(function(m){ return !ex.includes(m); }); if(n===undefined){toast("12 meses ja existem!");return;} var rc={cid:window._selC,y:y,m:n,otif:100}; IND.forEach(function(i){ rc[i.key]=1; }); RCS.push(rc); window._selMs.add(n); saveData(); renderMonthChips(); renderAll(); toast(MS[n]+" adicionado"); }
 
-function sH(ok,ri,k){ return `<span class="st ${ok?'ok':'fl'}" onclick="toggleIndicator(${ri},'${k}')">${ok?'✓':'✕'}</span>`; }
-
-// ═══ ACTIONS ═══
-function toggleIndicator(ri,k){ const rs=gR(); if(!rs[ri])return; const i=RCS.indexOf(rs[ri]); if(i<0)return; RCS[i][k]=RCS[i][k]?0:1; saveData(); renderAll(); }
-function editOtif(ri,v){ const rs=gR(); if(!rs[ri])return; const i=RCS.indexOf(rs[ri]); if(i<0)return; RCS[i].otif=Math.min(100,Math.max(0,+v||0)); saveData(); renderAll(); }
-function deleteMonthCol(m){ RCS=RCS.filter(r=>!(r.cid===window._selC&&r.y===gY()&&r.m===m)); saveData(); renderAll(); toast("Excluído"); }
-function addMonthCol(){ const y=gY(),ex=RCS.filter(r=>r.cid===window._selC&&r.y===y).map(r=>r.m),n=[0,1,2,3,4,5,6,7,8,9,10,11].find(m=>!ex.includes(m)); if(n===undefined){toast("12 meses já existem!");return} const rc={cid:window._selC,y,m:n,otif:100}; IND.forEach(i=>rc[i.key]=1); RCS.push(rc); window._selMs.add(n); saveData(); renderMonthChips(); renderAll(); toast(`${MS[n]} adicionado`); }
-
-// Indicators
-function openAddInd(){ document.getElementById("mdlT").textContent="Adicionar Farol"; document.getElementById("mdlB").innerHTML=`<input id="newIndLabel" class="in" placeholder="Texto do farol..."><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="bt bp" onclick="doAddInd()">Adicionar</button></div>`; document.getElementById("mdl").style.display="flex"; }
-function doAddInd(){ const l=document.getElementById("newIndLabel").value.trim(); if(!l)return; const k="i_"+Date.now(); IND.push({key:k,label:l}); RCS.forEach(r=>r[k]=1); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("✓ Adicionado!"); }
-function openEditInd(){ document.getElementById("mdlT").textContent="Editar Faróis"; let h='<div style="display:flex;flex-direction:column;gap:6px">'; IND.forEach((ind,i)=>h+=`<div style="display:flex;gap:6px;align-items:center"><input id="eidx${i}" class="in" value="${ind.label}" style="flex:1;font-size:11px"><button class="ib dg" onclick="removeInd(${i})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>`); h+=`</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><button class="bt bo" onclick="addIndFromEdit()">+ Novo Farol</button><button class="bt bp" onclick="doSaveInd()">Salvar</button></div>`; document.getElementById("mdlB").innerHTML=h; document.getElementById("mdl").style.display="flex"; }
-
-function addIndFromEdit(){
-  // Salva os labels digitados antes de abrir o campo
-  IND.forEach((ind,i)=>{const v=document.getElementById("eidx"+i);if(v&&v.value.trim())ind.label=v.value.trim()});
-  const newKey="i_"+Date.now();
-  IND.push({key:newKey,label:""});
-  openEditInd();
-  // Focar no último campo
-  setTimeout(()=>{const last=document.getElementById("eidx"+(IND.length-1));if(last){last.focus();last.placeholder="Novo farol..."}},50);
+function openAddInd(){ document.getElementById("mdlT").textContent="Adicionar Farol"; document.getElementById("mdlB").innerHTML='<input id="newIndLabel" class="in" placeholder="Texto do farol..."><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="bt bp" onclick="doAddInd()">Adicionar</button></div>'; document.getElementById("mdl").style.display="flex"; }
+function doAddInd(){ var l=document.getElementById("newIndLabel").value.trim(); if(!l)return; var k="i_"+Date.now(); IND.push({key:k,label:l}); RCS.forEach(function(r){ r[k]=1; }); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("Adicionado!"); }
+function openEditInd(){
+  document.getElementById("mdlT").textContent="Editar Farois";
+  var h='<div style="display:flex;flex-direction:column;gap:6px">';
+  IND.forEach(function(ind,i){
+    h+='<div style="display:flex;gap:6px;align-items:center"><input id="eidx'+i+'" class="in" value="'+ind.label+'" style="flex:1;font-size:11px"><button class="ib dg" onclick="removeInd('+i+')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>';
+  });
+  h+='</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><button class="bt bo" onclick="addIndFromEdit()">+ Novo Farol</button><button class="bt bp" onclick="doSaveInd()">Salvar</button></div>';
+  document.getElementById("mdlB").innerHTML=h;
+  document.getElementById("mdl").style.display="flex";
 }
-
-function doSaveInd(){ IND.forEach((ind,i)=>{const v=document.getElementById("eidx"+i); if(v&&v.value.trim())ind.label=v.value.trim()}); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("✓ Salvo!"); }
+function addIndFromEdit(){
+  IND.forEach(function(ind,i){ var v=document.getElementById("eidx"+i); if(v&&v.value.trim()) ind.label=v.value.trim(); });
+  var k="i_"+Date.now(); IND.push({key:k,label:""}); openEditInd();
+  setTimeout(function(){ var last=document.getElementById("eidx"+(IND.length-1)); if(last){last.focus();last.placeholder="Novo farol...";} },50);
+}
+function doSaveInd(){ IND.forEach(function(ind,i){ var v=document.getElementById("eidx"+i); if(v&&v.value.trim()) ind.label=v.value.trim(); }); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("Salvo!"); }
 function removeInd(i){ if(!confirm("Excluir?"))return; IND.splice(i,1); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); }
 
-// Clients
-function addClient(){ const inp=document.getElementById("newClientInput"); const n=inp.value.trim(); if(!n)return; CLS.push({id:n.toLowerCase().replace(/\s+/g,"-")+"-"+Date.now(),name:n,logo:null,active:true}); inp.value=""; saveData(); renderAll(); toast(`✓ "${n}" adicionado`); }
-function editClientName(id){ const c=CLS.find(x=>x.id===id); if(!c)return; const n=prompt("Novo nome:",c.name); if(n&&n.trim()){c.name=n.trim();saveData();renderAll();} }
-function toggleClientActive(id){ const c=CLS.find(x=>x.id===id); if(c){c.active=!c.active;saveData();renderAll();} }
-function deleteClient(id){ if(!confirm("Excluir?"))return; CLS=CLS.filter(c=>c.id!==id); RCS=RCS.filter(r=>r.cid!==id); if(window._selC===id&&CLS.length)window._selC=CLS[0].id; saveData();renderAll(); }
-function uploadLogo(id){ const inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=e=>{const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=ev=>{const c=CLS.find(x=>x.id===id);if(c){c.logo=ev.target.result;saveData();renderAll();toast("Logo salvo!")}}; r.readAsDataURL(f)}; inp.click(); }
+function addClient(){ var inp=document.getElementById("newClientInput"); var n=inp.value.trim(); if(!n)return; CLS.push({id:n.toLowerCase().replace(/\s+/g,"-")+"-"+Date.now(),name:n,logo:null,active:true}); inp.value=""; saveData(); renderAll(); toast('"'+n+'" adicionado'); }
+function editClientName(id){ var c=CLS.find(function(x){ return x.id===id; }); if(!c)return; var n=prompt("Novo nome:",c.name); if(n&&n.trim()){c.name=n.trim();saveData();renderAll();} }
+function toggleClientActive(id){ var c=CLS.find(function(x){ return x.id===id; }); if(c){c.active=!c.active;saveData();renderAll();} }
+function deleteClient(id){ if(!confirm("Excluir?"))return; CLS=CLS.filter(function(c){ return c.id!==id; }); RCS=RCS.filter(function(r){ return r.cid!==id; }); if(window._selC===id&&CLS.length) window._selC=CLS[0].id; saveData();renderAll(); }
+function uploadLogo(id){ var inp=document.createElement("input"); inp.type="file"; inp.accept="image/*"; inp.onchange=function(e){ var f=e.target.files[0]; if(!f)return; var r=new FileReader(); r.onload=function(ev){ var c=CLS.find(function(x){ return x.id===id; }); if(c){c.logo=ev.target.result;saveData();renderAll();toast("Logo salvo!");} }; r.readAsDataURL(f); }; inp.click(); }
 
-// Ações
-function addAcao(){ ACOES.push({id:Date.now(),mes:"",cliente:gC()?.name||"",desvio:"",material:"",embalagem:"",volume:"",dataDesvio:"",responsavel:"",fnc:"",planoAcao:""}); saveData(); renderAll(); }
-function deleteAcao(id){ ACOES=ACOES.filter(a=>a.id!==id); saveData(); renderAll(); }
-function updateAcao(id,field,val){ const a=ACOES.find(x=>x.id===id); if(a){a[field]=val; saveData();} }
+function addAcao(){ ACOES.push({id:Date.now(),mes:"",cliente:gC()?gC().name:"",desvio:"",material:"",embalagem:"",volume:"",dataDesvio:"",responsavel:"",fnc:"",planoAcao:""}); saveData(); renderAll(); }
+function deleteAcao(id){ ACOES=ACOES.filter(function(a){ return a.id!==id; }); saveData(); renderAll(); }
+function updateAcao(id,field,val){ var a=ACOES.find(function(x){ return x.id===id; }); if(a){a[field]=val; saveData();} }
 
-// Month chips
 function toggleMonth(m){ window._selMs.has(m)?window._selMs.delete(m):window._selMs.add(m); renderMonthChips(); renderAll(); }
 function selectAllMonths(){ window._selMs=new Set([0,1,2,3,4,5,6,7,8,9,10,11]); renderMonthChips(); renderAll(); }
-function renderMonthChips(){ document.getElementById("mChips").innerHTML=`<span class="mc ${window._selMs.size===12?'on':''}" onclick="selectAllMonths()">Todos</span>`+SH.map((s,i)=>`<span class="mc ${window._selMs.has(i)?'on':''}" onclick="toggleMonth(${i})">${s}</span>`).join(''); }
+function renderMonthChips(){
+  var html='<span class="mc '+(window._selMs.size===12?'on':'')+'" onclick="selectAllMonths()">Todos</span>';
+  SH.forEach(function(s,i){ html+='<span class="mc '+(window._selMs.has(i)?'on':'')+'" onclick="toggleMonth('+i+')">'+s+'</span>'; });
+  document.getElementById("mChips").innerHTML=html;
+}
 
-// Export
-function exportExcel(){ const cl=gC(),rs=gR(),y=gY(); const hd=["Mês",...IND.map(i=>i.label),"OTIF %"],dt=[hd]; rs.forEach(r=>{const rw=[MS[r.m]];IND.forEach(i=>rw.push(i.key==="otif_ind"?r.otif+"%":(r[i.key]?"Conforme":"Não Conforme")));rw.push(r.otif+"%");dt.push(rw)}); const ws=XLSX.utils.aoa_to_sheet(dt),wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"OTIF"); if(ACOES.length){const ad=[["Mês","Cliente","Desvio","Material","Embalagem","Volume","Data","Responsável","FNC","Plano"],...ACOES.map(a=>[a.mes,a.cliente,a.desvio,a.material,a.embalagem,a.volume,a.dataDesvio,a.responsavel,a.fnc,a.planoAcao])];XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ad),"Ações")} XLSX.writeFile(wb,`OTIF_${cl?cl.name.replace(/\s/g,'_'):''}_${y}.xlsx`); toast("📊 Exportado!"); }
+function exportExcel(){ var cl=gC(),rs=gR(),y=gY(); var hd=["Mes"].concat(IND.map(function(i){ return i.label; })).concat(["OTIF %"]); var dt=[hd]; rs.forEach(function(r){ var rw=[MS[r.m]]; IND.forEach(function(i){ rw.push(i.key==="otif_ind"?r.otif+"%":(r[i.key]?"Conforme":"Nao Conforme")); }); rw.push(r.otif+"%"); dt.push(rw); }); var ws=XLSX.utils.aoa_to_sheet(dt),wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"OTIF"); if(ACOES.length){var ad=[["Mes","Cliente","Desvio","Material","Embalagem","Volume","Data","Responsavel","FNC","Plano"]].concat(ACOES.map(function(a){ return [a.mes,a.cliente,a.desvio,a.material,a.embalagem,a.volume,a.dataDesvio,a.responsavel,a.fnc,a.planoAcao]; })); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ad),"Acoes");} XLSX.writeFile(wb,"OTIF_"+(cl?cl.name.replace(/\s/g,"_"):"")+"_"+y+".xlsx"); toast("Exportado!"); }
 
-// Import
-function handleImport(e){ const f=e.target.files[0]; if(!f)return; const rd=new FileReader(); rd.onload=ev=>{try{const wb=XLSX.read(ev.target.result,{type:'binary'}); let msg=[]; const acoesSheet=wb.SheetNames.find(s=>s.toLowerCase().includes("ações")||s.toLowerCase().includes("acoes")||s.toLowerCase().includes("acao")); if(acoesSheet){const data=XLSX.utils.sheet_to_json(wb.Sheets[acoesSheet],{defval:""});data.forEach(row=>{ACOES.push({id:Date.now()+Math.random(),mes:row["MÊS"]||row["Mês"]||row["mes"]||"",cliente:row["CLIENTE"]||row["Cliente"]||"",desvio:row["DESVIO"]||row["Desvio"]||row["C"]||"",material:row["MATERIAL"]||row["Material"]||"",embalagem:row["EMBALAGEM"]||row["Embalagem"]||"",volume:String(row["VOLUME"]||row["Volume"]||""),dataDesvio:row["DATA DO DESVIO"]||row["Data Desvio"]||"",responsavel:row["RESPONSÁVEL"]||row["Responsavel"]||"",fnc:String(row["FNC/PROTOCOLO"]||row["FNC"]||""),planoAcao:row["PLANO DE AÇÃO"]||row["Plano de Ação"]||""})});msg.push(`${data.length} ações`)} const fncSheet=wb.SheetNames.find(s=>s.toLowerCase().includes("fnc")||s.toLowerCase().includes("registro")); if(fncSheet){const data=XLSX.utils.sheet_to_json(wb.Sheets[fncSheet],{defval:""});FNCS=data.map(r=>({id:Date.now()+Math.random(),...r}));msg.push(`${data.length} FNC`)} saveData();renderAll();toast(msg.length?`✓ Importado: ${msg.join(', ')}`:"Importado")}catch(ex){toast("Erro: "+ex.message)}}; rd.readAsBinaryString(f); }
+function handleImport(e){ var f=e.target.files[0]; if(!f)return; var rd=new FileReader(); rd.onload=function(ev){ try{ var wb=XLSX.read(ev.target.result,{type:"binary"}); var msg=[]; var acoesSheet=wb.SheetNames.find(function(s){ return s.toLowerCase().includes("oes")||s.toLowerCase().includes("acoes"); }); if(acoesSheet){ var data=XLSX.utils.sheet_to_json(wb.Sheets[acoesSheet],{defval:""}); data.forEach(function(row){ ACOES.push({id:Date.now()+Math.random(),mes:row["MES"]||row["Mes"]||row["mes"]||"",cliente:row["CLIENTE"]||row["Cliente"]||"",desvio:row["DESVIO"]||row["Desvio"]||"",material:row["MATERIAL"]||row["Material"]||"",embalagem:row["EMBALAGEM"]||row["Embalagem"]||"",volume:String(row["VOLUME"]||row["Volume"]||""),dataDesvio:row["DATA DO DESVIO"]||row["Data Desvio"]||"",responsavel:row["RESPONSAVEL"]||row["Responsavel"]||"",fnc:String(row["FNC"]||""),planoAcao:row["PLANO DE ACAO"]||row["Plano de Acao"]||""}); }); msg.push(data.length+" acoes"); } var fncSheet=wb.SheetNames.find(function(s){ return s.toLowerCase().includes("fnc"); }); if(fncSheet){ var fdata=XLSX.utils.sheet_to_json(wb.Sheets[fncSheet],{defval:""}); FNCS=fdata.map(function(r){ return Object.assign({id:Date.now()+Math.random()},r); }); msg.push(fdata.length+" FNC"); } saveData();renderAll();toast(msg.length?"Importado: "+msg.join(", "):"Importado"); }catch(ex){toast("Erro: "+ex.message);} }; rd.readAsBinaryString(f); }
 
-// Capture
-async function copyImage(){ const btn=document.getElementById("btnCopy"); btn.textContent="⏳..."; btn.disabled=true; try{const c=await html2canvas(document.getElementById("previewArea"),{backgroundColor:"#fff",scale:2,useCORS:true,allowTaint:true,logging:false}); c.toBlob(async bl=>{try{await navigator.clipboard.write([new ClipboardItem({"image/png":bl})]);document.getElementById("copyTip").style.display="block";setTimeout(()=>document.getElementById("copyTip").style.display="none",5000);toast("✓ Copiada!")}catch(e){window.open(URL.createObjectURL(bl),"_blank")} btn.textContent="📋 Copiar Imagem";btn.disabled=false},"image/png")}catch(e){toast("Erro");btn.textContent="📋 Copiar Imagem";btn.disabled=false} }
-async function downloadImage(){ try{const c=await html2canvas(document.getElementById("previewArea"),{backgroundColor:"#fff",scale:2,useCORS:true,allowTaint:true,logging:false}); const cl=gC(),l=document.createElement("a");l.download=`OTIF_${cl?cl.name.replace(/\s/g,'_'):''}_${gY()}.png`;l.href=c.toDataURL("image/png");l.click();toast("💾 Baixada!")}catch(e){toast("Erro")} }
+async function copyImage(){ var btn=document.getElementById("btnCopy"); btn.textContent="..."; btn.disabled=true; try{ var c=await html2canvas(document.getElementById("previewArea"),{backgroundColor:"#fff",scale:2,useCORS:true,allowTaint:true,logging:false}); c.toBlob(async function(bl){ try{await navigator.clipboard.write([new ClipboardItem({"image/png":bl})]);document.getElementById("copyTip").style.display="block";setTimeout(function(){document.getElementById("copyTip").style.display="none";},5000);toast("Copiada!");}catch(e){window.open(URL.createObjectURL(bl),"_blank");} btn.textContent="Copiar Imagem";btn.disabled=false;},"image/png");}catch(e){toast("Erro");btn.textContent="Copiar Imagem";btn.disabled=false;} }
+async function downloadImage(){ try{var c=await html2canvas(document.getElementById("previewArea"),{backgroundColor:"#fff",scale:2,useCORS:true,allowTaint:true,logging:false}); var cl=gC(),l=document.createElement("a");l.download="OTIF_"+(cl?cl.name.replace(/\s/g,"_"):"")+"_"+gY()+".png";l.href=c.toDataURL("image/png");l.click();toast("Baixada!");}catch(e){toast("Erro");} }
 
-// ═══ NAVIGATION ═══
-function goPage(id){ window._curP=id; document.querySelectorAll(".nb").forEach((b,i)=>b.classList.toggle("on",NAV[i].id===id)); renderAll(); }
+function goPage(id){ window._curP=id; document.querySelectorAll(".nb").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-id")===id); }); renderAll(); }
 
-// ═══ MAIN RENDER ═══
+// ═══════════════════════════════════════
+// ZEUS — USUÁRIOS
+// ═══════════════════════════════════════
+function openNewUserModal() {
+  document.getElementById("mdlT").textContent = "Novo Usuario";
+  document.getElementById("mdlB").innerHTML =
+    '<div style="display:flex;flex-direction:column;gap:12px">' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nome completo</label><input id="nuName" class="in" placeholder="Nome do usuario"></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">E-mail</label><input id="nuEmail" class="in" type="email" placeholder="email@empresa.com"></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Senha</label><input id="nuPass" class="in" type="password" placeholder="Minimo 6 caracteres"></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nivel de Acesso</label>' +
+    '<select id="nuRole" class="in"><option value="viewer">Visualizador - so leitura</option><option value="editor">Editor - preenche farois e acoes</option><option value="admin">Administrador - gerencia usuarios</option></select></div>' +
+    '<div id="nuErr" style="font-size:11px;color:var(--rd);font-weight:600;min-height:16px"></div>' +
+    '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px"><button class="bt bo" onclick="document.getElementById(\'mdl\').style.display=\'none\'">Cancelar</button><button class="bt bp" onclick="saveNewUser()">Criar Usuario</button></div>' +
+    '</div>';
+  document.getElementById("mdl").style.display = "flex";
+}
+
+async function saveNewUser() {
+  var name  = document.getElementById("nuName").value.trim();
+  var email = document.getElementById("nuEmail").value.trim().toLowerCase();
+  var pass  = document.getElementById("nuPass").value;
+  var role  = document.getElementById("nuRole").value;
+  var err   = document.getElementById("nuErr");
+  if (!name||!email||!pass) { err.textContent = "Preencha todos os campos."; return; }
+  if (pass.length < 6) { err.textContent = "Senha minimo 6 caracteres."; return; }
+  var existing = USERS.find(function(u){ return u.email.toLowerCase()===email; });
+  if (existing) { err.textContent = "Este e-mail ja esta cadastrado."; return; }
+  var newUser = { id: "u_"+Date.now(), name: name, email: email, pass: pass, role: role, status: "active" };
+  USERS.push(newUser);
+  saveUser(newUser);
+  document.getElementById("mdl").style.display = "none";
+  renderAll();
+  toast("Usuario " + name + " criado!");
+}
+
+function openEditUserModal(id) {
+  var u = USERS.find(function(x){ return x.id===id; });
+  if (!u) return;
+  document.getElementById("mdlT").textContent = "Editar Usuario";
+  document.getElementById("mdlB").innerHTML =
+    '<div style="display:flex;flex-direction:column;gap:12px">' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nome completo</label><input id="euName" class="in" value="'+u.name+'"></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">E-mail</label><input id="euEmail" class="in" value="'+u.email+'"></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nova Senha <span style="color:var(--mt);font-weight:400">(em branco = manter)</span></label><input id="euPass" class="in" type="password" placeholder="Nova senha..."></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nivel de Acesso</label>' +
+    '<select id="euRole" class="in"><option value="viewer"'+(u.role==="viewer"?" selected":"")+'>Visualizador</option><option value="editor"'+(u.role==="editor"?" selected":"")+'>Editor</option><option value="admin"'+(u.role==="admin"?" selected":"")+'>Administrador</option></select></div>' +
+    '<div id="euErr" style="font-size:11px;color:var(--rd);font-weight:600;min-height:16px"></div>' +
+    '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px"><button class="bt bo" onclick="document.getElementById(\'mdl\').style.display=\'none\'">Cancelar</button><button class="bt bp" onclick="saveEditUser(\''+u.id+'\')">Salvar</button></div>' +
+    '</div>';
+  document.getElementById("mdl").style.display = "flex";
+}
+
+function saveEditUser(id) {
+  var u = USERS.find(function(x){ return x.id===id; });
+  if (!u) return;
+  var name  = document.getElementById("euName").value.trim();
+  var email = document.getElementById("euEmail").value.trim().toLowerCase();
+  var pass  = document.getElementById("euPass").value;
+  var role  = document.getElementById("euRole").value;
+  var err   = document.getElementById("euErr");
+  if (!name||!email) { err.textContent = "Nome e e-mail sao obrigatorios."; return; }
+  if (pass && pass.length < 6) { err.textContent = "Senha minimo 6 caracteres."; return; }
+  u.name = name; u.email = email; u.role = role;
+  if (pass) u.pass = pass;
+  saveUser(u);
+  document.getElementById("mdl").style.display = "none";
+  renderAll();
+  toast("Usuario " + name + " atualizado!");
+}
+
+function deleteUserById(id) {
+  var u = USERS.find(function(x){ return x.id===id; });
+  if (!u || !confirm("Excluir o usuario " + u.name + "?")) return;
+  USERS = USERS.filter(function(x){ return x.id!==id; });
+  deleteUserRemote(id);
+  renderAll();
+  toast("Usuario excluido.");
+}
+
+function toggleUserStatus(id) {
+  var u = USERS.find(function(x){ return x.id===id; });
+  if (!u) return;
+  u.status = u.status === "active" ? "inactive" : "active";
+  saveUser(u);
+  renderAll();
+  toast(u.name + (u.status==="active"?" ativado":" desativado") + ".");
+}
+
+// ═══════════════════════════════════════
+// ZEUS — PERSONALIZAR
+// ═══════════════════════════════════════
+function loadTheme(){ return JSON.parse(localStorage.getItem("otif_theme")||"{}"); }
+function applyColor(v,val){ document.documentElement.style.setProperty(v,val); }
+function saveThemeColor(k,val){ var th=loadTheme(); th[k]=val; localStorage.setItem("otif_theme",JSON.stringify(th)); }
+function applyFont(font){
+  document.body.style.fontFamily = "'" + font + "', sans-serif";
+  var th=loadTheme(); th.font=font; localStorage.setItem("otif_theme",JSON.stringify(th));
+  if (font !== "DM Sans") {
+    var link=document.createElement("link"); link.rel="stylesheet";
+    link.href="https://fonts.googleapis.com/css2?family="+font.replace(" ","+")+":wght@400;500;600;700&display=swap";
+    document.head.appendChild(link);
+  }
+}
+function applyStoredTheme(){
+  var th=loadTheme();
+  if(th.nv) applyColor("--nv",th.nv);
+  if(th.ac) applyColor("--ac",th.ac);
+  if(th.gn) applyColor("--gn",th.gn);
+  if(th.bg) applyColor("--bg",th.bg);
+  if(th.font) applyFont(th.font);
+}
+function resetTheme(){ if(!confirm("Restaurar tudo ao padrao?"))return; localStorage.removeItem("otif_theme"); location.reload(); }
+function saveSysName(){
+  var v=document.getElementById("sysNameInp").value.trim(); if(!v)return;
+  localStorage.setItem("otif_sysname",v);
+  document.querySelector(".sb-lg h2").innerHTML=v; document.title="Sistema OTIF - "+v;
+  toast("Nome salvo!");
+}
+function zeusUploadLogo(){
+  var inp=document.createElement("input"); inp.type="file"; inp.accept="image/*";
+  inp.onchange=function(e){ var f=e.target.files[0]; if(!f)return; var r=new FileReader(); r.onload=function(ev){ localStorage.setItem("otif_logo",ev.target.result); document.getElementById("sbLogoImg").src=ev.target.result; document.getElementById("sbLogoWrap").style.display="block"; toast("Logo salvo!"); renderAll(); }; r.readAsDataURL(f); };
+  inp.click();
+}
+function zeusRemoveLogo(){ localStorage.removeItem("otif_logo"); document.getElementById("sbLogoWrap").style.display="none"; toast("Logo removido."); renderAll(); }
+
+// ═══════════════════════════════════════
+// MAIN RENDER
+// ═══════════════════════════════════════
 function renderAll(){
-  const cl=gC(), rs=gR(), y=gY(), mc=document.getElementById("mainContent");
+  var cl=gC(), rs=gR(), y=gY(), mc=document.getElementById("mainContent");
+  var csel=document.getElementById("clientSel");
+  var activeCls=CLS.filter(function(c){ return c.active; });
+  csel.innerHTML=activeCls.map(function(c){ return '<option value="'+c.id+'"'+(c.id===window._selC?" selected":"")+'>'+c.name+'</option>'; }).join("");
+  if(!activeCls.find(function(c){ return c.id===window._selC; })&&activeCls.length){ window._selC=activeCls[0].id; }
 
-  // Update client selector
-  const csel=document.getElementById("clientSel");
-  const activeCls=CLS.filter(c=>c.active);
-  csel.innerHTML=activeCls.map(c=>`<option value="${c.id}"${c.id===window._selC?' selected':''}>${c.name}</option>`).join('');
-  if(!activeCls.find(c=>c.id===window._selC)&&activeCls.length){ window._selC=activeCls[0].id; }
+  var H="";
+  var P=window._curP;
 
-  let H='';
-  const P=window._curP;
-
-  // ═══ DASHBOARD ═══
+  // DASHBOARD
   if(P==="dashboard"){
-    const iNO=IND.filter(i=>i.key!=="otif_ind"),tE=rs.length*iNO.length,tO=rs.reduce((s,r)=>s+iNO.filter(i=>r[i.key]).length,0),tF=tE-tO,avg=rs.length?(rs.reduce((s,r)=>s+r.otif,0)/rs.length).toFixed(1):"0",cr=tE?((tO/tE)*100).toFixed(0):"0";
-    const ci=2*Math.PI*44,of=ci-(cr/100)*ci;
-    H=`<div class="ph"><div><h1>Performance OTIF — ${cl?cl.name:''}</h1><p>On Time, In Full · ${y}</p></div>${cl&&cl.logo?`<img src="${cl.logo}" class="cl">`:`<span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;font-weight:800;color:var(--nv)">${cl?cl.name:''}</span>`}</div>
-    <div class="kg"><div class="cd kp g"><div class="kl">OTIF Médio</div><div class="kv">${avg}%</div><div class="ks">Meta: 95%</div></div><div class="cd kp b"><div class="kl">Meses</div><div class="kv">${rs.length}</div><div class="ks">${y}</div></div><div class="cd kp g"><div class="kl">Conformidades</div><div class="kv">${tO}</div><div class="ks">de ${tE} · ${cr}%</div></div><div class="cd kp r"><div class="kl">Não Conformidades</div><div class="kv">${tF}</div><div class="ks">itens com falha</div></div></div>
-    <div class="cg"><div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Evolução OTIF Mensal</div><div class="bw">${rs.map(r=>`<div class="bc"><span class="bv">${r.otif}%</span><div class="br ${r.otif===100?'f':'p'}" style="height:${Math.max(r.otif*1.2,5)}%"></div><span class="bm">${SH[r.m]}</span></div>`).join('')||'<span style="color:var(--mt);padding:20px">Sem dados</span>'}</div></div>
-    <div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Conformidade</div><div class="dw"><div class="dr"><svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="44" fill="none" stroke="#EEF1F6" stroke-width="11"/><circle cx="55" cy="55" r="44" fill="none" stroke="var(--gn)" stroke-width="11" stroke-dasharray="${ci}" stroke-dashoffset="${of}" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:center"/></svg><div class="dc"><span class="dv">${cr}%</span><span class="dl">Conforme</span></div></div><div class="lg"><span><i style="background:var(--gn)"></i>${tO}</span><span><i style="background:var(--rd)"></i>${tF}</span></div></div></div></div>
-    <div class="cd" style="overflow:hidden"><div class="th">Detalhamento</div><div style="overflow-x:auto"><table><thead><tr><th>Mês</th>${IND.map(i=>`<th style="max-width:80px;white-space:normal;line-height:1.2">${i.label.length>28?i.label.substring(0,26)+'…':i.label}</th>`).join('')}<th style="text-align:right">OTIF</th></tr></thead><tbody>${rs.map((r,ri)=>`<tr class="${(IND.some(i=>i.key!=="otif_ind"&&!r[i.key])||r.otif<100)?'is':''}"><td style="font-weight:700;color:var(--nv)">${MS[r.m]}</td>${IND.map(i=>i.key==="otif_ind"?`<td style="font-weight:800;color:${r.otif===100?'var(--gn)':'var(--yl)'}">${r.otif}%</td>`:`<td>${sH(r[i.key],ri,i.key)}</td>`).join('')}<td style="text-align:right;font-weight:800;color:${r.otif===100?'var(--gn)':'var(--yl)'}">${r.otif}%</td></tr>`).join('')}</tbody></table></div></div>`;
+    var iNO=IND.filter(function(i){ return i.key!=="otif_ind"; });
+    var tE=rs.length*iNO.length;
+    var tO=rs.reduce(function(s,r){ return s+iNO.filter(function(i){ return r[i.key]; }).length; },0);
+    var tF=tE-tO;
+    var avg=rs.length?(rs.reduce(function(s,r){ return s+r.otif; },0)/rs.length).toFixed(1):"0";
+    var cr=tE?((tO/tE)*100).toFixed(0):"0";
+    var ci=2*Math.PI*44, of=ci-(cr/100)*ci;
+    H='<div class="ph"><div><h1>Performance OTIF - '+(cl?cl.name:"")+'</h1><p>On Time, In Full - '+y+'</p></div>'+(cl&&cl.logo?'<img src="'+cl.logo+'" class="cl">':'<span style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:20px;font-weight:800;color:var(--nv)">'+(cl?cl.name:"")+'</span>')+'</div>';
+    H+='<div class="kg"><div class="cd kp g"><div class="kl">OTIF Medio</div><div class="kv">'+avg+'%</div><div class="ks">Meta: 95%</div></div><div class="cd kp b"><div class="kl">Meses</div><div class="kv">'+rs.length+'</div><div class="ks">'+y+'</div></div><div class="cd kp g"><div class="kl">Conformidades</div><div class="kv">'+tO+'</div><div class="ks">de '+tE+' - '+cr+'%</div></div><div class="cd kp r"><div class="kl">Nao Conformidades</div><div class="kv">'+tF+'</div><div class="ks">itens com falha</div></div></div>';
+    H+='<div class="cg"><div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Evolucao OTIF Mensal</div><div class="bw">'+(rs.map(function(r){ return '<div class="bc"><span class="bv">'+r.otif+'%</span><div class="br '+(r.otif===100?"f":"p")+'" style="height:'+Math.max(r.otif*1.2,5)+'%"></div><span class="bm">'+SH[r.m]+'</span></div>'; }).join("")||'<span style="color:var(--mt);padding:20px">Sem dados</span>')+'</div></div>';
+    H+='<div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Conformidade</div><div class="dw"><div class="dr"><svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="44" fill="none" stroke="#EEF1F6" stroke-width="11"/><circle cx="55" cy="55" r="44" fill="none" stroke="var(--gn)" stroke-width="11" stroke-dasharray="'+ci+'" stroke-dashoffset="'+of+'" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:center"/></svg><div class="dc"><span class="dv">'+cr+'%</span><span class="dl">Conforme</span></div></div><div class="lg"><span><i style="background:var(--gn)"></i>'+tO+'</span><span><i style="background:var(--rd)"></i>'+tF+'</span></div></div></div></div>';
+    H+='<div class="cd" style="overflow:hidden"><div class="th">Detalhamento</div><div style="overflow-x:auto"><table><thead><tr><th>Mes</th>'+IND.map(function(i){ return '<th style="max-width:80px;white-space:normal;line-height:1.2">'+(i.label.length>28?i.label.substring(0,26)+'...':i.label)+'</th>'; }).join("")+'<th style="text-align:right">OTIF</th></tr></thead><tbody>'+rs.map(function(r,ri){ return '<tr class="'+(IND.some(function(i){ return i.key!=="otif_ind"&&!r[i.key]; })||r.otif<100?"is":"")+'"><td style="font-weight:700;color:var(--nv)">'+MS[r.m]+'</td>'+IND.map(function(i){ return i.key==="otif_ind"?'<td style="font-weight:800;color:'+(r.otif===100?"var(--gn)":"var(--yl)")+'">'+r.otif+'%</td>':'<td>'+sH(r[i.key],ri,i.key)+'</td>'; }).join("")+'<td style="text-align:right;font-weight:800;color:'+(r.otif===100?"var(--gn)":"var(--yl)")+'">'+r.otif+'%</td></tr>'; }).join("")+'</tbody></table></div></div>';
   }
 
-  // ═══ PREENCHIMENTO ═══
+  // PREENCHIMENTO
   if(P==="form"){
-    H=`<div class="ph"><div><h1>Preenchimento — ${cl?cl.name:''}</h1><p>Faróis nas linhas · Meses nas colunas · Clique ✓/✕</p></div></div>
-    <div class="cd" style="overflow:hidden"><div class="th"><span>${cl?cl.name:''} · ${y}</span><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="bt bo" onclick="addMonthCol()">+ Mês</button><button class="bt bo" onclick="openAddInd()">+ Farol</button><button class="bt bo" onclick="openEditInd()">✎ Faróis</button><button class="bt bo" onclick="exportExcel()">📊 Excel</button></div></div>
-    <div style="overflow-x:auto"><table class="ft"><thead><tr><th style="text-align:left;min-width:200px">Indicador</th>${rs.map(r=>`<th>${SH[r.m]}<br><span class="mc" onclick="deleteMonthCol(${r.m})" style="font-size:7px;padding:1px 5px;margin-top:3px;color:var(--rd);border-color:var(--rr);cursor:pointer">✕</span></th>`).join('')}</tr></thead><tbody>${IND.map(ind=>`<tr><td class="inn">${ind.label}</td>${rs.map((r,ri)=>ind.key==="otif_ind"?`<td><input type="number" class="oe ${r.otif===100?'ok':'lo'}" value="${r.otif}" min="0" max="100" onchange="editOtif(${ri},this.value)"></td>`:`<td>${sH(r[ind.key],ri,ind.key)}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`;
+    H='<div class="ph"><div><h1>Preenchimento - '+(cl?cl.name:"")+'</h1><p>Farois nas linhas, Meses nas colunas</p></div></div>';
+    H+='<div class="cd" style="overflow:hidden"><div class="th"><span>'+(cl?cl.name:"")+" - "+y+'</span><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="bt bo" onclick="addMonthCol()">+ Mes</button><button class="bt bo" onclick="openAddInd()">+ Farol</button><button class="bt bo" onclick="openEditInd()">Editar Farois</button><button class="bt bo" onclick="exportExcel()">Excel</button></div></div>';
+    H+='<div style="overflow-x:auto"><table class="ft"><thead><tr><th style="text-align:left;min-width:200px">Indicador</th>'+rs.map(function(r){ return '<th>'+SH[r.m]+'<br><span class="mc" onclick="deleteMonthCol('+r.m+')" style="font-size:7px;padding:1px 5px;margin-top:3px;color:var(--rd);border-color:var(--rr);cursor:pointer">x</span></th>'; }).join("")+'</tr></thead><tbody>'+IND.map(function(ind){ return '<tr><td class="inn">'+ind.label+'</td>'+rs.map(function(r,ri){ return ind.key==="otif_ind"?'<td><input type="number" class="oe '+(r.otif===100?"ok":"lo")+'" value="'+r.otif+'" min="0" max="100" onchange="editOtif('+ri+',this.value)"></td>':'<td>'+sH(r[ind.key],ri,ind.key)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
   }
 
-  // ═══ CONSOLIDADO ═══
+  // CONSOLIDADO
   if(P==="consolidado"){
-    const allCls=CLS.filter(c=>c.active), iNO=IND.filter(i=>i.key!=="otif_ind");
-    let gRow='',rRow='',gTot=0,rTot=0;
-    allCls.forEach(c=>{
-      const cR=RCS.filter(r=>r.cid===c.id&&r.y===y&&window._selMs.has(r.m));
-      let g=0,rd=0; cR.forEach(r=>iNO.forEach(i=>{if(r[i.key])g++;else rd++}));
-      gRow+=`<td class="cv gn">${g}</td>`; rRow+=`<td class="cv rd">${rd}</td>`; gTot+=g; rTot+=rd;
+    var allCls=CLS.filter(function(c){ return c.active; }), iNO2=IND.filter(function(i){ return i.key!=="otif_ind"; });
+    var gRow="",rRow="",gTot=0,rTot=0;
+    allCls.forEach(function(c){
+      var cR=RCS.filter(function(r){ return r.cid===c.id&&r.y===y&&window._selMs.has(r.m); });
+      var g=0,rd=0; cR.forEach(function(r){ iNO2.forEach(function(i){ if(r[i.key])g++;else rd++; }); });
+      gRow+='<td class="cv gn">'+g+'</td>'; rRow+='<td class="cv rd">'+rd+'</td>'; gTot+=g; rTot+=rd;
     });
-    const tot=gTot+rTot;
-    H=`<div class="ph"><div><h1>Consolidado — Farol ${y}</h1><p>Resumo verde/vermelho por cliente</p></div></div>
-    <div class="cd" style="overflow:hidden"><div class="th" style="background:var(--yb);color:var(--nv);font-size:14px;font-weight:800;justify-content:center">FAROL ${y}</div><div style="overflow-x:auto"><table><thead><tr><th>Farol</th>${allCls.map(c=>`<th style="text-align:center">${c.name}</th>`).join('')}<th style="text-align:center">Total</th><th style="text-align:center">%</th></tr></thead><tbody>
-    <tr style="background:var(--gb)"><td style="font-weight:700;color:var(--gn)">Verde</td>${gRow}<td class="cv gn">${gTot}</td><td class="cv gn">${tot?(gTot/tot*100).toFixed(1):'0'}%</td></tr>
-    <tr style="background:var(--rb)"><td style="font-weight:700;color:var(--rd)">Vermelho</td>${rRow}<td class="cv rd">${rTot}</td><td class="cv rd">${tot?(rTot/tot*100).toFixed(1):'0'}%</td></tr>
-    <tr><td></td>${allCls.map(()=>'<td></td>').join('')}<td class="cv" style="font-weight:800">${tot}</td><td class="cv yl" style="font-weight:800">${tot?(gTot/tot*100).toFixed(0):'0'}%</td></tr>
-    </tbody></table></div></div>`;
+    var tot=gTot+rTot;
+    H='<div class="ph"><div><h1>Consolidado - Farol '+y+'</h1><p>Resumo verde/vermelho por cliente</p></div></div>';
+    H+='<div class="cd" style="overflow:hidden"><div class="th" style="background:var(--yb);color:var(--nv);font-size:14px;font-weight:800;justify-content:center">FAROL '+y+'</div><div style="overflow-x:auto"><table><thead><tr><th>Farol</th>'+allCls.map(function(c){ return '<th style="text-align:center">'+c.name+'</th>'; }).join("")+'<th style="text-align:center">Total</th><th style="text-align:center">%</th></tr></thead><tbody>';
+    H+='<tr style="background:var(--gb)"><td style="font-weight:700;color:var(--gn)">Verde</td>'+gRow+'<td class="cv gn">'+gTot+'</td><td class="cv gn">'+(tot?(gTot/tot*100).toFixed(1):"0")+'%</td></tr>';
+    H+='<tr style="background:var(--rb)"><td style="font-weight:700;color:var(--rd)">Vermelho</td>'+rRow+'<td class="cv rd">'+rTot+'</td><td class="cv rd">'+(tot?(rTot/tot*100).toFixed(1):"0")+'%</td></tr>';
+    H+='<tr><td></td>'+allCls.map(function(){ return '<td></td>'; }).join("")+'<td class="cv" style="font-weight:800">'+tot+'</td><td class="cv yl" style="font-weight:800">'+(tot?(gTot/tot*100).toFixed(0):"0")+'%</td></tr>';
+    H+='</tbody></table></div></div>';
   }
 
-  // ═══ AÇÕES ═══
+  // ACOES
   if(P==="acoes"){
-    H=`<div class="ph"><div><h1>Ações / Desvios</h1><p>${ACOES.length} registros</p></div></div>
-    <div class="cd" style="overflow:hidden"><div class="th"><span>Registros</span><button class="bt bp" onclick="addAcao()">+ Nova Ação</button></div>
-    <div style="overflow-x:auto"><table class="at"><thead><tr><th>Mês</th><th>Cliente</th><th>Desvio</th><th>Material</th><th>Embalagem</th><th>Volume</th><th>Data</th><th>Responsável</th><th>FNC</th><th>Plano de Ação</th><th></th></tr></thead><tbody>`;
-    ACOES.forEach(a=>{
-      H+=`<tr>${['mes','cliente','desvio','material','embalagem','volume','dataDesvio','responsavel','fnc','planoAcao'].map(f=>`<td><input class="in" value="${a[f]||''}" onchange="updateAcao(${a.id},'${f}',this.value)" style="width:${f==='desvio'||f==='planoAcao'?'160':'70'}px;font-size:10px;padding:4px"></td>`).join('')}<td><button class="ib dg" onclick="deleteAcao(${a.id})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></td></tr>`;
+    H='<div class="ph"><div><h1>Acoes / Desvios</h1><p>'+ACOES.length+' registros</p></div></div>';
+    H+='<div class="cd" style="overflow:hidden"><div class="th"><span>Registros</span><button class="bt bp" onclick="addAcao()">+ Nova Acao</button></div><div style="overflow-x:auto"><table class="at"><thead><tr><th>Mes</th><th>Cliente</th><th>Desvio</th><th>Material</th><th>Embalagem</th><th>Volume</th><th>Data</th><th>Responsavel</th><th>FNC</th><th>Plano de Acao</th><th></th></tr></thead><tbody>';
+    ACOES.forEach(function(a){
+      H+='<tr>'+["mes","cliente","desvio","material","embalagem","volume","dataDesvio","responsavel","fnc","planoAcao"].map(function(f){ return '<td><input class="in" value="'+(a[f]||"")+'" onchange="updateAcao('+a.id+',\''+f+'\',this.value)" style="width:'+(f==="desvio"||f==="planoAcao"?"160":"70")+'px;font-size:10px;padding:4px"></td>'; }).join("")+'<td><button class="ib dg" onclick="deleteAcao('+a.id+')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></td></tr>';
     });
-    H+=`</tbody></table></div></div>`;
-    if(!ACOES.length) H+=`<div style="text-align:center;padding:30px;color:var(--mt)">Nenhuma ação. Clique "+ Nova Ação" ou importe uma planilha.</div>`;
+    H+='</tbody></table></div></div>';
+    if(!ACOES.length) H+='<div style="text-align:center;padding:30px;color:var(--mt)">Nenhuma acao. Clique em "+ Nova Acao".</div>';
   }
 
-  // ═══ FNC ═══
+  // FNC
   if(P==="fnc"){
-    const keys=FNCS.length?Object.keys(FNCS[0]).filter(k=>k!=="id"):[];
-    H=`<div class="ph"><div><h1>Registros FNC</h1><p>${FNCS.length} registros</p></div></div>
-    <div class="cd" style="overflow:hidden"><div class="th">${FNCS.length} registros</div><div style="overflow-x:auto"><table class="at"><thead><tr>${keys.map(k=>`<th>${k}</th>`).join('')}</tr></thead><tbody>${FNCS.slice(0,200).map(f=>`<tr>${keys.map(k=>`<td style="font-size:10px;max-width:180px">${f[k]||''}</td>`).join('')}</tr>`).join('')}</tbody></table></div></div>`;
-    if(!FNCS.length) H+=`<div style="text-align:center;padding:30px;color:var(--mt)">Nenhum registro. Importe via "Importar Excel".</div>`;
+    var keys=FNCS.length?Object.keys(FNCS[0]).filter(function(k){ return k!=="id"; }):[];
+    H='<div class="ph"><div><h1>Registros FNC</h1><p>'+FNCS.length+' registros</p></div></div>';
+    H+='<div class="cd" style="overflow:hidden"><div class="th">'+FNCS.length+' registros</div><div style="overflow-x:auto"><table class="at"><thead><tr>'+keys.map(function(k){ return '<th>'+k+'</th>'; }).join("")+'</tr></thead><tbody>'+FNCS.slice(0,200).map(function(f){ return '<tr>'+keys.map(function(k){ return '<td style="font-size:10px;max-width:180px">'+(f[k]||"")+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
+    if(!FNCS.length) H+='<div style="text-align:center;padding:30px;color:var(--mt)">Nenhum registro. Importe via Importar Excel.</div>';
   }
 
-  // ═══ CLIENTES ═══
+  // CLIENTES
   if(P==="clients"){
-    H=`<div class="ph"><div><h1>Clientes</h1><p>Gerencie clientes</p></div></div>
-    <div class="cd cp" style="display:flex;gap:8px;align-items:center;margin-bottom:14px"><input id="newClientInput" class="in" placeholder="Novo cliente..." style="flex:1" onkeydown="if(event.key==='Enter')addClient()"><button class="bt bp" onclick="addClient()">+ Adicionar</button></div>
-    ${CLS.map(c=>`<div class="cd cc ${c.active?'':'off'}"><div class="la" onclick="uploadLogo('${c.id}')">${c.logo?`<img src="${c.logo}">`:`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B0B8CC" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>`}</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--nv)">${c.name}</div><div style="font-size:9px;color:var(--mt)">${c.active?'Ativo':'Inativo'}</div></div><div style="display:flex;gap:4px"><button class="ib" onclick="editClientName('${c.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A5068" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib" onclick="toggleClientActive('${c.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="${c.active?'#16A34A':'#8690A8'}" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></button><button class="ib dg" onclick="deleteClient('${c.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></div></div>`).join('')}`;
+    H='<div class="ph"><div><h1>Clientes</h1><p>Gerencie clientes</p></div></div>';
+    H+='<div class="cd cp" style="display:flex;gap:8px;align-items:center;margin-bottom:14px"><input id="newClientInput" class="in" placeholder="Novo cliente..." style="flex:1" onkeydown="if(event.key===\'Enter\')addClient()"><button class="bt bp" onclick="addClient()">+ Adicionar</button></div>';
+    H+=CLS.map(function(c){ return '<div class="cd cc '+(c.active?"":"off")+'"><div class="la" onclick="uploadLogo(\''+c.id+'\')">'+(c.logo?'<img src="'+c.logo+'">':"")+'</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:var(--nv)">'+c.name+'</div><div style="font-size:9px;color:var(--mt)">'+(c.active?"Ativo":"Inativo")+'</div></div><div style="display:flex;gap:4px"><button class="ib" onclick="editClientName(\''+c.id+'\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A5068" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="ib" onclick="toggleClientActive(\''+c.id+'\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="'+(c.active?"#16A34A":"#8690A8")+'" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></button><button class="ib dg" onclick="deleteClient(\''+c.id+'\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></div></div>'; }).join("");
   }
 
-  // ═══ COPIAR RELATÓRIO ═══
+  // COPIAR RELATORIO
   if(P==="copy"){
-    let lg=cl&&cl.logo?`<img src="${cl.logo}" style="height:50px;margin-bottom:8px" crossorigin="anonymous">`:'';
-    let tbl=`<table style="width:100%;border-collapse:collapse"><thead><tr><th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:left;border-bottom:1px solid #EEF1F6;background:#F8F9FC">Mês</th>${IND.map(i=>`<th style="padding:8px;font-size:7px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:center;border-bottom:1px solid #EEF1F6;background:#F8F9FC;max-width:80px;white-space:normal;line-height:1.2">${i.label}</th>`).join('')}<th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:right;border-bottom:1px solid #EEF1F6;background:#F8F9FC">OTIF</th></tr></thead><tbody>`;
-    rs.forEach(r=>{tbl+=`<tr style="border-bottom:1px solid #EEF1F6"><td style="padding:8px;font-weight:700;color:#0D2240;font-size:11px">${MS[r.m]}</td>${IND.map(i=>i.key==="otif_ind"?`<td style="padding:8px;text-align:center;font-weight:800;color:${r.otif===100?'#16A34A':'#D97706'}">${r.otif}%</td>`:`<td style="padding:8px;text-align:center"><span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:700;background:${r[i.key]?'#DCFCE7':'#FEE2E2'};color:${r[i.key]?'#16A34A':'#DC2626'}">${r[i.key]?'✓':'✕'}</span></td>`).join('')}<td style="padding:8px;text-align:right;font-weight:800;font-size:13px;color:${r.otif===100?'#16A34A':'#D97706'}">${r.otif}%</td></tr>`});
+    var lg=cl&&cl.logo?'<img src="'+cl.logo+'" style="height:50px;margin-bottom:8px" crossorigin="anonymous">':'';
+    var tbl='<table style="width:100%;border-collapse:collapse"><thead><tr><th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:left;border-bottom:1px solid #EEF1F6;background:#F8F9FC">Mes</th>'+IND.map(function(i){ return '<th style="padding:8px;font-size:7px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:center;border-bottom:1px solid #EEF1F6;background:#F8F9FC;max-width:80px;white-space:normal;line-height:1.2">'+i.label+'</th>'; }).join("")+'<th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:right;border-bottom:1px solid #EEF1F6;background:#F8F9FC">OTIF</th></tr></thead><tbody>';
+    rs.forEach(function(r){ tbl+='<tr style="border-bottom:1px solid #EEF1F6"><td style="padding:8px;font-weight:700;color:#0D2240;font-size:11px">'+MS[r.m]+'</td>'+IND.map(function(i){ return i.key==="otif_ind"?'<td style="padding:8px;text-align:center;font-weight:800;color:'+(r.otif===100?"#16A34A":"#D97706")+'">'+r.otif+'%</td>':'<td style="padding:8px;text-align:center"><span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:700;background:'+(r[i.key]?"#DCFCE7":"#FEE2E2")+';color:'+(r[i.key]?"#16A34A":"#DC2626")+'">'+(r[i.key]?"v":"x")+'</span></td>'; }).join("")+'<td style="padding:8px;text-align:right;font-weight:800;font-size:13px;color:'+(r.otif===100?"#16A34A":"#D97706")+'">'+r.otif+'%</td></tr>'; });
     tbl+='</tbody></table>';
-    H=`<div class="ph"><div><h1>Copiar Relatório — ${cl?cl.name:''}</h1><p>Copie a imagem para colar no email</p></div></div>
-    <div class="cd cp" style="margin-bottom:14px"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bt bp" onclick="copyImage()" id="btnCopy" style="padding:10px 24px">📋 Copiar Imagem</button><button class="bt bgr" onclick="downloadImage()" style="padding:10px 24px">💾 Baixar PNG</button><button class="bt bo" onclick="exportExcel()" style="padding:10px 24px">📊 Excel</button></div><div id="copyTip" style="margin-top:10px;padding:10px 14px;border-radius:8px;background:#DCFCE7;color:#16A34A;font-size:12px;font-weight:600;display:none">✓ Copiada! Cole com Ctrl+V</div></div>
-    <div class="ep" id="previewArea" style="background:#fff"><div class="eh">${lg}<div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:18px;font-weight:800;color:#0D2240">Relatório OTIF — ${y}</div><div style="font-size:11px;color:#8690A8">${cl?cl.name:''} · Química Anastácio</div></div>${tbl}</div>`;
+    H='<div class="ph"><div><h1>Copiar Relatorio - '+(cl?cl.name:"")+'</h1><p>Copie a imagem para colar no email</p></div></div>';
+    H+='<div class="cd cp" style="margin-bottom:14px"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bt bp" onclick="copyImage()" id="btnCopy" style="padding:10px 24px">Copiar Imagem</button><button class="bt bgr" onclick="downloadImage()" style="padding:10px 24px">Baixar PNG</button><button class="bt bo" onclick="exportExcel()" style="padding:10px 24px">Excel</button></div><div id="copyTip" style="margin-top:10px;padding:10px 14px;border-radius:8px;background:#DCFCE7;color:#16A34A;font-size:12px;font-weight:600;display:none">Copiada! Cole com Ctrl+V</div></div>';
+    H+='<div class="ep" id="previewArea" style="background:#fff"><div class="eh">'+lg+'<div style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:18px;font-weight:800;color:#0D2240">Relatorio OTIF - '+y+'</div><div style="font-size:11px;color:#8690A8">'+(cl?cl.name:"")+" - Quimica Anastacio"+'</div></div>'+tbl+'</div>';
   }
 
-  // ═══ IMPORTAR EXCEL ═══
+  // IMPORTAR
   if(P==="import"){
-    H=`<div class="ph"><div><h1>Importar Planilha Excel</h1><p>Importe abas Ações e FNC da planilha do SharePoint</p></div></div>
-    <div class="cd cp"><div class="dz" onclick="document.getElementById('fileImport').click()">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8690A8" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      <p style="color:var(--mt);font-size:13px;margin-top:8px">Clique para selecionar o arquivo .xlsx</p>
-    </div>
-    <input type="file" id="fileImport" accept=".xlsx,.xls" style="display:none" onchange="handleImport(event)">
-    <div style="margin-top:14px;padding:12px;background:var(--sf);border-radius:8px;font-size:11px;color:var(--t2);line-height:1.6">
-      <strong>Abas reconhecidas:</strong><br>
-      • <strong>Ações</strong> — Mês, Cliente, Desvio, Material, Embalagem, Volume, Data, Responsável, FNC, Plano de Ação<br>
-      • <strong>FNC</strong> — Importa todas as colunas
-    </div></div>`;
+    H='<div class="ph"><div><h1>Importar Planilha Excel</h1><p>Importe abas Acoes e FNC da planilha</p></div></div>';
+    H+='<div class="cd cp"><div class="dz" onclick="document.getElementById(\'fileImport\').click()">';
+    H+='<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8690A8" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
+    H+='<p style="color:var(--mt);font-size:13px;margin-top:8px">Clique para selecionar o arquivo .xlsx</p></div>';
+    H+='<input type="file" id="fileImport" accept=".xlsx,.xls" style="display:none" onchange="handleImport(event)">';
+    H+='<div style="margin-top:14px;padding:12px;background:var(--sf);border-radius:8px;font-size:11px;color:var(--t2);line-height:1.6"><strong>Abas reconhecidas:</strong><br>Acoes e FNC</div></div>';
   }
 
-
-  // ═══ ZEUS — USUÁRIOS ═══
+  // ZEUS — USUARIOS
   if(P==="zeus_users"){
-    const roleLabel = {admin:"🛡️ Administrador", editor:"✏️ Editor", viewer:"👁️ Visualizador"};
-    const roleBadge = {admin:"badge-active", editor:"badge-pending", viewer:"badge-rejected"};
-    H=`<div class="ph">
-      <div><h1>⚡ Usuários</h1><p>${USERS.length} usuário(s) cadastrado(s)</p></div>
-      ${_isZeus?`<button class="bt bp" onclick="zeusOpenNewUser()">+ Novo Usuário</button>`:''}
-    </div>
-    ${USERS.length===0?`<div class="cd cp" style="text-align:center;color:var(--mt);padding:40px">Nenhum usuário cadastrado. Clique em "+ Novo Usuário" para começar.</div>`:''}
-    <div style="display:flex;flex-direction:column;gap:10px">
-      ${USERS.map(u=>`
-        <div class="cd" style="padding:14px 18px;display:flex;align-items:center;gap:14px">
-          <div style="width:40px;height:40px;border-radius:10px;background:var(--ab);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">
-            ${u.role==='admin'?'🛡️':u.role==='editor'?'✏️':'👁️'}
-          </div>
-          <div style="flex:1">
-            <div style="font-size:13px;font-weight:700;color:var(--nv)">${u.name}</div>
-            <div style="font-size:11px;color:var(--mt)">${u.email}</div>
-          </div>
-          <span class="${roleBadge[u.role]||'badge-pending'}">${roleLabel[u.role]||u.role}</span>
-          <div style="display:flex;gap:6px">
-            ${_isZeus?`<button class="ib" onclick="zeusEditUser('${u.id}')" title="Editar">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A5068" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>`:''}
-            ${_isZeus?`<button class="ib dg" onclick="zeusDeleteUser('${u.id}')" title="Excluir">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>`:''}
-          </div>
-        </div>`).join('')}
-    </div>\`;
+    var roleLabel = { admin:"Administrador", editor:"Editor", viewer:"Visualizador" };
+    var roleCls   = { admin:"badge badge-admin", editor:"badge badge-editor", viewer:"badge badge-viewer" };
+    H='<div class="ph"><div><h1>Usuarios</h1><p>'+USERS.length+' usuario(s) cadastrado(s)</p></div><button class="bt bp" onclick="openNewUserModal()">+ Novo Usuario</button></div>';
+    if(!USERS.length) {
+      H+='<div class="cd cp" style="text-align:center;color:var(--mt);padding:40px">Nenhum usuario. Clique em "+ Novo Usuario".</div>';
+    } else {
+      USERS.forEach(function(u){
+        H+='<div class="user-card">';
+        H+='<div style="width:40px;height:40px;border-radius:10px;background:var(--ab);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0">'+(u.role==="admin"?"A":u.role==="editor"?"E":"V")+'</div>';
+        H+='<div class="uc-info"><div class="uc-name">'+u.name+'</div><div class="uc-email">'+u.email+'</div></div>';
+        H+='<span class="'+(roleCls[u.role]||"badge badge-viewer")+'">'+(roleLabel[u.role]||u.role)+'</span>';
+        H+='<span class="badge '+(u.status==="active"?"badge-admin":"badge-viewer")+'">'+(u.status==="active"?"Ativo":"Inativo")+'</span>';
+        H+='<div style="display:flex;gap:6px">';
+        H+='<button class="ib" onclick="openEditUserModal(\''+u.id+'\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A5068" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>';
+        H+='<button class="ib" onclick="toggleUserStatus(\''+u.id+'\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="'+(u.status==="active"?"#16A34A":"#8690A8")+'" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></button>';
+        H+='<button class="ib dg" onclick="deleteUserById(\''+u.id+'\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>';
+        H+='</div></div>';
+      });
+    }
   }
 
-    // ═══ ZEUS — PERSONALIZAR ═══
+  // ZEUS — PERSONALIZAR
   if(P==="zeus_design"){
-    const th = loadTheme();
-    const sbLogo = localStorage.getItem('sb_logo_anastacio');
-    const sysName = localStorage.getItem('otif_sysname') || 'Química Anastácio';
-    const sysYears = JSON.parse(localStorage.getItem('otif_years') || JSON.stringify(YRS));
-    const navItems = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
+    var th2=loadTheme();
+    var sysName=localStorage.getItem("otif_sysname")||"Quimica Anastacio";
+    var sbLogo=localStorage.getItem("otif_logo");
+    H='<div class="ph"><div><h1>Personalizar Sistema</h1><p>Configure visual e dados do painel</p></div></div>';
+    H+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:900px">';
 
-    H=`<div class="ph"><div><h1>🎨 Personalizar Sistema</h1><p>Configure visual, navegação e dados do painel</p></div></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:900px">
+    // Logo
+    H+='<div class="cd cp" style="grid-column:1/3"><h3 style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:13px;font-weight:800;color:var(--nv);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--bd)">Logo do Menu</h3>';
+    H+='<div style="display:flex;align-items:center;gap:16px"><div style="width:90px;height:56px;border:2px dashed #D1D5DB;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--sf)">'+(sbLogo?'<img src="'+sbLogo+'" style="max-width:100%;max-height:100%;object-fit:contain">':"Sem logo")+'</div>';
+    H+='<div style="display:flex;gap:8px"><button class="bt bp" onclick="zeusUploadLogo()">Trocar Logo</button>'+(sbLogo?'<button class="bt bo" onclick="zeusRemoveLogo()">Remover</button>':"")+'</div></div></div>';
 
-      <!-- Logo -->
-      <div class="cd cp zeus-section" style="grid-column:1/3">
-        <h3>🖼️ Logo do Menu Lateral</h3>
-        <div style="display:flex;align-items:center;gap:16px">
-          <div style="width:90px;height:56px;border:2px dashed #D1D5DB;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--sf)">
-            ${sbLogo?'<img src="'+sbLogo+'" style="max-width:100%;max-height:100%;object-fit:contain">'  :'<span style="font-size:10px;color:var(--mt)">Sem logo</span>'}
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="bt bp" onclick="zeusUploadSbLogo()">📁 Trocar Logo</button>
-            ${sbLogo?'<button class="bt bo" onclick="zeusRemoveLogo()">Remover</button>':''}
-          </div>
-        </div>
-      </div>
+    // Nome
+    H+='<div class="cd cp"><h3 style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:13px;font-weight:800;color:var(--nv);margin-bottom:12px">Nome do Sistema</h3>';
+    H+='<div style="display:flex;gap:8px"><input id="sysNameInp" class="in" value="'+sysName+'" style="flex:1"><button class="bt bp" onclick="saveSysName()">Salvar</button></div></div>';
 
-      <!-- Nome do sistema -->
-      <div class="cd cp zeus-section">
-        <h3>✏️ Nome do Sistema</h3>
-        <div style="display:flex;gap:8px;align-items:center">
-          <input id="sysNameInp" class="in" value="${sysName}" style="flex:1">
-          <button class="bt bp" onclick="saveSysName()">Salvar</button>
-        </div>
-        <div style="font-size:10px;color:var(--mt);margin-top:6px">Aparece no menu lateral e no título da página</div>
-      </div>
+    // Fonte
+    H+='<div class="cd cp"><h3 style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:13px;font-weight:800;color:var(--nv);margin-bottom:12px">Fonte</h3>';
+    H+='<select class="in" onchange="applyFont(this.value)">';
+    ["DM Sans","Inter","Roboto","Poppins","Open Sans"].forEach(function(f){ H+='<option value="'+f+'"'+((th2.font||"DM Sans")===f?" selected":"")+'>'+f+'</option>'; });
+    H+='</select></div>';
 
-      <!-- Fonte -->
-      <div class="cd cp zeus-section">
-        <h3>🔤 Fonte do Sistema</h3>
-        <select class="in" onchange="applyFont(this.value)" style="width:100%">
-          <option value="DM Sans" ${(th.font||'DM Sans')==='DM Sans'?'selected':''}>DM Sans (padrão)</option>
-          <option value="Inter" ${th.font==='Inter'?'selected':''}>Inter</option>
-          <option value="Roboto" ${th.font==='Roboto'?'selected':''}>Roboto</option>
-          <option value="Poppins" ${th.font==='Poppins'?'selected':''}>Poppins</option>
-          <option value="Open Sans" ${th.font==='Open Sans'?'selected':''}>Open Sans</option>
-        </select>
-      </div>
+    // Cores
+    H+='<div class="cd cp" style="grid-column:1/3"><h3 style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:13px;font-weight:800;color:var(--nv);margin-bottom:12px">Cores</h3>';
+    [
+      ["--nv","nv",th2.nv||"#0D2240","Cor Principal (Menu)","Fundo do menu e botoes primarios"],
+      ["--ac","ac",th2.ac||"#2563EB","Cor de Destaque","Links e botoes secundarios"],
+      ["--gn","gn",th2.gn||"#16A34A","Cor Verde","Indicadores positivos"],
+      ["--bg","bg",th2.bg||"#F4F6FA","Cor de Fundo","Fundo geral do sistema"]
+    ].forEach(function(c){
+      H+='<div class="theme-row"><div><div class="theme-label">'+c[3]+'</div><div class="theme-sub">'+c[4]+'</div></div>';
+      H+='<div class="color-swatch"><input type="color" value="'+c[2]+'" oninput="applyColor(\''+c[0]+'\',this.value)" onchange="saveThemeColor(\''+c[1]+'\',this.value)"></div></div>';
+    });
+    H+='</div>';
 
-      <!-- Cores -->
-      <div class="cd cp zeus-section" style="grid-column:1/3">
-        <h3>🎨 Cores do Sistema</h3>
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0">
-          <div class="theme-row" style="padding-right:20px"><div><div class="theme-label">Cor Principal (Menu)</div><div class="theme-sub">Fundo do menu lateral e botões primários</div></div><div class="color-swatch"><input type="color" value="${th.nv||'#0D2240'}" oninput="applyColor('--nv',this.value)" onchange="saveThemeColor('nv',this.value)"></div></div>
-          <div class="theme-row" style="padding-left:20px"><div><div class="theme-label">Cor de Destaque</div><div class="theme-sub">Links, botões secundários, foco</div></div><div class="color-swatch"><input type="color" value="${th.ac||'#2563EB'}" oninput="applyColor('--ac',this.value)" onchange="saveThemeColor('ac',this.value)"></div></div>
-          <div class="theme-row" style="padding-right:20px"><div><div class="theme-label">Cor Verde (Conforme)</div><div class="theme-sub">Indicadores positivos e badges</div></div><div class="color-swatch"><input type="color" value="${th.gn||'#16A34A'}" oninput="applyColor('--gn',this.value)" onchange="saveThemeColor('gn',this.value)"></div></div>
-          <div class="theme-row" style="padding-left:20px"><div><div class="theme-label">Cor de Fundo</div><div class="theme-sub">Fundo geral do sistema</div></div><div class="color-swatch"><input type="color" value="${th.bg||'#F4F6FA'}" oninput="applyColor('--bg',this.value)" onchange="saveThemeColor('bg',this.value)"></div></div>
-        </div>
-      </div>
-
-      <!-- Anos -->
-      <div class="cd cp zeus-section">
-        <h3>📅 Anos Disponíveis no Filtro</h3>
-        <div id="yearsListZeus" style="display:flex;flex-direction:column;gap:6px">
-          ${sysYears.map(y=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--sf);border-radius:8px;font-size:13px;font-weight:700"><span>${y}</span><button class="ib dg" onclick="zeusRemoveYear(${y})"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></div>`).join('')}
-        </div>
-        <div style="display:flex;gap:6px;margin-top:10px">
-          <input id="newYearInp" class="in" type="number" placeholder="Ex: 2027" style="width:100px">
-          <button class="bt bp" onclick="zeusAddYear()">+ Adicionar</button>
-        </div>
-      </div>
-
-      <!-- Menu / Navegação -->
-      <div class="cd cp zeus-section">
-        <h3>🗂️ Ordem e Visibilidade do Menu</h3>
-        <div id="navOrderList" style="display:flex;flex-direction:column;gap:6px">
-          ${navItems.map((n,i)=>`<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--sf);border-radius:8px">
-            <div style="display:flex;flex-direction:column;gap:2px">
-              <button onclick="zeusNavUp(${i})" style="background:none;border:none;cursor:pointer;color:var(--mt);font-size:10px;padding:0;line-height:1">▲</button>
-              <button onclick="zeusNavDown(${i})" style="background:none;border:none;cursor:pointer;color:var(--mt);font-size:10px;padding:0;line-height:1">▼</button>
-            </div>
-            <span style="flex:1;font-size:12px;font-weight:600">${n.lbl}</span>
-            <button class="ib dg" onclick="zeusNavRemove(${i})" title="Ocultar"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>
-          </div>`).join('')}
-        </div>
-        <div style="margin-top:10px">
-          <select id="navAddSel" class="in" style="width:100%;margin-bottom:6px">
-            ${NAV.filter(n=>!n.zeusOnly&&!navItems.find(x=>x.id===n.id)).map(n=>`<option value="${n.id}">${n.lbl}</option>`).join('')||'<option disabled>Todos já estão no menu</option>'}
-          </select>
-          <button class="bt bp" onclick="zeusNavAdd()" style="width:100%">+ Adicionar ao Menu</button>
-        </div>
-      </div>
-
-      <!-- Restaurar -->
-      <div class="cd cp" style="grid-column:1/3;display:flex;justify-content:flex-end">
-        <button class="bt bo" onclick="resetTheme()">↺ Restaurar Tudo ao Padrão</button>
-      </div>
-
-    </div>`;
+    // Restaurar
+    H+='<div class="cd cp" style="grid-column:1/3;display:flex;justify-content:flex-end"><button class="bt bo" onclick="resetTheme()">Restaurar Padrao</button></div>';
+    H+='</div>';
   }
 
   mc.innerHTML = H;
 }
 
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+async function initApp() {
+  // Nav
+  var visibleNav = NAV.filter(function(p){ return !p.zeus || _isZeus; });
+  document.getElementById("navArea").innerHTML = visibleNav.map(function(p){
+    return '<button class="nb" data-id="'+p.id+'" onclick="goPage(\''+p.id+'\')">' + p.icon + " " + p.lbl + '</button>';
+  }).join("");
 
+  // Anos
+  var ys = document.getElementById("yearSel");
+  ys.innerHTML = "";
+  YRS.forEach(function(y){ var o=document.createElement("option"); o.value=y; o.textContent=y; ys.appendChild(o); });
+  ys.value = "2025";
 
-// ═══ PERMISSÕES ═══
-function canEdit(){ return _isZeus || _userRole === 'editor' || _userRole === 'admin'; }
-function canAdmin(){ return _isZeus || _userRole === 'admin'; }
-function isViewer(){ return _userRole === 'viewer'; }
+  // Data
+  document.getElementById("dateNow").textContent = new Date().toLocaleDateString("pt-BR");
 
-// ═══ LOGIN & ZEUS ═══
-const ZEUS_USER = "amanda.almeida@anastacio.com";
-const ZEUS_PASS = "Anastacio@2026"; // mantido para referência futura
-let _isZeus = false;
-let _userRole = null; // null=zeus, admin, editor, viewer
-let _userRole = 'user'; // 'zeus' | 'admin' | 'user'
-
-
-
-function zeusUploadSbLogo(){
-  if(!_isZeus) return;
-  const inp = document.createElement("input");
-  inp.type = "file"; inp.accept = "image/*";
-  inp.onchange = e => {
-    const f = e.target.files[0]; if(!f) return;
-    const r = new FileReader();
-    r.onload = ev => {
-      localStorage.setItem("sb_logo_anastacio", ev.target.result);
-      showSbLogo(ev.target.result);
-      toast("✓ Logo salvo!");
-    };
-    r.readAsDataURL(f);
-  };
-  inp.click();
-}
-
-function showSbLogo(src){
-  const wrap = document.getElementById("sbLogoWrap");
-  const img = document.getElementById("sbLogoImg");
-  img.src = src;
-  wrap.style.display = "block";
-}
-
-
-// ═══ USUÁRIOS (salvo no Supabase via USERS array) ═══
-let USERS = [];
-
-async function loadUsers(){
-  try {
-    const r = await fetch(`${SUPABASE_URL}/rest/v1/usuarios?order=created_at.asc`,{
-      headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`}
-    });
-    if(r.ok) USERS = await r.json();
-  } catch(e){ USERS = JSON.parse(localStorage.getItem('otif_users')||'[]'); }
-}
-
-async function saveUsers(){
-  localStorage.setItem('otif_users', JSON.stringify(USERS));
-  // Tenta salvar no Supabase também
-  try {
-    for(const u of USERS){
-      await fetch(`${SUPABASE_URL}/rest/v1/usuarios`,{
-        method:'POST',
-        headers:{"apikey":SUPABASE_KEY,"Authorization":`Bearer ${SUPABASE_KEY}`,"Content-Type":"application/json","Prefer":"resolution=merge-duplicates"},
-        body: JSON.stringify([{id:u.id,name:u.name,email:u.email,pass:u.pass,status:u.status}])
-      });
-    }
-  } catch(e){}
-}
-
-
-async 
-async function doLogin(){
-  const u   = document.getElementById("loginUser").value.trim();
-  const err = document.getElementById("loginErr");
-  // Zeus
-  if(u.toLowerCase() === ZEUS_USER.toLowerCase()){
-    _isZeus = true;
-    _userRole = 'zeus';
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("appShell").classList.add("visible");
-    document.getElementById("zeusBadgeWrap").style.display = "block";
-    document.getElementById("sbLogoBtn").style.display = "block";
-    const logo = localStorage.getItem("sb_logo_anastacio");
-    if(logo){ showSbLogo(logo); }
-    err.textContent = "";
-    await loadUsers();
-    initApp();
-    return;
-  }
-  // Usuário comum — acesso só por e-mail
-  await loadUsers();
-  const found = USERS.find(usr => usr.email === u);
-  if(!found){ err.textContent = "E-mail não encontrado. Fale com o administrador."; return; }
-  if(found.status === 'rejected'){ err.textContent = "Seu acesso foi revogado. Entre em contato com o administrador."; return; }
-  _isZeus = false;
-  _userRole = found.role;
-  document.getElementById("loginScreen").style.display = "none";
-  document.getElementById("appShell").classList.add("visible");
-  err.textContent = "";
-  initApp();
-}
-
-function toggleAdminRole(id){
-  const u = USERS.find(x=>x.id===id);
-  if(!u) return;
-  u.role = u.role==='admin' ? 'user' : 'admin';
-  saveUsers();
-  renderAll();
-  toast(u.role==='admin' ? `🛡️ ${u.name} agora é Admin!` : `${u.name} voltou para Usuário.`);
-}
-
-
-// ═══ TEMA / PERSONALIZAÇÃO ═══
-function loadTheme(){
-  return JSON.parse(localStorage.getItem('otif_theme')||'{}');
-}
-function applyColor(varName, value){
-  document.documentElement.style.setProperty(varName, value);
-  // Sincronizar cor secundária para nv
-  if(varName==='--nv') document.documentElement.style.setProperty('--n2', value+'dd');
-}
-function saveThemeColor(key, value){
-  const th = loadTheme(); th[key]=value;
-  localStorage.setItem('otif_theme', JSON.stringify(th));
-}
-function applyFont(font){
-  document.body.style.fontFamily = `'${font}', sans-serif`;
-  const th = loadTheme(); th.font=font;
-  localStorage.setItem('otif_theme', JSON.stringify(th));
-  // Carrega do Google Fonts se necessário
-  if(!['DM Sans'].includes(font)){
-    const link=document.createElement('link');
-    link.rel='stylesheet';
-    link.href=`https://fonts.googleapis.com/css2?family=${font.replace(' ','+')}:wght@400;500;600;700&display=swap`;
-    document.head.appendChild(link);
-  }
-}
-function resetTheme(){
-  if(!confirm("Restaurar todas as cores e fontes padrão?")) return;
-  localStorage.removeItem('otif_theme');
-  location.reload();
-}
-function applyStoredTheme(){
-  const th = loadTheme();
-  if(th.nv) applyColor('--nv', th.nv);
-  if(th.ac) applyColor('--ac', th.ac);
-  if(th.gn) applyColor('--gn', th.gn);
-  if(th.bg) applyColor('--bg', th.bg);
-  if(th.font) applyFont(th.font);
-}
-function zeusRemoveLogo(){
-  localStorage.removeItem('sb_logo_anastacio');
-  document.getElementById("sbLogoWrap").style.display="none";
-  toast("Logo removido.");
-  renderAll();
-}
-
-
-
-// ═══ ZEUS — GESTÃO DE USUÁRIOS ═══
-function zeusOpenNewUser(){
-  document.getElementById("mdlT").textContent = "Novo Usuário";
-  document.getElementById("mdlB").innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nome completo</label>
-        <input id="nuName" class="in" placeholder="Nome do usuário"></div>
-      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">E-mail / Login</label>
-        <input id="nuEmail" class="in" placeholder="email@empresa.com"></div>
-
-      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nível de Acesso</label>
-        <select id="nuRole" class="in">
-          <option value="viewer">👁️ Visualizador — só leitura</option>
-          <option value="editor">✏️ Editor — preenche faróis e ações</option>
-          <option value="admin">🛡️ Administrador — aprova usuários</option>
-        </select>
-      </div>
-      <div id="nuErr" style="font-size:11px;color:var(--rd);font-weight:600;min-height:16px"></div>
-      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px">
-        <button class="bt bo" onclick="document.getElementById('mdl').style.display='none'">Cancelar</button>
-        <button class="bt bp" onclick="zeusSaveNewUser()">✓ Criar Usuário</button>
-      </div>
-    </div>`;
-  document.getElementById("mdl").style.display = "flex";
-}
-
-async function zeusSaveNewUser(){
-  const name  = document.getElementById("nuName").value.trim();
-  const email = document.getElementById("nuEmail").value.trim();
-  const role  = document.getElementById("nuRole").value;
-  const err   = document.getElementById("nuErr");
-  if(!name||!email){ err.textContent="Preencha nome e e-mail."; return; }
-  if(USERS.find(u=>u.email===email)){ err.textContent="Este e-mail já está cadastrado."; return; }
-  const newUser = { id:"u_"+Date.now(), name, email, role, status:"active" };
-  USERS.push(newUser);
-  await saveUsers();
-  document.getElementById("mdl").style.display = "none";
-  renderAll();
-  toast(`✓ Usuário "${name}" criado!`);
-}
-
-function zeusEditUser(id){
-  const u = USERS.find(x=>x.id===id);
-  if(!u) return;
-  document.getElementById("mdlT").textContent = "Editar Usuário";
-  document.getElementById("mdlB").innerHTML = `
-    <div style="display:flex;flex-direction:column;gap:12px">
-      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nome completo</label>
-        <input id="euName" class="in" value="${u.name}"></div>
-      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">E-mail / Login</label>
-        <input id="euEmail" class="in" value="${u.email}"></div>
-
-      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nível de Acesso</label>
-        <select id="euRole" class="in">
-          <option value="viewer" ${u.role==='viewer'?'selected':''}>👁️ Visualizador — só leitura</option>
-          <option value="editor" ${u.role==='editor'?'selected':''}>✏️ Editor — preenche faróis e ações</option>
-          <option value="admin" ${u.role==='admin'?'selected':''}>🛡️ Administrador — aprova usuários</option>
-        </select>
-      </div>
-      <div id="euErr" style="font-size:11px;color:var(--rd);font-weight:600;min-height:16px"></div>
-      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px">
-        <button class="bt bo" onclick="document.getElementById('mdl').style.display='none'">Cancelar</button>
-        <button class="bt bp" onclick="zeusSaveEditUser('${u.id}')">✓ Salvar</button>
-      </div>
-    </div>`;
-  document.getElementById("mdl").style.display = "flex";
-}
-
-async function zeusSaveEditUser(id){
-  const u = USERS.find(x=>x.id===id);
-  if(!u) return;
-  const name  = document.getElementById("euName").value.trim();
-  const email = document.getElementById("euEmail").value.trim();
-  const role  = document.getElementById("euRole").value;
-  const err   = document.getElementById("euErr");
-  if(!name||!email){ err.textContent="Nome e e-mail são obrigatórios."; return; }
-
-  u.name = name; u.email = email; u.role = role;
-
-  await saveUsers();
-  document.getElementById("mdl").style.display = "none";
-  renderAll();
-  toast(`✓ Usuário "${name}" atualizado!`);
-}
-
-async function zeusDeleteUser(id){
-  const u = USERS.find(x=>x.id===id);
-  if(!u || !confirm(`Excluir o usuário "${u.name}"?`)) return;
-  USERS = USERS.filter(x=>x.id!==id);
-  await saveUsers();
-  renderAll();
-  toast(`Usuário "${u.name}" excluído.`);
-}
-
-// ═══ ZEUS — FUNÇÕES DE PERSONALIZAÇÃO EXTRA ═══
-function saveSysName(){
-  const v = document.getElementById("sysNameInp").value.trim();
-  if(!v) return;
-  localStorage.setItem('otif_sysname', v);
-  // Atualizar sidebar
-  document.querySelector('.sb-lg h2').innerHTML = v.replace(' ', ' <span>') + '</span>';
-  document.title = 'Sistema OTIF — ' + v;
-  toast("✓ Nome salvo!");
-}
-
-function zeusAddYear(){
-  const inp = document.getElementById("newYearInp");
-  const y = parseInt(inp.value);
-  if(!y || y < 2000 || y > 2099){ toast("Ano inválido!"); return; }
-  const years = JSON.parse(localStorage.getItem('otif_years') || JSON.stringify(YRS));
-  if(years.includes(y)){ toast("Ano já existe!"); return; }
-  years.push(y); years.sort();
-  localStorage.setItem('otif_years', JSON.stringify(years));
-  // Atualizar selector de anos
-  const ys = document.getElementById("yearSel");
-  const opt = document.createElement("option");
-  opt.value = y; opt.textContent = y;
-  ys.appendChild(opt);
-  inp.value = "";
-  toast("✓ Ano " + y + " adicionado!");
-  renderAll();
-}
-
-function zeusRemoveYear(y){
-  if(!confirm("Remover o ano " + y + " do filtro?")) return;
-  const years = JSON.parse(localStorage.getItem('otif_years') || JSON.stringify(YRS));
-  const updated = years.filter(x => x !== y);
-  localStorage.setItem('otif_years', JSON.stringify(updated));
-  // Remover do selector
-  const ys = document.getElementById("yearSel");
-  Array.from(ys.options).forEach(o => { if(parseInt(o.value)===y) ys.removeChild(o); });
-  toast("Ano " + y + " removido.");
-  renderAll();
-}
-
-function zeusNavUp(i){
-  const nav = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
-  if(i===0) return;
-  [nav[i-1], nav[i]] = [nav[i], nav[i-1]];
-  localStorage.setItem('otif_nav', JSON.stringify(nav));
-  rebuildNav(); renderAll();
-}
-
-function zeusNavDown(i){
-  const nav = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
-  if(i===nav.length-1) return;
-  [nav[i], nav[i+1]] = [nav[i+1], nav[i]];
-  localStorage.setItem('otif_nav', JSON.stringify(nav));
-  rebuildNav(); renderAll();
-}
-
-function zeusNavRemove(i){
-  const nav = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
-  if(nav.length<=1){ toast("Precisa ter ao menos 1 item no menu!"); return; }
-  nav.splice(i,1);
-  localStorage.setItem('otif_nav', JSON.stringify(nav));
-  rebuildNav(); renderAll();
-}
-
-function zeusNavAdd(){
-  const sel = document.getElementById("navAddSel");
-  if(!sel || !sel.value) return;
-  const nav = JSON.parse(localStorage.getItem('otif_nav') || 'null') || NAV.filter(n=>!n.zeusOnly);
-  const item = NAV.find(n=>n.id===sel.value);
-  if(!item || nav.find(n=>n.id===item.id)) return;
-  nav.push(item);
-  localStorage.setItem('otif_nav', JSON.stringify(nav));
-  rebuildNav(); renderAll(); toast("✓ " + item.lbl + " adicionado!");
-}
-
-function rebuildNav(){
-  const storedNav = JSON.parse(localStorage.getItem('otif_nav') || 'null');
-  const isAdmin = _userRole === 'admin' || _userRole === 'zeus';
-  const isZeus  = _userRole === 'zeus';
-  const visibleNav = storedNav
-    ? [...storedNav, ...NAV.filter(n=>(n.adminOk && canAdmin())||(n.zeusOnly && _isZeus))]
-    : NAV.filter(p => (!p.adminOk && !p.zeusOnly) || (p.adminOk && canAdmin()) || (p.zeusOnly && _isZeus));
-  document.getElementById("navArea").innerHTML = visibleNav.map((p,i)=>
-    `<button class="nb${window._curP===p.id?' on':''}" onclick="goPage('${p.id}')">${p.icon} ${p.lbl}</button>`
-  ).join('');
-}
-
-function applyStoredNav(){
-  const storedNav = JSON.parse(localStorage.getItem('otif_nav') || 'null');
-  if(storedNav) localStorage.setItem('otif_nav', JSON.stringify(storedNav));
-}
-
-// ═══ INIT ═══
-async function initApp(){
-  applyStoredTheme();
-  // Build nav
-  rebuildNav();
-
-  // Year selector
-  const ys=document.getElementById("yearSel");
-  const activeYears = JSON.parse(localStorage.getItem('otif_years') || JSON.stringify(YRS));
-  activeYears.forEach(y=>{const o=document.createElement("option");o.value=y;o.textContent=y;ys.appendChild(o)});
-  ys.value="2025";
-
-  // Date
-  document.getElementById("dateNow").textContent=new Date().toLocaleDateString("pt-BR");
-
-  // Month chips
+  // Chips
   renderMonthChips();
 
-  // Load data
+  // Dados
   await loadData();
-  if(_isZeus) await loadUsers();
+  if (_isZeus) await loadUsers();
 
-  // Set initial client
-  if(CLS.length) window._selC = CLS[0].id;
+  if (CLS.length) window._selC = CLS[0].id;
 
-  // First render
   renderAll();
 }
 </script>
