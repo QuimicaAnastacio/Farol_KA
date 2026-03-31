@@ -175,26 +175,11 @@ tr.is{background:rgba(220,38,38,.02)}
       <small>Painel OTIF · Acesso Restrito</small>
     </div>
     <div class="login-field">
-      <label>Usuário</label>
-      <input type="text" id="loginUser" placeholder="Seu usuário" onkeydown="if(event.key==='Enter')doLogin()">
-    </div>
-    <div class="login-field">
-      <label>Senha</label>
-      <input type="password" id="loginPass" placeholder="Sua senha" onkeydown="if(event.key==='Enter')doLogin()">
+      <label>E-mail</label>
+      <input type="email" id="loginUser" placeholder="seu@email.com" onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <div class="login-err" id="loginErr"></div>
     <button class="login-btn" onclick="doLogin()">Entrar</button>
-    <div class="login-switch">Não tem acesso? <a onclick="toggleRequestPanel()">Solicitar acesso</a></div>
-  </div>
-  <!-- Painel de solicitação -->
-  <div class="login-box" id="requestPanel" style="margin-top:16px;display:none">
-    <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:800;color:var(--nv);margin-bottom:16px">Solicitar Acesso</div>
-    <div class="login-field"><label>Nome completo</label><input type="text" id="reqName" placeholder="Seu nome" class="login-field-in"></div>
-    <div class="login-field"><label>E-mail</label><input type="email" id="reqEmail" placeholder="seu@email.com" class="login-field-in"></div>
-    <div class="login-field"><label>Senha desejada</label><input type="password" id="reqPass" placeholder="Mínimo 6 caracteres" class="login-field-in"></div>
-    <div class="login-err" id="reqErr"></div>
-    <button class="login-btn" onclick="doRequestAccess()">Enviar Solicitação</button>
-    <div class="login-switch"><a onclick="toggleRequestPanel()">← Voltar ao login</a></div>
   </div>
 </div>
 
@@ -257,7 +242,7 @@ const NAV=[
   {id:"copy",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',lbl:"Copiar Relatório"},
   {id:"import",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',lbl:"Importar Excel"},
   // Zeus only
-  {id:"zeus_users",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',lbl:"Usuários",zeusOnly:true},
+  {id:"zeus_users",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',lbl:"Usuários",adminOnly:true},
   {id:"zeus_design",icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>',lbl:"Personalizar",zeusOnly:true},
 ];
 
@@ -511,34 +496,35 @@ function renderAll(){
 
   // ═══ ZEUS — USUÁRIOS ═══
   if(P==="zeus_users"){
-    const pending = USERS.filter(u=>u.status==='pending');
-    const active  = USERS.filter(u=>u.status==='active');
-    const rejected= USERS.filter(u=>u.status==='rejected');
-    H=`<div class="ph"><div><h1>⚡ Gerenciar Usuários</h1><p>Aprove ou recuse solicitações de acesso</p></div></div>`;
-    if(pending.length){
-      H+=`<div class="zeus-section"><h3>🕐 Aguardando Aprovação (${pending.length})</h3>`;
-      pending.forEach(u=>{
-        H+=`<div class="user-card"><div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-email">${u.email}</div></div><div class="uc-actions"><span class="badge-pending">Pendente</span><button class="bt bgr" onclick="approveUser('${u.id}')">✓ Aprovar</button><button class="bt" style="background:var(--rb);color:var(--rd)" onclick="rejectUser('${u.id}')">✕ Recusar</button></div></div>`;
-      });
-      H+=`</div>`;
-    }
-    H+=`<div class="zeus-section"><h3>✅ Usuários Ativos (${active.length})</h3>`;
-    if(active.length){
-      active.forEach(u=>{
-        H+=`<div class="user-card"><div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-email">${u.email}</div></div><div class="uc-actions"><span class="badge-active">Ativo</span><button class="bt" style="background:var(--rb);color:var(--rd);font-size:10px" onclick="revokeUser('${u.id}')">Revogar</button></div></div>`;
-      });
-    } else { H+=`<div style="color:var(--mt);font-size:12px;padding:10px 0">Nenhum usuário ativo.</div>`; }
-    H+=`</div>`;
-    if(rejected.length){
-      H+=`<div class="zeus-section"><h3>❌ Recusados (${rejected.length})</h3>`;
-      rejected.forEach(u=>{
-        H+=`<div class="user-card"><div class="uc-info"><div class="uc-name">${u.name}</div><div class="uc-email">${u.email}</div></div><div class="uc-actions"><span class="badge-rejected">Recusado</span><button class="bt bo" onclick="approveUser('${u.id}')">Reativar</button></div></div>`;
-      });
-      H+=`</div>`;
-    }
+    const roleLabel = {admin:"🛡️ Administrador", editor:"✏️ Editor", viewer:"👁️ Visualizador"};
+    const roleBadge = {admin:"badge-active", editor:"badge-pending", viewer:"badge-rejected"};
+    H=`<div class="ph">
+      <div><h1>⚡ Usuários</h1><p>${USERS.length} usuário(s) cadastrado(s)</p></div>
+      ${_isZeus?`<button class="bt bp" onclick="zeusOpenNewUser()">+ Novo Usuário</button>`:''}
+    </div>
+    ${USERS.length===0?`<div class="cd cp" style="text-align:center;color:var(--mt);padding:40px">Nenhum usuário cadastrado. Clique em "+ Novo Usuário" para começar.</div>`:''}
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${USERS.map(u=>`
+        <div class="cd" style="padding:14px 18px;display:flex;align-items:center;gap:14px">
+          <div style="width:40px;height:40px;border-radius:10px;background:var(--ab);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">
+            ${u.role==='admin'?'🛡️':u.role==='editor'?'✏️':'👁️'}
+          </div>
+          <div style="flex:1">
+            <div style="font-size:13px;font-weight:700;color:var(--nv)">${u.name}</div>
+            <div style="font-size:11px;color:var(--mt)">${u.email}</div>
+          </div>
+          <span class="${roleBadge[u.role]||'badge-pending'}">${roleLabel[u.role]||u.role}</span>
+          <div style="display:flex;gap:6px">
+            ${_isZeus?`<button class="ib" onclick="zeusEditUser('${u.id}')" title="Editar">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4A5068" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>`:''}
+            ${_isZeus?`<button class="ib dg" onclick="zeusDeleteUser('${u.id}')" title="Excluir">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button>`:''}
+          </div>
+        </div>`).join('')}
+    </div>\`;
   }
 
-  // ═══ ZEUS — PERSONALIZAR ═══
+    // ═══ ZEUS — PERSONALIZAR ═══
   if(P==="zeus_design"){
     const th = loadTheme();
     const sbLogo = localStorage.getItem('sb_logo_anastacio');
@@ -643,10 +629,18 @@ function renderAll(){
 }
 
 
+
+// ═══ PERMISSÕES ═══
+function canEdit(){ return _isZeus || _userRole === 'editor' || _userRole === 'admin'; }
+function canAdmin(){ return _isZeus || _userRole === 'admin'; }
+function isViewer(){ return _userRole === 'viewer'; }
+
 // ═══ LOGIN & ZEUS ═══
 const ZEUS_USER = "Zeus";
 const ZEUS_PASS = "Anastacio@2026";
 let _isZeus = false;
+let _userRole = null; // null=zeus, admin, editor, viewer
+let _userRole = 'user'; // 'zeus' | 'admin' | 'user'
 
 
 
@@ -701,37 +695,15 @@ async function saveUsers(){
   } catch(e){}
 }
 
-function toggleRequestPanel(){
-  const p = document.getElementById("requestPanel");
-  p.style.display = p.style.display === 'none' ? 'block' : 'none';
-}
 
-async function doRequestAccess(){
-  const name  = document.getElementById("reqName").value.trim();
-  const email = document.getElementById("reqEmail").value.trim();
-  const pass  = document.getElementById("reqPass").value;
-  const err   = document.getElementById("reqErr");
-  if(!name||!email||!pass){ err.textContent="Preencha todos os campos."; return; }
-  if(pass.length < 6){ err.textContent="Senha mínimo 6 caracteres."; return; }
-  await loadUsers();
-  if(USERS.find(u=>u.email===email)){ err.textContent="Este e-mail já foi cadastrado."; return; }
-  const newUser = { id: "u_"+Date.now(), name, email, pass, status:"pending" };
-  USERS.push(newUser);
-  await saveUsers();
-  err.style.color="var(--gn)";
-  err.textContent="✓ Solicitação enviada! Aguarde aprovação.";
-  document.getElementById("reqName").value="";
-  document.getElementById("reqEmail").value="";
-  document.getElementById("reqPass").value="";
-}
-
+async 
 async function doLogin(){
   const u   = document.getElementById("loginUser").value.trim();
-  const p   = document.getElementById("loginPass").value;
   const err = document.getElementById("loginErr");
   // Zeus
-  if(u === ZEUS_USER && p === ZEUS_PASS){
+  if(u === ZEUS_USER){
     _isZeus = true;
+    _userRole = 'zeus';
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("appShell").classList.add("visible");
     document.getElementById("zeusBadgeWrap").style.display = "block";
@@ -743,33 +715,28 @@ async function doLogin(){
     initApp();
     return;
   }
-  // Usuário comum
+  // Usuário comum — acesso só por e-mail
   await loadUsers();
-  const found = USERS.find(usr => usr.email === u || usr.name === u);
-  if(!found){ err.textContent = "Usuário não encontrado."; return; }
-  if(found.status === 'pending'){ err.textContent = "Acesso ainda não aprovado pelo administrador."; return; }
-  if(found.status === 'rejected'){ err.textContent = "Seu acesso foi recusado. Entre em contato com o administrador."; return; }
-  if(found.pass !== p){ err.textContent = "Senha incorreta."; return; }
+  const found = USERS.find(usr => usr.email === u);
+  if(!found){ err.textContent = "E-mail não encontrado. Fale com o administrador."; return; }
+  if(found.status === 'rejected'){ err.textContent = "Seu acesso foi revogado. Entre em contato com o administrador."; return; }
   _isZeus = false;
+  _userRole = found.role;
   document.getElementById("loginScreen").style.display = "none";
   document.getElementById("appShell").classList.add("visible");
   err.textContent = "";
   initApp();
 }
 
-function approveUser(id){
+function toggleAdminRole(id){
   const u = USERS.find(x=>x.id===id);
-  if(u){ u.status='active'; saveUsers(); renderAll(); toast(`✓ ${u.name} aprovado!`); }
+  if(!u) return;
+  u.role = u.role==='admin' ? 'user' : 'admin';
+  saveUsers();
+  renderAll();
+  toast(u.role==='admin' ? `🛡️ ${u.name} agora é Admin!` : `${u.name} voltou para Usuário.`);
 }
-function rejectUser(id){
-  const u = USERS.find(x=>x.id===id);
-  if(u){ u.status='rejected'; saveUsers(); renderAll(); toast(`${u.name} recusado.`); }
-}
-function revokeUser(id){
-  if(!confirm("Revogar acesso deste usuário?")) return;
-  const u = USERS.find(x=>x.id===id);
-  if(u){ u.status='rejected'; saveUsers(); renderAll(); toast("Acesso revogado."); }
-}
+
 
 // ═══ TEMA / PERSONALIZAÇÃO ═══
 function loadTheme(){
@@ -816,6 +783,101 @@ function zeusRemoveLogo(){
   renderAll();
 }
 
+
+
+// ═══ ZEUS — GESTÃO DE USUÁRIOS ═══
+function zeusOpenNewUser(){
+  document.getElementById("mdlT").textContent = "Novo Usuário";
+  document.getElementById("mdlB").innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nome completo</label>
+        <input id="nuName" class="in" placeholder="Nome do usuário"></div>
+      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">E-mail / Login</label>
+        <input id="nuEmail" class="in" placeholder="email@empresa.com"></div>
+
+      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nível de Acesso</label>
+        <select id="nuRole" class="in">
+          <option value="viewer">👁️ Visualizador — só leitura</option>
+          <option value="editor">✏️ Editor — preenche faróis e ações</option>
+          <option value="admin">🛡️ Administrador — aprova usuários</option>
+        </select>
+      </div>
+      <div id="nuErr" style="font-size:11px;color:var(--rd);font-weight:600;min-height:16px"></div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px">
+        <button class="bt bo" onclick="document.getElementById('mdl').style.display='none'">Cancelar</button>
+        <button class="bt bp" onclick="zeusSaveNewUser()">✓ Criar Usuário</button>
+      </div>
+    </div>`;
+  document.getElementById("mdl").style.display = "flex";
+}
+
+async function zeusSaveNewUser(){
+  const name  = document.getElementById("nuName").value.trim();
+  const email = document.getElementById("nuEmail").value.trim();
+  const role  = document.getElementById("nuRole").value;
+  const err   = document.getElementById("nuErr");
+  if(!name||!email){ err.textContent="Preencha nome e e-mail."; return; }
+  if(USERS.find(u=>u.email===email)){ err.textContent="Este e-mail já está cadastrado."; return; }
+  const newUser = { id:"u_"+Date.now(), name, email, role, status:"active" };
+  USERS.push(newUser);
+  await saveUsers();
+  document.getElementById("mdl").style.display = "none";
+  renderAll();
+  toast(`✓ Usuário "${name}" criado!`);
+}
+
+function zeusEditUser(id){
+  const u = USERS.find(x=>x.id===id);
+  if(!u) return;
+  document.getElementById("mdlT").textContent = "Editar Usuário";
+  document.getElementById("mdlB").innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nome completo</label>
+        <input id="euName" class="in" value="${u.name}"></div>
+      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">E-mail / Login</label>
+        <input id="euEmail" class="in" value="${u.email}"></div>
+
+      <div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nível de Acesso</label>
+        <select id="euRole" class="in">
+          <option value="viewer" ${u.role==='viewer'?'selected':''}>👁️ Visualizador — só leitura</option>
+          <option value="editor" ${u.role==='editor'?'selected':''}>✏️ Editor — preenche faróis e ações</option>
+          <option value="admin" ${u.role==='admin'?'selected':''}>🛡️ Administrador — aprova usuários</option>
+        </select>
+      </div>
+      <div id="euErr" style="font-size:11px;color:var(--rd);font-weight:600;min-height:16px"></div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px">
+        <button class="bt bo" onclick="document.getElementById('mdl').style.display='none'">Cancelar</button>
+        <button class="bt bp" onclick="zeusSaveEditUser('${u.id}')">✓ Salvar</button>
+      </div>
+    </div>`;
+  document.getElementById("mdl").style.display = "flex";
+}
+
+async function zeusSaveEditUser(id){
+  const u = USERS.find(x=>x.id===id);
+  if(!u) return;
+  const name  = document.getElementById("euName").value.trim();
+  const email = document.getElementById("euEmail").value.trim();
+  const role  = document.getElementById("euRole").value;
+  const err   = document.getElementById("euErr");
+  if(!name||!email){ err.textContent="Nome e e-mail são obrigatórios."; return; }
+
+  u.name = name; u.email = email; u.role = role;
+
+  await saveUsers();
+  document.getElementById("mdl").style.display = "none";
+  renderAll();
+  toast(`✓ Usuário "${name}" atualizado!`);
+}
+
+async function zeusDeleteUser(id){
+  const u = USERS.find(x=>x.id===id);
+  if(!u || !confirm(`Excluir o usuário "${u.name}"?`)) return;
+  USERS = USERS.filter(x=>x.id!==id);
+  await saveUsers();
+  renderAll();
+  toast(`Usuário "${u.name}" excluído.`);
+}
 
 // ═══ ZEUS — FUNÇÕES DE PERSONALIZAÇÃO EXTRA ═══
 function saveSysName(){
@@ -895,9 +957,11 @@ function zeusNavAdd(){
 
 function rebuildNav(){
   const storedNav = JSON.parse(localStorage.getItem('otif_nav') || 'null');
+  const isAdmin = _userRole === 'admin' || _userRole === 'zeus';
+  const isZeus  = _userRole === 'zeus';
   const visibleNav = storedNav
-    ? [...storedNav, ...NAV.filter(n=>n.zeusOnly && _isZeus)]
-    : NAV.filter(p => !p.zeusOnly || _isZeus);
+    ? [...storedNav, ...NAV.filter(n=>(n.adminOk && canAdmin())||(n.zeusOnly && _isZeus))]
+    : NAV.filter(p => (!p.adminOk && !p.zeusOnly) || (p.adminOk && canAdmin()) || (p.zeusOnly && _isZeus));
   document.getElementById("navArea").innerHTML = visibleNav.map((p,i)=>
     `<button class="nb${window._curP===p.id?' on':''}" onclick="goPage('${p.id}')">${p.icon} ${p.lbl}</button>`
   ).join('');
