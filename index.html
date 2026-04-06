@@ -304,6 +304,9 @@ function enterApp() {
   document.getElementById("appShell").classList.add("visible");
   if (_isZeus) {
     document.getElementById("zeusBadgeWrap").style.display = "block";
+  } else if (_userRole === "admin") {
+    document.getElementById("zeusBadgeWrap").style.display = "block";
+    document.querySelector(".zeus-badge").textContent = "Admin";
   }
   var logo = localStorage.getItem("otif_logo");
   if (logo) {
@@ -422,8 +425,15 @@ async function loadData() {
     ]);
     var clientes = results[0], indicadores = results[1], registrosRaw = results[2], acoesRaw = results[3], fncsRaw = results[4];
 
-    if (clientes && clientes.length) CLS = clientes;
+    if (clientes && clientes.length) {
+      CLS = clientes.map(function(c) {
+        // Restaurar logo do localStorage
+        var savedLogo = localStorage.getItem("logo_"+c.id);
+        return { id: c.id, name: c.name, logo: savedLogo||c.logo||null, active: c.active };
+      });
+    }
     if (indicadores && indicadores.length) IND = indicadores;
+    else { var savedInd = localStorage.getItem("otif_ind"); if(savedInd) IND = JSON.parse(savedInd); }
     if (registrosRaw && registrosRaw.length) {
       RCS = registrosRaw.map(function(r) {
         var obj = { cid: r.cid, y: r.y, m: r.m, otif: r.otif };
@@ -444,7 +454,17 @@ async function loadData() {
       });
     }
   } catch(e) {
-    console.warn("Erro ao carregar do Supabase:", e);
+    console.warn("Erro ao carregar do Supabase, usando backup local:", e);
+    var bRcs = localStorage.getItem("otif_rcs");
+    var bCls = localStorage.getItem("otif_cls");
+    var bInd = localStorage.getItem("otif_ind");
+    var bAcoes = localStorage.getItem("otif_acoes");
+    var bFncs = localStorage.getItem("otif_fncs");
+    if (bCls) CLS = JSON.parse(bCls).map(function(c){ var logo=localStorage.getItem("logo_"+c.id); return Object.assign(c,{logo:logo||null}); });
+    if (bInd) IND = JSON.parse(bInd);
+    if (bRcs) RCS = JSON.parse(bRcs);
+    if (bAcoes) ACOES = JSON.parse(bAcoes);
+    if (bFncs) FNCS = JSON.parse(bFncs);
   }
   if (!RCS.length) RCS = defaultRecs();
 }
@@ -455,25 +475,52 @@ async function saveData() {
     if (_saving) return;
     _saving = true;
     try {
-      if (CLS.length) await sbUpsert("clientes", CLS.map(function(c){ return { id: c.id, name: c.name, logo: c.logo||null, active: c.active!==false }; }));
-      if (IND.length) await sbUpsert("indicadores", IND.map(function(ind, i){ return { key: ind.key, label: ind.label, ordem: i }; }));
+      // Salvar backup local sempre
+      localStorage.setItem("otif_rcs", JSON.stringify(RCS));
+      localStorage.setItem("otif_cls", JSON.stringify(CLS.map(function(c){ return {id:c.id,name:c.name,active:c.active,logo:null}; })));
+      localStorage.setItem("otif_acoes", JSON.stringify(ACOES));
+      localStorage.setItem("otif_fncs", JSON.stringify(FNCS));
+      localStorage.setItem("otif_ind", JSON.stringify(IND));
+
+      // Clientes
+      if (CLS.length) {
+        for (var ci=0; ci<CLS.length; ci++) {
+          var c = CLS[ci];
+          if (c.logo) localStorage.setItem("logo_"+c.id, c.logo);
+          await sbUpsert("clientes", [{ id: c.id, name: c.name, logo: null, active: c.active!==false }]);
+        }
+      }
+
+      // Indicadores
+      if (IND.length) {
+        await sbUpsert("indicadores", IND.map(function(ind,i){ return { key: ind.key, label: ind.label, ordem: i }; }));
+      }
+
+      // Registros — apaga tudo e reinsere para evitar conflito
+      await sbDelete("registros", "y=gte.2000");
       if (RCS.length) {
         var regs = RCS.map(function(r) {
           var dados = {};
-          Object.keys(r).forEach(function(k){ if (k !== "cid" && k !== "y" && k !== "m" && k !== "otif") dados[k] = r[k]; });
+          Object.keys(r).forEach(function(k){ if (k!=="cid"&&k!=="y"&&k!=="m"&&k!=="otif") dados[k]=r[k]; });
           return { cid: r.cid, y: r.y, m: r.m, otif: r.otif, dados: dados };
         });
         await sbUpsert("registros", regs);
       }
+
+      // Ações
       await sbDelete("acoes", "id=gt.0");
       if (ACOES.length) {
         await sbUpsert("acoes", ACOES.map(function(a){ return { id: a.id, mes: a.mes||"", cliente: a.cliente||"", desvio: a.desvio||"", material: a.material||"", embalagem: a.embalagem||"", volume: a.volume||"", data_desvio: a.dataDesvio||"", responsavel: a.responsavel||"", fnc: a.fnc||"", plano_acao: a.planoAcao||"" }; }));
       }
+
+      // FNCs
       await sbDelete("fncs", "id=gt.0");
       if (FNCS.length) {
-        await sbUpsert("fncs", FNCS.map(function(f){ var id = f.id; var dados = {}; Object.keys(f).forEach(function(k){ if (k !== "id") dados[k] = f[k]; }); return { id: id, dados: dados }; }));
+        await sbUpsert("fncs", FNCS.map(function(f){ var id=f.id; var dados={}; Object.keys(f).forEach(function(k){ if(k!=="id") dados[k]=f[k]; }); return { id: id, dados: dados }; }));
       }
+
     } catch(e) {
+      console.error("Erro saveData:", e);
       toast("Erro ao salvar");
     }
     _saving = false;
