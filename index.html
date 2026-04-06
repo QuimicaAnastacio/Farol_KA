@@ -263,7 +263,7 @@ function sbDelete(table, filter) {
 // AUTH — ZEUS & USUÁRIOS
 // ═══════════════════════════════════════
 var ZEUS_EMAIL = "amanda.almeida@anastacio.com";
-var ZEUS_PASS  = "Anastácio@2026";
+var ZEUS_PASS  = "Anastacio@2026";
 var _isZeus    = false;
 var _userRole  = null;
 var USERS      = [];
@@ -366,7 +366,7 @@ var NAV = [
   {id:"clients",    zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>', lbl:"Clientes"},
   {id:"copy",       zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>', lbl:"Copiar Relatório"},
   {id:"import",     zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>', lbl:"Importar Excel"},
-  {id:"zeus_users", zeus:true,  icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', lbl:"Usuários"},
+  {id:"zeus_users", zeus:false, admin:true,  icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', lbl:"Usuários"},
   {id:"zeus_design",zeus:true,  icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>', lbl:"Personalizar"},
 ];
 
@@ -844,7 +844,7 @@ function renderAll(){
 // ═══════════════════════════════════════
 async function initApp() {
   // Nav
-  var visibleNav = NAV.filter(function(p){ return !p.zeus || _isZeus; });
+  var visibleNav = NAV.filter(function(p){ return (!p.zeus && !p.admin) || _isZeus || (p.admin && (_isZeus || _userRole==="admin")); });
   document.getElementById("navArea").innerHTML = visibleNav.map(function(p){
     return '<button class="nb" data-id="'+p.id+'" onclick="goPage(\''+p.id+'\')">' + p.icon + " " + p.lbl + '</button>';
   }).join("");
