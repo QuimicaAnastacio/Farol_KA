@@ -213,7 +213,7 @@ tr.is{background:rgba(220,38,38,.02)}
 
 </div><!-- /appShell -->
 
-<div id="mdl" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9000;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
+<div id="mdl" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:9000;align-items:center;justify-content:center" >
   <div style="background:#fff;border-radius:14px;padding:24px;width:560px;max-width:92vw;max-height:85vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <h2 id="mdlT" style="font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:800;color:#0D2240;margin:0"></h2>
@@ -263,7 +263,7 @@ function sbDelete(table, filter) {
 // AUTH — ZEUS & USUÁRIOS
 // ═══════════════════════════════════════
 var ZEUS_EMAIL = "amanda.almeida@anastacio.com";
-var ZEUS_PASS  = "Anastacio@2026";
+var ZEUS_PASS  = "Anastácio@2026";
 var _isZeus    = false;
 var _userRole  = null;
 var USERS      = [];
@@ -290,7 +290,7 @@ function doLogin() {
     for (var i = 0; i < USERS.length; i++) {
       if (USERS[i].email.toLowerCase() === email) { found = USERS[i]; break; }
     }
-    if (!found) { err.textContent = "E-mail nao encontrado."; return; }
+    if (!found) { err.textContent = "E-mail não encontrado."; return; }
     if (found.status === "inactive") { err.textContent = "Acesso desativado. Fale com o administrador."; return; }
     if (found.pass !== pass) { err.textContent = "Senha incorreta."; return; }
     _isZeus   = false;
@@ -354,33 +354,33 @@ function deleteUserRemote(id) {
 // ═══════════════════════════════════════
 // CONSTANTS
 // ═══════════════════════════════════════
-var MS  = ["Janeiro","Fevereiro","Marco","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+var MS  = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 var SH  = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
 var YRS = [2023,2024,2025,2026];
 var NAV = [
   {id:"dashboard",  zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>', lbl:"Dashboard"},
   {id:"form",       zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', lbl:"Preenchimento"},
   {id:"consolidado",zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3z"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/></svg>', lbl:"Consolidado"},
-  {id:"acoes",      zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', lbl:"Acoes"},
+  {id:"acoes",      zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>', lbl:"Ações"},
   {id:"fnc",        zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>', lbl:"FNC"},
   {id:"clients",    zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>', lbl:"Clientes"},
-  {id:"copy",       zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>', lbl:"Copiar Relatorio"},
+  {id:"copy",       zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>', lbl:"Copiar Relatório"},
   {id:"import",     zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>', lbl:"Importar Excel"},
-  {id:"zeus_users", zeus:true,  icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', lbl:"Usuarios"},
+  {id:"zeus_users", zeus:true,  icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>', lbl:"Usuários"},
   {id:"zeus_design",zeus:true,  icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>', lbl:"Personalizar"},
 ];
 
 // DATA
 var IND=[
-  {key:"tabela_preco",  label:"Atualizacao da tabela de preco em vigencia (trimestral)"},
-  {key:"analise_demanda",label:"Analise e retorno de atendimento da demanda no prazo esperado"},
-  {key:"agendamento",   label:"Confirmacao de agendamento de entrega no prazo esperado"},
+  {key:"tabela_preco",  label:"Atualização da tabela de preço em vigência (trimestral)"},
+  {key:"analise_demanda",label:"Análise e retorno de atendimento da demanda no prazo esperado"},
+  {key:"agendamento",   label:"Confirmação de agendamento de entrega no prazo esperado"},
   {key:"prazo_entrega", label:"Atendimento do prazo para entrega"},
   {key:"qtd_entrega",   label:"Atendimento da quantidade para entrega"},
-  {key:"otif_ind",      label:"Indicador OTIF Anastacio"},
-  {key:"carga",         label:"Carga entregue atende as particularidades e politicas de fornecimento"},
-  {key:"comunicacao",   label:"Facilidade de comunicacao (reclamacoes, elogios, sugestoes e duvidas)"},
-  {key:"forecast",      label:"Variacao do forecast da demanda negociada em ate 10%"},
+  {key:"otif_ind",      label:"Indicador OTIF Anastácio"},
+  {key:"carga",         label:"Carga entregue atende as particularidades e políticas de fornecimento"},
+  {key:"comunicacao",   label:"Facilidade de comunicação (reclamações, elogios, sugestões e dúvidas)"},
+  {key:"forecast",      label:"Variação do forecast da demanda negociada em até 10%"},
 ];
 var CLS=[{id:"kenvue",name:"Kenvue",logo:null,active:true}];
 var RCS=[];
@@ -501,12 +501,12 @@ function addMonthCol(){ var y=gY(),ex=RCS.filter(function(r){ return r.cid===win
 function openAddInd(){ document.getElementById("mdlT").textContent="Adicionar Farol"; document.getElementById("mdlB").innerHTML='<input id="newIndLabel" class="in" placeholder="Texto do farol..."><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="bt bp" onclick="doAddInd()">Adicionar</button></div>'; document.getElementById("mdl").style.display="flex"; }
 function doAddInd(){ var l=document.getElementById("newIndLabel").value.trim(); if(!l)return; var k="i_"+Date.now(); IND.push({key:k,label:l}); RCS.forEach(function(r){ r[k]=1; }); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("Adicionado!"); }
 function openEditInd(){
-  document.getElementById("mdlT").textContent="Editar Farois";
+  document.getElementById("mdlT").textContent="Editar Faróis";
   var h='<div style="display:flex;flex-direction:column;gap:6px">';
   IND.forEach(function(ind,i){
     h+='<div style="display:flex;gap:6px;align-items:center"><input id="eidx'+i+'" class="in" value="'+ind.label+'" style="flex:1;font-size:11px"><button class="ib dg" onclick="removeInd('+i+')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>';
   });
-  h+='</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><button class="bt bo" onclick="addIndFromEdit()">+ Novo Farol</button><button class="bt bp" onclick="doSaveInd()">Salvar</button></div>';
+  h+='</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><button class="bt bo" onclick="addIndFromEdit()">+ + Novo Farol</button><button class="bt bp" onclick="doSaveInd()">Salvar</button></div>';
   document.getElementById("mdlB").innerHTML=h;
   document.getElementById("mdl").style.display="flex";
 }
@@ -536,7 +536,7 @@ function renderMonthChips(){
   document.getElementById("mChips").innerHTML=html;
 }
 
-function exportExcel(){ var cl=gC(),rs=gR(),y=gY(); var hd=["Mes"].concat(IND.map(function(i){ return i.label; })).concat(["OTIF %"]); var dt=[hd]; rs.forEach(function(r){ var rw=[MS[r.m]]; IND.forEach(function(i){ rw.push(i.key==="otif_ind"?r.otif+"%":(r[i.key]?"Conforme":"Nao Conforme")); }); rw.push(r.otif+"%"); dt.push(rw); }); var ws=XLSX.utils.aoa_to_sheet(dt),wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"OTIF"); if(ACOES.length){var ad=[["Mes","Cliente","Desvio","Material","Embalagem","Volume","Data","Responsavel","FNC","Plano"]].concat(ACOES.map(function(a){ return [a.mes,a.cliente,a.desvio,a.material,a.embalagem,a.volume,a.dataDesvio,a.responsavel,a.fnc,a.planoAcao]; })); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ad),"Acoes");} XLSX.writeFile(wb,"OTIF_"+(cl?cl.name.replace(/\s/g,"_"):"")+"_"+y+".xlsx"); toast("Exportado!"); }
+function exportExcel(){ var cl=gC(),rs=gR(),y=gY(); var hd=["Mes"].concat(IND.map(function(i){ return i.label; })).concat(["OTIF %"]); var dt=[hd]; rs.forEach(function(r){ var rw=[MS[r.m]]; IND.forEach(function(i){ rw.push(i.key==="otif_ind"?r.otif+"%":(r[i.key]?"Conforme":"Não Conforme")); }); rw.push(r.otif+"%"); dt.push(rw); }); var ws=XLSX.utils.aoa_to_sheet(dt),wb=XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb,ws,"OTIF"); if(ACOES.length){var ad=[["Mes","Cliente","Desvio","Material","Embalagem","Volume","Data","Responsavel","FNC","Plano"]].concat(ACOES.map(function(a){ return [a.mes,a.cliente,a.desvio,a.material,a.embalagem,a.volume,a.dataDesvio,a.responsavel,a.fnc,a.planoAcao]; })); XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(ad),"Ações");} XLSX.writeFile(wb,"OTIF_"+(cl?cl.name.replace(/\s/g,"_"):"")+"_"+y+".xlsx"); toast("Exportado!"); }
 
 function handleImport(e){ var f=e.target.files[0]; if(!f)return; var rd=new FileReader(); rd.onload=function(ev){ try{ var wb=XLSX.read(ev.target.result,{type:"binary"}); var msg=[]; var acoesSheet=wb.SheetNames.find(function(s){ return s.toLowerCase().includes("oes")||s.toLowerCase().includes("acoes"); }); if(acoesSheet){ var data=XLSX.utils.sheet_to_json(wb.Sheets[acoesSheet],{defval:""}); data.forEach(function(row){ ACOES.push({id:Date.now()+Math.random(),mes:row["MES"]||row["Mes"]||row["mes"]||"",cliente:row["CLIENTE"]||row["Cliente"]||"",desvio:row["DESVIO"]||row["Desvio"]||"",material:row["MATERIAL"]||row["Material"]||"",embalagem:row["EMBALAGEM"]||row["Embalagem"]||"",volume:String(row["VOLUME"]||row["Volume"]||""),dataDesvio:row["DATA DO DESVIO"]||row["Data Desvio"]||"",responsavel:row["RESPONSAVEL"]||row["Responsavel"]||"",fnc:String(row["FNC"]||""),planoAcao:row["PLANO DE ACAO"]||row["Plano de Acao"]||""}); }); msg.push(data.length+" acoes"); } var fncSheet=wb.SheetNames.find(function(s){ return s.toLowerCase().includes("fnc"); }); if(fncSheet){ var fdata=XLSX.utils.sheet_to_json(wb.Sheets[fncSheet],{defval:""}); FNCS=fdata.map(function(r){ return Object.assign({id:Date.now()+Math.random()},r); }); msg.push(fdata.length+" FNC"); } saveData();renderAll();toast(msg.length?"Importado: "+msg.join(", "):"Importado"); }catch(ex){toast("Erro: "+ex.message);} }; rd.readAsBinaryString(f); }
 
@@ -549,16 +549,16 @@ function goPage(id){ window._curP=id; document.querySelectorAll(".nb").forEach(f
 // ZEUS — USUÁRIOS
 // ═══════════════════════════════════════
 function openNewUserModal() {
-  document.getElementById("mdlT").textContent = "Novo Usuario";
+  document.getElementById("mdlT").textContent = "Novo Usuário";
   document.getElementById("mdlB").innerHTML =
     '<div style="display:flex;flex-direction:column;gap:12px">' +
-    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nome completo</label><input id="nuName" class="in" placeholder="Nome do usuario"></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nome completo</label><input id="nuName" class="in" placeholder="Nome do usuário"></div>' +
     '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">E-mail</label><input id="nuEmail" class="in" type="email" placeholder="email@empresa.com"></div>' +
-    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Senha</label><input id="nuPass" class="in" type="password" placeholder="Minimo 6 caracteres"></div>' +
-    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nivel de Acesso</label>' +
-    '<select id="nuRole" class="in"><option value="viewer">Visualizador - so leitura</option><option value="editor">Editor - preenche farois e acoes</option><option value="admin">Administrador - gerencia usuarios</option></select></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Senha</label><input id="nuPass" class="in" type="password" placeholder="Mínimo 6 caracteres"></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nível de Acesso</label>' +
+    '<select id="nuRole" class="in"><option value="viewer">Visualizador — só leitura</option><option value="editor">Editor — preenche faróis e ações</option><option value="admin">Administrador — gerencia usuários</option></select></div>' +
     '<div id="nuErr" style="font-size:11px;color:var(--rd);font-weight:600;min-height:16px"></div>' +
-    '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px"><button class="bt bo" onclick="document.getElementById(\'mdl\').style.display=\'none\'">Cancelar</button><button class="bt bp" onclick="saveNewUser()">Criar Usuario</button></div>' +
+    '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px"><button class="bt bo" onclick="document.getElementById(\'mdl\').style.display=\'none\'">Cancelar</button><button class="bt bp" onclick="saveNewUser()">Criar Usuário</button></div>' +
     '</div>';
   document.getElementById("mdl").style.display = "flex";
 }
@@ -570,27 +570,27 @@ async function saveNewUser() {
   var role  = document.getElementById("nuRole").value;
   var err   = document.getElementById("nuErr");
   if (!name||!email||!pass) { err.textContent = "Preencha todos os campos."; return; }
-  if (pass.length < 6) { err.textContent = "Senha minimo 6 caracteres."; return; }
+  if (pass.length < 6) { err.textContent = "Senha mínimo 6 caracteres."; return; }
   var existing = USERS.find(function(u){ return u.email.toLowerCase()===email; });
-  if (existing) { err.textContent = "Este e-mail ja esta cadastrado."; return; }
+  if (existing) { err.textContent = "Este e-mail já está cadastrado."; return; }
   var newUser = { id: "u_"+Date.now(), name: name, email: email, pass: pass, role: role, status: "active" };
   USERS.push(newUser);
   saveUser(newUser);
   document.getElementById("mdl").style.display = "none";
   renderAll();
-  toast("Usuario " + name + " criado!");
+  toast("Usuário " + name + " criado!");
 }
 
 function openEditUserModal(id) {
   var u = USERS.find(function(x){ return x.id===id; });
   if (!u) return;
-  document.getElementById("mdlT").textContent = "Editar Usuario";
+  document.getElementById("mdlT").textContent = "Editar Usuário";
   document.getElementById("mdlB").innerHTML =
     '<div style="display:flex;flex-direction:column;gap:12px">' +
     '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nome completo</label><input id="euName" class="in" value="'+u.name+'"></div>' +
     '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">E-mail</label><input id="euEmail" class="in" value="'+u.email+'"></div>' +
     '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nova Senha <span style="color:var(--mt);font-weight:400">(em branco = manter)</span></label><input id="euPass" class="in" type="password" placeholder="Nova senha..."></div>' +
-    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nivel de Acesso</label>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--t2);display:block;margin-bottom:4px">Nível de Acesso</label>' +
     '<select id="euRole" class="in"><option value="viewer"'+(u.role==="viewer"?" selected":"")+'>Visualizador</option><option value="editor"'+(u.role==="editor"?" selected":"")+'>Editor</option><option value="admin"'+(u.role==="admin"?" selected":"")+'>Administrador</option></select></div>' +
     '<div id="euErr" style="font-size:11px;color:var(--rd);font-weight:600;min-height:16px"></div>' +
     '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px"><button class="bt bo" onclick="document.getElementById(\'mdl\').style.display=\'none\'">Cancelar</button><button class="bt bp" onclick="saveEditUser(\''+u.id+'\')">Salvar</button></div>' +
@@ -606,14 +606,14 @@ function saveEditUser(id) {
   var pass  = document.getElementById("euPass").value;
   var role  = document.getElementById("euRole").value;
   var err   = document.getElementById("euErr");
-  if (!name||!email) { err.textContent = "Nome e e-mail sao obrigatorios."; return; }
-  if (pass && pass.length < 6) { err.textContent = "Senha minimo 6 caracteres."; return; }
+  if (!name||!email) { err.textContent = "Nome e e-mail são obrigatórios."; return; }
+  if (pass && pass.length < 6) { err.textContent = "Senha mínimo 6 caracteres."; return; }
   u.name = name; u.email = email; u.role = role;
   if (pass) u.pass = pass;
   saveUser(u);
   document.getElementById("mdl").style.display = "none";
   renderAll();
-  toast("Usuario " + name + " atualizado!");
+  toast("Usuário " + name + " atualizado!");
 }
 
 function deleteUserById(id) {
@@ -622,7 +622,7 @@ function deleteUserById(id) {
   USERS = USERS.filter(function(x){ return x.id!==id; });
   deleteUserRemote(id);
   renderAll();
-  toast("Usuario excluido.");
+  toast("Usuário excluido.");
 }
 
 function toggleUserStatus(id) {
@@ -693,17 +693,17 @@ function renderAll(){
     var avg=rs.length?(rs.reduce(function(s,r){ return s+r.otif; },0)/rs.length).toFixed(1):"0";
     var cr=tE?((tO/tE)*100).toFixed(0):"0";
     var ci=2*Math.PI*44, of=ci-(cr/100)*ci;
-    H='<div class="ph"><div><h1>Performance OTIF - '+(cl?cl.name:"")+'</h1><p>On Time, In Full - '+y+'</p></div>'+(cl&&cl.logo?'<img src="'+cl.logo+'" class="cl">':'<span style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:20px;font-weight:800;color:var(--nv)">'+(cl?cl.name:"")+'</span>')+'</div>';
-    H+='<div class="kg"><div class="cd kp g"><div class="kl">OTIF Medio</div><div class="kv">'+avg+'%</div><div class="ks">Meta: 95%</div></div><div class="cd kp b"><div class="kl">Meses</div><div class="kv">'+rs.length+'</div><div class="ks">'+y+'</div></div><div class="cd kp g"><div class="kl">Conformidades</div><div class="kv">'+tO+'</div><div class="ks">de '+tE+' - '+cr+'%</div></div><div class="cd kp r"><div class="kl">Nao Conformidades</div><div class="kv">'+tF+'</div><div class="ks">itens com falha</div></div></div>';
-    H+='<div class="cg"><div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Evolucao OTIF Mensal</div><div class="bw">'+(rs.map(function(r){ return '<div class="bc"><span class="bv">'+r.otif+'%</span><div class="br '+(r.otif===100?"f":"p")+'" style="height:'+Math.max(r.otif*1.2,5)+'%"></div><span class="bm">'+SH[r.m]+'</span></div>'; }).join("")||'<span style="color:var(--mt);padding:20px">Sem dados</span>')+'</div></div>';
+    H='<div class="ph"><div><h1>Performance OTIF — '+(cl?cl.name:"")+'</h1><p>On Time, In Full - '+y+'</p></div>'+(cl&&cl.logo?'<img src="'+cl.logo+'" class="cl">':'<span style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:20px;font-weight:800;color:var(--nv)">'+(cl?cl.name:"")+'</span>')+'</div>';
+    H+='<div class="kg"><div class="cd kp g"><div class="kl">OTIF Médio</div><div class="kv">'+avg+'%</div><div class="ks">Meta: 95%</div></div><div class="cd kp b"><div class="kl">Meses</div><div class="kv">'+rs.length+'</div><div class="ks">'+y+'</div></div><div class="cd kp g"><div class="kl">Conformidades</div><div class="kv">'+tO+'</div><div class="ks">de '+tE+' - '+cr+'%</div></div><div class="cd kp r"><div class="kl">Não Conformidades</div><div class="kv">'+tF+'</div><div class="ks">itens com falha</div></div></div>';
+    H+='<div class="cg"><div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Evolução OTIF Mensal</div><div class="bw">'+(rs.map(function(r){ return '<div class="bc"><span class="bv">'+r.otif+'%</span><div class="br '+(r.otif===100?"f":"p")+'" style="height:'+Math.max(r.otif*1.2,5)+'%"></div><span class="bm">'+SH[r.m]+'</span></div>'; }).join("")||'<span style="color:var(--mt);padding:20px">Sem dados</span>')+'</div></div>';
     H+='<div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Conformidade</div><div class="dw"><div class="dr"><svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="44" fill="none" stroke="#EEF1F6" stroke-width="11"/><circle cx="55" cy="55" r="44" fill="none" stroke="var(--gn)" stroke-width="11" stroke-dasharray="'+ci+'" stroke-dashoffset="'+of+'" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:center"/></svg><div class="dc"><span class="dv">'+cr+'%</span><span class="dl">Conforme</span></div></div><div class="lg"><span><i style="background:var(--gn)"></i>'+tO+'</span><span><i style="background:var(--rd)"></i>'+tF+'</span></div></div></div></div>';
     H+='<div class="cd" style="overflow:hidden"><div class="th">Detalhamento</div><div style="overflow-x:auto"><table><thead><tr><th>Mes</th>'+IND.map(function(i){ return '<th style="max-width:80px;white-space:normal;line-height:1.2">'+(i.label.length>28?i.label.substring(0,26)+'...':i.label)+'</th>'; }).join("")+'<th style="text-align:right">OTIF</th></tr></thead><tbody>'+rs.map(function(r,ri){ return '<tr class="'+(IND.some(function(i){ return i.key!=="otif_ind"&&!r[i.key]; })||r.otif<100?"is":"")+'"><td style="font-weight:700;color:var(--nv)">'+MS[r.m]+'</td>'+IND.map(function(i){ return i.key==="otif_ind"?'<td style="font-weight:800;color:'+(r.otif===100?"var(--gn)":"var(--yl)")+'">'+r.otif+'%</td>':'<td>'+sH(r[i.key],ri,i.key)+'</td>'; }).join("")+'<td style="text-align:right;font-weight:800;color:'+(r.otif===100?"var(--gn)":"var(--yl)")+'">'+r.otif+'%</td></tr>'; }).join("")+'</tbody></table></div></div>';
   }
 
   // PREENCHIMENTO
   if(P==="form"){
-    H='<div class="ph"><div><h1>Preenchimento - '+(cl?cl.name:"")+'</h1><p>Farois nas linhas, Meses nas colunas</p></div></div>';
-    H+='<div class="cd" style="overflow:hidden"><div class="th"><span>'+(cl?cl.name:"")+" - "+y+'</span><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="bt bo" onclick="addMonthCol()">+ Mes</button><button class="bt bo" onclick="openAddInd()">+ Farol</button><button class="bt bo" onclick="openEditInd()">Editar Farois</button><button class="bt bo" onclick="exportExcel()">Excel</button></div></div>';
+    H='<div class="ph"><div><h1>Preenchimento — '+(cl?cl.name:"")+'</h1><p>Faróis nas linhas · Meses nas colunas</p></div></div>';
+    H+='<div class="cd" style="overflow:hidden"><div class="th"><span>'+(cl?cl.name:"")+" - "+y+'</span><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="bt bo" onclick="addMonthCol()">+ Mes</button><button class="bt bo" onclick="openAddInd()">+ Farol</button><button class="bt bo" onclick="openEditInd()">Editar Faróis</button><button class="bt bo" onclick="exportExcel()">Excel</button></div></div>';
     H+='<div style="overflow-x:auto"><table class="ft"><thead><tr><th style="text-align:left;min-width:200px">Indicador</th>'+rs.map(function(r){ return '<th>'+SH[r.m]+'<br><span class="mc" onclick="deleteMonthCol('+r.m+')" style="font-size:7px;padding:1px 5px;margin-top:3px;color:var(--rd);border-color:var(--rr);cursor:pointer">x</span></th>'; }).join("")+'</tr></thead><tbody>'+IND.map(function(ind){ return '<tr><td class="inn">'+ind.label+'</td>'+rs.map(function(r,ri){ return ind.key==="otif_ind"?'<td><input type="number" class="oe '+(r.otif===100?"ok":"lo")+'" value="'+r.otif+'" min="0" max="100" onchange="editOtif('+ri+',this.value)"></td>':'<td>'+sH(r[ind.key],ri,ind.key)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
   }
 
@@ -717,7 +717,7 @@ function renderAll(){
       gRow+='<td class="cv gn">'+g+'</td>'; rRow+='<td class="cv rd">'+rd+'</td>'; gTot+=g; rTot+=rd;
     });
     var tot=gTot+rTot;
-    H='<div class="ph"><div><h1>Consolidado - Farol '+y+'</h1><p>Resumo verde/vermelho por cliente</p></div></div>';
+    H='<div class="ph"><div><h1>Consolidado — Farol '+y+'</h1><p>Resumo verde/vermelho por cliente</p></div></div>';
     H+='<div class="cd" style="overflow:hidden"><div class="th" style="background:var(--yb);color:var(--nv);font-size:14px;font-weight:800;justify-content:center">FAROL '+y+'</div><div style="overflow-x:auto"><table><thead><tr><th>Farol</th>'+allCls.map(function(c){ return '<th style="text-align:center">'+c.name+'</th>'; }).join("")+'<th style="text-align:center">Total</th><th style="text-align:center">%</th></tr></thead><tbody>';
     H+='<tr style="background:var(--gb)"><td style="font-weight:700;color:var(--gn)">Verde</td>'+gRow+'<td class="cv gn">'+gTot+'</td><td class="cv gn">'+(tot?(gTot/tot*100).toFixed(1):"0")+'%</td></tr>';
     H+='<tr style="background:var(--rb)"><td style="font-weight:700;color:var(--rd)">Vermelho</td>'+rRow+'<td class="cv rd">'+rTot+'</td><td class="cv rd">'+(tot?(rTot/tot*100).toFixed(1):"0")+'%</td></tr>';
@@ -727,13 +727,13 @@ function renderAll(){
 
   // ACOES
   if(P==="acoes"){
-    H='<div class="ph"><div><h1>Acoes / Desvios</h1><p>'+ACOES.length+' registros</p></div></div>';
-    H+='<div class="cd" style="overflow:hidden"><div class="th"><span>Registros</span><button class="bt bp" onclick="addAcao()">+ Nova Acao</button></div><div style="overflow-x:auto"><table class="at"><thead><tr><th>Mes</th><th>Cliente</th><th>Desvio</th><th>Material</th><th>Embalagem</th><th>Volume</th><th>Data</th><th>Responsavel</th><th>FNC</th><th>Plano de Acao</th><th></th></tr></thead><tbody>';
+    H='<div class="ph"><div><h1>Ações / Desvios</h1><p>'+ACOES.length+' registros</p></div></div>';
+    H+='<div class="cd" style="overflow:hidden"><div class="th"><span>Registros</span><button class="bt bp" onclick="addAcao()">+ Nova Ação</button></div><div style="overflow-x:auto"><table class="at"><thead><tr><th>Mes</th><th>Cliente</th><th>Desvio</th><th>Material</th><th>Embalagem</th><th>Volume</th><th>Data</th><th>Responsavel</th><th>FNC</th><th>Plano de Acao</th><th></th></tr></thead><tbody>';
     ACOES.forEach(function(a){
       H+='<tr>'+["mes","cliente","desvio","material","embalagem","volume","dataDesvio","responsavel","fnc","planoAcao"].map(function(f){ return '<td><input class="in" value="'+(a[f]||"")+'" onchange="updateAcao('+a.id+',\''+f+'\',this.value)" style="width:'+(f==="desvio"||f==="planoAcao"?"160":"70")+'px;font-size:10px;padding:4px"></td>'; }).join("")+'<td><button class="ib dg" onclick="deleteAcao('+a.id+')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/></svg></button></td></tr>';
     });
     H+='</tbody></table></div></div>';
-    if(!ACOES.length) H+='<div style="text-align:center;padding:30px;color:var(--mt)">Nenhuma acao. Clique em "+ Nova Acao".</div>';
+    if(!ACOES.length) H+='<div style="text-align:center;padding:30px;color:var(--mt)">Nenhuma ação. Clique em "+ Nova Ação".</div>';
   }
 
   // FNC
@@ -741,7 +741,7 @@ function renderAll(){
     var keys=FNCS.length?Object.keys(FNCS[0]).filter(function(k){ return k!=="id"; }):[];
     H='<div class="ph"><div><h1>Registros FNC</h1><p>'+FNCS.length+' registros</p></div></div>';
     H+='<div class="cd" style="overflow:hidden"><div class="th">'+FNCS.length+' registros</div><div style="overflow-x:auto"><table class="at"><thead><tr>'+keys.map(function(k){ return '<th>'+k+'</th>'; }).join("")+'</tr></thead><tbody>'+FNCS.slice(0,200).map(function(f){ return '<tr>'+keys.map(function(k){ return '<td style="font-size:10px;max-width:180px">'+(f[k]||"")+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
-    if(!FNCS.length) H+='<div style="text-align:center;padding:30px;color:var(--mt)">Nenhum registro. Importe via Importar Excel.</div>';
+    if(!FNCS.length) H+='<div style="text-align:center;padding:30px;color:var(--mt)">Nenhum registro. Importe via "Importar Excel".</div>';
   }
 
   // CLIENTES
@@ -757,28 +757,28 @@ function renderAll(){
     var tbl='<table style="width:100%;border-collapse:collapse"><thead><tr><th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:left;border-bottom:1px solid #EEF1F6;background:#F8F9FC">Mes</th>'+IND.map(function(i){ return '<th style="padding:8px;font-size:7px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:center;border-bottom:1px solid #EEF1F6;background:#F8F9FC;max-width:80px;white-space:normal;line-height:1.2">'+i.label+'</th>'; }).join("")+'<th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:right;border-bottom:1px solid #EEF1F6;background:#F8F9FC">OTIF</th></tr></thead><tbody>';
     rs.forEach(function(r){ tbl+='<tr style="border-bottom:1px solid #EEF1F6"><td style="padding:8px;font-weight:700;color:#0D2240;font-size:11px">'+MS[r.m]+'</td>'+IND.map(function(i){ return i.key==="otif_ind"?'<td style="padding:8px;text-align:center;font-weight:800;color:'+(r.otif===100?"#16A34A":"#D97706")+'">'+r.otif+'%</td>':'<td style="padding:8px;text-align:center"><span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:700;background:'+(r[i.key]?"#DCFCE7":"#FEE2E2")+';color:'+(r[i.key]?"#16A34A":"#DC2626")+'">'+(r[i.key]?"v":"x")+'</span></td>'; }).join("")+'<td style="padding:8px;text-align:right;font-weight:800;font-size:13px;color:'+(r.otif===100?"#16A34A":"#D97706")+'">'+r.otif+'%</td></tr>'; });
     tbl+='</tbody></table>';
-    H='<div class="ph"><div><h1>Copiar Relatorio - '+(cl?cl.name:"")+'</h1><p>Copie a imagem para colar no email</p></div></div>';
+    H='<div class="ph"><div><h1>Copiar Relatório — '+(cl?cl.name:"")+'</h1><p>Copie a imagem para colar no email</p></div></div>';
     H+='<div class="cd cp" style="margin-bottom:14px"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bt bp" onclick="copyImage()" id="btnCopy" style="padding:10px 24px">Copiar Imagem</button><button class="bt bgr" onclick="downloadImage()" style="padding:10px 24px">Baixar PNG</button><button class="bt bo" onclick="exportExcel()" style="padding:10px 24px">Excel</button></div><div id="copyTip" style="margin-top:10px;padding:10px 14px;border-radius:8px;background:#DCFCE7;color:#16A34A;font-size:12px;font-weight:600;display:none">Copiada! Cole com Ctrl+V</div></div>';
-    H+='<div class="ep" id="previewArea" style="background:#fff"><div class="eh">'+lg+'<div style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:18px;font-weight:800;color:#0D2240">Relatorio OTIF - '+y+'</div><div style="font-size:11px;color:#8690A8">'+(cl?cl.name:"")+" - Quimica Anastacio"+'</div></div>'+tbl+'</div>';
+    H+='<div class="ep" id="previewArea" style="background:#fff"><div class="eh">'+lg+'<div style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:18px;font-weight:800;color:#0D2240">Relatório OTIF — '+y+'</div><div style="font-size:11px;color:#8690A8">'+(cl?cl.name:"")+" - Química Anastácio"+'</div></div>'+tbl+'</div>';
   }
 
   // IMPORTAR
   if(P==="import"){
-    H='<div class="ph"><div><h1>Importar Planilha Excel</h1><p>Importe abas Acoes e FNC da planilha</p></div></div>';
+    H='<div class="ph"><div><h1>Importar Planilha Excel</h1><p>Importe abas Ações e FNC da planilha</p></div></div>';
     H+='<div class="cd cp"><div class="dz" onclick="document.getElementById(\'fileImport\').click()">';
     H+='<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8690A8" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
     H+='<p style="color:var(--mt);font-size:13px;margin-top:8px">Clique para selecionar o arquivo .xlsx</p></div>';
     H+='<input type="file" id="fileImport" accept=".xlsx,.xls" style="display:none" onchange="handleImport(event)">';
-    H+='<div style="margin-top:14px;padding:12px;background:var(--sf);border-radius:8px;font-size:11px;color:var(--t2);line-height:1.6"><strong>Abas reconhecidas:</strong><br>Acoes e FNC</div></div>';
+    H+='<div style="margin-top:14px;padding:12px;background:var(--sf);border-radius:8px;font-size:11px;color:var(--t2);line-height:1.6"><strong>Abas reconhecidas:</strong><br>Ações e FNC</div></div>';
   }
 
   // ZEUS — USUARIOS
   if(P==="zeus_users"){
     var roleLabel = { admin:"Administrador", editor:"Editor", viewer:"Visualizador" };
     var roleCls   = { admin:"badge badge-admin", editor:"badge badge-editor", viewer:"badge badge-viewer" };
-    H='<div class="ph"><div><h1>Usuarios</h1><p>'+USERS.length+' usuario(s) cadastrado(s)</p></div><button class="bt bp" onclick="openNewUserModal()">+ Novo Usuario</button></div>';
+    H='<div class="ph"><div><h1>Usuários</h1><p>'+USERS.length+' usuário(s) cadastrado(s)</p></div><button class="bt bp" onclick="openNewUserModal()">+ Novo Usuário</button></div>';
     if(!USERS.length) {
-      H+='<div class="cd cp" style="text-align:center;color:var(--mt);padding:40px">Nenhum usuario. Clique em "+ Novo Usuario".</div>';
+      H+='<div class="cd cp" style="text-align:center;color:var(--mt);padding:40px">Nenhum usuário. Clique em "+ Novo Usuário".</div>';
     } else {
       USERS.forEach(function(u){
         H+='<div class="user-card">';
@@ -798,7 +798,7 @@ function renderAll(){
   // ZEUS — PERSONALIZAR
   if(P==="zeus_design"){
     var th2=loadTheme();
-    var sysName=localStorage.getItem("otif_sysname")||"Quimica Anastacio";
+    var sysName=localStorage.getItem("otif_sysname")||"Química Anastácio";
     var sbLogo=localStorage.getItem("otif_logo");
     H='<div class="ph"><div><h1>Personalizar Sistema</h1><p>Configure visual e dados do painel</p></div></div>';
     H+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:900px">';
@@ -821,8 +821,8 @@ function renderAll(){
     // Cores
     H+='<div class="cd cp" style="grid-column:1/3"><h3 style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:13px;font-weight:800;color:var(--nv);margin-bottom:12px">Cores</h3>';
     [
-      ["--nv","nv",th2.nv||"#0D2240","Cor Principal (Menu)","Fundo do menu e botoes primarios"],
-      ["--ac","ac",th2.ac||"#2563EB","Cor de Destaque","Links e botoes secundarios"],
+      ["--nv","nv",th2.nv||"#0D2240","Cor Principal (Menu)","Fundo do menu e botões primários"],
+      ["--ac","ac",th2.ac||"#2563EB","Cor de Destaque","Links e botões secundários"],
       ["--gn","gn",th2.gn||"#16A34A","Cor Verde","Indicadores positivos"],
       ["--bg","bg",th2.bg||"#F4F6FA","Cor de Fundo","Fundo geral do sistema"]
     ].forEach(function(c){
@@ -832,7 +832,7 @@ function renderAll(){
     H+='</div>';
 
     // Restaurar
-    H+='<div class="cd cp" style="grid-column:1/3;display:flex;justify-content:flex-end"><button class="bt bo" onclick="resetTheme()">Restaurar Padrao</button></div>';
+    H+='<div class="cd cp" style="grid-column:1/3;display:flex;justify-content:flex-end"><button class="bt bo" onclick="resetTheme()">Restaurar Padrão</button></div>';
     H+='</div>';
   }
 
