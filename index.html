@@ -438,12 +438,17 @@ async function loadData() {
       localStorage.setItem("otif_cls", JSON.stringify(CLS.map(function(c){ return Object.assign({},c,{logo:null}); })));
     }
     if(indicadores && indicadores.length){
-      // Respeitar ordem local se existir
       var lsInd = localStorage.getItem("otif_ind");
       if(lsInd){
-        IND = JSON.parse(lsInd);
+        // Usar ordem local mas atualizar resp do Supabase (fonte oficial)
+        var localInd = JSON.parse(lsInd);
+        IND = localInd.map(function(i){
+          var fromSb = indicadores.find(function(s){ return s.key===i.key; });
+          return Object.assign({resp:"anastacio"}, i, {resp: fromSb?fromSb.resp||"anastacio":i.resp||"anastacio"});
+        });
+        localStorage.setItem("otif_ind", JSON.stringify(IND));
       } else {
-        IND = indicadores;
+        IND = indicadores.map(function(i){ return Object.assign({resp:"anastacio"},i); });
         localStorage.setItem("otif_ind", JSON.stringify(IND));
       }
     }
@@ -501,7 +506,7 @@ async function saveData() {
 
       // Indicadores (com ordem)
       if(IND.length){
-        await sbUpsert("indicadores", IND.map(function(ind,i){ return {key:ind.key,label:ind.label,ordem:i}; }));
+        await sbUpsert("indicadores", IND.map(function(ind,i){ return {key:ind.key,label:ind.label,ordem:i,resp:ind.resp||"anastacio"}; }));
       }
 
       // Registros — DELETE + INSERT (chave primária cid+y+m)
@@ -1062,7 +1067,7 @@ async function initApp() {
   var ys = document.getElementById("yearSel");
   ys.innerHTML = "";
   YRS.forEach(function(y){ var o=document.createElement("option"); o.value=y; o.textContent=y; ys.appendChild(o); });
-  ys.value = "2025";
+  ys.value = new Date().getFullYear().toString();
 
   // Data
   document.getElementById("dateNow").textContent = new Date().toLocaleDateString("pt-BR");
