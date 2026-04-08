@@ -991,7 +991,15 @@ function renderAll(){
     tbl+='</tbody></table>';
     H='<div class="ph"><div><h1>Copiar Relatório — '+(cl?cl.name:"")+'</h1><p>Copie a imagem para colar no email</p></div></div>';
     H+='<div class="cd cp" style="margin-bottom:14px"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bt bp" onclick="copyImage()" id="btnCopy" style="padding:10px 24px">Copiar Imagem</button><button class="bt bgr" onclick="downloadImage()" style="padding:10px 24px">Baixar PNG</button><button class="bt bo" onclick="exportExcel()" style="padding:10px 24px">Excel</button></div><div id="copyTip" style="margin-top:10px;padding:10px 14px;border-radius:8px;background:#DCFCE7;color:#16A34A;font-size:12px;font-weight:600;display:none">Copiada! Cole com Ctrl+V</div></div>';
-    H+='<div class="ep" id="previewArea" style="background:#fff"><div class="eh">'+lg+'<div style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:18px;font-weight:800;color:#0D2240">Farol de Performance — '+y+'</div><div style="font-size:11px;color:#8690A8">'+(cl?cl.name:"")+" - Química Anastácio"+'</div></div>'+tbl+'</div>';
+    var relLogo = localStorage.getItem("otif_rel_logo");
+    var logoAnastacio = relLogo ? '<img src="'+relLogo+'" style="height:50px;object-fit:contain" crossorigin="anonymous">' : '';
+    var lgCli = cl&&cl.logo ? '<img src="'+cl.logo+'" style="height:50px;margin-bottom:8px" crossorigin="anonymous">' : '';
+    H+='<div class="ep" id="previewArea" style="background:#fff">'
+      +'<div style="display:flex;align-items:center;padding-bottom:14px;border-bottom:1px solid #EEF1F6;margin-bottom:14px">'
+      +'<div style="flex:0 0 80px">'+logoAnastacio+'</div>'
+      +'<div style="flex:1;text-align:center">'+lgCli+'<div style="font-family:\'Plus Jakarta Sans\',sans-serif;font-size:18px;font-weight:800;color:#0D2240">Farol de Performance — '+y+'</div><div style="font-size:11px;color:#8690A8">'+(cl?cl.name:'')+' — Química Anastácio</div></div>'
+      +'<div style="flex:0 0 80px"></div>'
+      +'</div>'+tbl+'</div>';
   }
 
   // IMPORTAR
