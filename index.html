@@ -587,9 +587,12 @@ function openEditInd(){
   document.getElementById("mdlT").textContent="Editar Far\u00f3is";
   var h='<p style="font-size:11px;color:var(--mt);margin-bottom:8px">Arraste para reordenar</p><div id="indSortList" style="display:flex;flex-direction:column;gap:6px">';
   IND.forEach(function(ind,i){
+    var respVal = ind.resp||"anastacio";
+    var respBtn = '<button onclick="toggleIndResp('+i+')" style="flex-shrink:0;padding:2px 8px;border-radius:100px;border:none;cursor:pointer;font-size:9px;font-weight:700;background:'+(respVal==="cliente"?"#EDE9FE":"#DBEAFE")+';color:'+(respVal==="cliente"?"#7C3AED":"#1D4ED8")+'">'+( respVal==="cliente"?"Cliente":"Anastácio")+'</button>';
     h+='<div class="ind-row" draggable="true" data-idx="'+i+'" style="display:flex;gap:6px;align-items:center;background:#F8F9FC;border:1px solid #E5E7EB;border-radius:8px;padding:6px 8px;cursor:grab">'
       +'<span style="color:#B0B8CC;font-size:16px;cursor:grab;margin-right:2px;user-select:none">&#9776;</span>'
       +'<input id="eidx'+i+'" class="in" value="'+ind.label+'" style="flex:1;font-size:11px;border:none;background:transparent;padding:2px 4px">'
+      +respBtn
       +'<button class="ib dg" onclick="removeInd('+i+')" style="flex-shrink:0"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>'
       +'</div>';
   });
@@ -802,6 +805,20 @@ function zeusRemoveLogo(){ localStorage.removeItem("otif_logo"); document.getEle
 
 // ═══ LARGURA DAS COLUNAS ═══
 
+function toggleIndResp(i){
+  // Salvar labels antes de togglear
+  IND.forEach(function(ind,j){ var v=document.getElementById("eidx"+j); if(v&&v.value.trim()) ind.label=v.value.trim(); });
+  var ind = IND[i];
+  if(!ind) return;
+  ind.resp = ind.resp==="cliente" ? "anastacio" : "cliente";
+  // Salvar imediatamente
+  localStorage.setItem("otif_ind", JSON.stringify(IND));
+  fetch(SUPABASE_URL + "/rest/v1/indicadores?key=eq." + ind.key, {
+    method: "PATCH", headers: sbHeaders(), body: JSON.stringify({resp: ind.resp})
+  }).catch(function(){});
+  openEditInd(); // Reabrir modal para refletir mudança
+}
+
 function setIndResp(key, val){
   var ind = IND.find(function(i){ return i.key===key; });
   if(!ind) return;
@@ -863,9 +880,7 @@ function renderAll(){
   if(P==="form"){
     H='<div class="ph"><div><h1>Preenchimento — '+(cl?cl.name:"")+'</h1><p>Faróis nas linhas · Meses nas colunas</p></div></div>';
     H+='<div class="cd" style="overflow:hidden"><div class="th"><span>'+(cl?cl.name:"")+" - "+y+'</span><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="bt bo" onclick="addMonthCol()">+ Mes</button><button class="bt bo" onclick="openAddInd()">+ Farol</button><button class="bt bo" onclick="openEditInd()">Editar Faróis</button><button class="bt bo" onclick="exportExcel()">Excel</button></div></div>';
-    H+='<div style="overflow-x:auto"><table class="ft"><thead><tr><th style="text-align:left;min-width:200px">Indicador</th><th style="text-align:center;min-width:110px">Responsabilidade</th>'+rs.map(function(r){ return '<th>'+SH[r.m]+'<br><span class="mc" onclick="deleteMonthCol('+r.m+')" style="font-size:7px;padding:1px 5px;margin-top:3px;color:var(--rd);border-color:var(--rr);cursor:pointer">x</span></th>'; }).join("")+'</tr></thead><tbody>'+IND.map(function(ind){ var respTag = ind.resp==="cliente"?'<span class="tag-resp tag-cliente">Cliente</span>':'<span class="tag-resp tag-anastacio">Anastácio</span>';
-      var respSel = '<select onchange="setIndResp(\"'+ind.key+'\",this.value)" style="font-size:10px;padding:3px 6px;border-radius:6px;border:1px solid #E5E7EB;background:#fff;cursor:pointer"><option value="anastacio"'+(ind.resp!=="cliente"?" selected":"")+'>Anastácio</option><option value="cliente"'+(ind.resp==="cliente"?" selected":"")+'>Cliente</option></select>';
-      return '<tr><td class="inn">'+ind.label+'</td><td style="text-align:center">'+(_isZeus||_userRole==="admin"?respSel:respTag)+'</td>'+rs.map(function(r,ri){ return ind.key==="otif_ind"?'<td><input type="text" class="oe '+(r.otif===100?"ok":"lo")+'" value="'+r.otif+'" placeholder="0-100 ou N/A" onchange="editOtif('+ri+',this.value)"></td>':'<td>'+sH(r[ind.key],ri,ind.key)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
+    H+='<div style="overflow-x:auto"><table class="ft"><thead><tr><th style="text-align:left;min-width:200px">Indicador</th>'+rs.map(function(r){ return '<th>'+SH[r.m]+'<br><span class="mc" onclick="deleteMonthCol('+r.m+')" style="font-size:7px;padding:1px 5px;margin-top:3px;color:var(--rd);border-color:var(--rr);cursor:pointer">x</span></th>'; }).join("")+'</tr></thead><tbody>'+IND.map(function(ind){ return '<tr><td class="inn">'+ind.label+'</td>'+rs.map(function(r,ri){ return ind.key==="otif_ind"?'<td><input type="text" class="oe '+(r.otif===100?"ok":"lo")+'" value="'+r.otif+'" placeholder="0-100 ou N/A" onchange="editOtif('+ri+',this.value)"></td>':'<td>'+sH(r[ind.key],ri,ind.key)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
   }
 
   // CONSOLIDADO
