@@ -548,15 +548,54 @@ function addMonthCol(){ var y=gY(),ex=RCS.filter(function(r){ return r.cid===win
 function openAddInd(){ document.getElementById("mdlT").textContent="Adicionar Farol"; document.getElementById("mdlB").innerHTML='<input id="newIndLabel" class="in" placeholder="Texto do farol..."><div style="display:flex;justify-content:flex-end;margin-top:10px"><button class="bt bp" onclick="doAddInd()">Adicionar</button></div>'; document.getElementById("mdl").style.display="flex"; }
 function doAddInd(){ var l=document.getElementById("newIndLabel").value.trim(); if(!l)return; var k="i_"+Date.now(); IND.push({key:k,label:l}); RCS.forEach(function(r){ r[k]=1; }); document.getElementById("mdl").style.display="none"; saveData(); renderAll(); toast("Adicionado!"); }
 function openEditInd(){
-  document.getElementById("mdlT").textContent="Editar Faróis";
-  var h='<div style="display:flex;flex-direction:column;gap:6px">';
+  document.getElementById("mdlT").textContent="Editar Far\u00f3is";
+  var h='<p style="font-size:11px;color:var(--mt);margin-bottom:8px">Arraste para reordenar</p><div id="indSortList" style="display:flex;flex-direction:column;gap:6px">';
   IND.forEach(function(ind,i){
-    h+='<div style="display:flex;gap:6px;align-items:center"><input id="eidx'+i+'" class="in" value="'+ind.label+'" style="flex:1;font-size:11px"><button class="ib dg" onclick="removeInd('+i+')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>';
+    h+='<div class="ind-row" draggable="true" data-idx="'+i+'" style="display:flex;gap:6px;align-items:center;background:#F8F9FC;border:1px solid #E5E7EB;border-radius:8px;padding:6px 8px;cursor:grab">'
+      +'<span style="color:#B0B8CC;font-size:16px;cursor:grab;margin-right:2px;user-select:none">&#9776;</span>'
+      +'<input id="eidx'+i+'" class="in" value="'+ind.label+'" style="flex:1;font-size:11px;border:none;background:transparent;padding:2px 4px">'
+      +'<button class="ib dg" onclick="removeInd('+i+')" style="flex-shrink:0"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>'
+      +'</div>';
   });
-  h+='</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><button class="bt bo" onclick="addIndFromEdit()">+ + Novo Farol</button><button class="bt bp" onclick="doSaveInd()">Salvar</button></div>';
+  h+='</div><div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px"><button class="bt bo" onclick="addIndFromEdit()">+ Novo Far\u00f3l</button><button class="bt bp" onclick="doSaveInd()">Salvar</button></div>';
   document.getElementById("mdlB").innerHTML=h;
   document.getElementById("mdl").style.display="flex";
+  setTimeout(initDragDrop, 50);
 }
+
+function initDragDrop(){
+  var list = document.getElementById("indSortList");
+  if(!list) return;
+  var dragging = null;
+  list.querySelectorAll(".ind-row").forEach(function(row){
+    row.addEventListener("dragstart", function(){
+      dragging = row;
+      setTimeout(function(){ row.style.opacity="0.4"; }, 0);
+    });
+    row.addEventListener("dragend", function(){
+      row.style.opacity="1";
+      dragging = null;
+      list.querySelectorAll(".ind-row").forEach(function(r){ r.style.borderTop=""; });
+    });
+    row.addEventListener("dragover", function(e){
+      e.preventDefault();
+      list.querySelectorAll(".ind-row").forEach(function(r){ r.style.borderTop=""; });
+      if(row !== dragging) row.style.borderTop="2px solid var(--ac)";
+    });
+    row.addEventListener("drop", function(e){
+      e.preventDefault();
+      if(!dragging || dragging===row) return;
+      IND.forEach(function(ind,i){ var v=document.getElementById("eidx"+i); if(v&&v.value.trim()) ind.label=v.value.trim(); });
+      var fromIdx = parseInt(dragging.getAttribute("data-idx"));
+      var toIdx   = parseInt(row.getAttribute("data-idx"));
+      var moved = IND.splice(fromIdx,1)[0];
+      IND.splice(toIdx,0,moved);
+      openEditInd();
+    });
+  });
+}
+
+
 function addIndFromEdit(){
   IND.forEach(function(ind,i){ var v=document.getElementById("eidx"+i); if(v&&v.value.trim()) ind.label=v.value.trim(); });
   var k="i_"+Date.now(); IND.push({key:k,label:""}); openEditInd();
@@ -744,7 +783,7 @@ function renderAll(){
     H+='<div class="kg"><div class="cd kp g"><div class="kl">OTIF Médio</div><div class="kv">'+avg+'%</div><div class="ks">Meta: 95%</div></div><div class="cd kp b"><div class="kl">Meses</div><div class="kv">'+rs.length+'</div><div class="ks">'+y+'</div></div><div class="cd kp g"><div class="kl">Conformidades</div><div class="kv">'+tO+'</div><div class="ks">de '+tE+' - '+cr+'%</div></div><div class="cd kp r"><div class="kl">Não Conformidades</div><div class="kv">'+tF+'</div><div class="ks">itens com falha</div></div></div>';
     H+='<div class="cg"><div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Evolução OTIF Mensal</div><div class="bw">'+(rs.map(function(r){ return '<div class="bc"><span class="bv">'+r.otif+'%</span><div class="br '+(r.otif===100?"f":"p")+'" style="height:'+Math.max(r.otif*1.2,5)+'%"></div><span class="bm">'+SH[r.m]+'</span></div>'; }).join("")||'<span style="color:var(--mt);padding:20px">Sem dados</span>')+'</div></div>';
     H+='<div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Conformidade</div><div class="dw"><div class="dr"><svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="44" fill="none" stroke="#EEF1F6" stroke-width="11"/><circle cx="55" cy="55" r="44" fill="none" stroke="var(--gn)" stroke-width="11" stroke-dasharray="'+ci+'" stroke-dashoffset="'+of+'" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:center"/></svg><div class="dc"><span class="dv">'+cr+'%</span><span class="dl">Conforme</span></div></div><div class="lg"><span><i style="background:var(--gn)"></i>'+tO+'</span><span><i style="background:var(--rd)"></i>'+tF+'</span></div></div></div></div>';
-    H+='<div class="cd" style="overflow:hidden"><div class="th">Detalhamento</div><div style="overflow-x:auto"><table><thead><tr><th>Mes</th>'+IND.filter(function(i){ return i.key!=='otif_ind'; }).map(function(i){ return '<th style="max-width:80px;white-space:normal;line-height:1.2">'+(i.label.length>28?i.label.substring(0,26)+'...':i.label)+'</th>'; }).join("")+'<th style="text-align:right">OTIF</th></tr></thead><tbody>'+rs.map(function(r,ri){ return '<tr class="'+(IND.some(function(i){ return i.key!=="otif_ind"&&!r[i.key]; })||r.otif<100?"is":"")+'"><td style="font-weight:700;color:var(--nv)">'+MS[r.m]+'</td>'+IND.filter(function(i){ return i.key!=='otif_ind'; }).map(function(i){ return '<td>'+sH(r[i.key],ri,i.key)+'</td>'; }).join("")+'<td style="text-align:right;font-weight:800;color:'+((r.otif===100?"var(--gn)":(r.otif==="N/A"?"var(--mt)":"var(--yl)")))+'">'+r.otif+'%</td></tr>'; }).join("")+'</tbody></table></div></div>';
+    H+='<div class="cd" style="overflow:hidden"><div class="th">Detalhamento</div><div style="overflow-x:auto"><table><thead><tr><th>Mes</th>'+IND.map(function(i){ return '<th style="max-width:80px;white-space:normal;line-height:1.2">'+(i.label.length>28?i.label.substring(0,26)+'...':i.label)+'</th>'; }).join("")+'</tr></thead><tbody>'+rs.map(function(r,ri){ return '<tr class="'+(IND.some(function(i){ return i.key!=="otif_ind"&&!r[i.key]; })||r.otif<100?"is":"")+'">'+'<td style="font-weight:700;color:var(--nv)">'+MS[r.m]+'</td>'+IND.map(function(i){ return i.key==="otif_ind"?'<td style="font-weight:800;color:'+(r.otif===100?"var(--gn)":(r.otif==="N/A"?"var(--mt)":"var(--yl)"))+'">'+(r.otif==="N/A"?"N/A":r.otif+'%')+'</td>':'<td>'+sH(r[i.key],ri,i.key)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
   }
 
   // PREENCHIMENTO
