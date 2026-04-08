@@ -535,7 +535,7 @@ function gC(){ return CLS.find(function(c){ return c.id===window._selC; }) || CL
 function gR(){ return RCS.filter(function(r){ return r.cid===window._selC && r.y===gY() && window._selMs.has(r.m); }).sort(function(a,b){ return a.m-b.m; }); }
 var _tt;
 function toast(m){ var e=document.getElementById("toastEl"); e.textContent=m; e.classList.add("sh"); clearTimeout(_tt); _tt=setTimeout(function(){ e.classList.remove("sh"); },2500); }
-function sH(ok,ri,k){ return '<span class="st '+(ok?'ok':'fl')+'" onclick="toggleIndicator('+ri+',\''+k+'\')">'+(ok?'v':'x')+'</span>'; }
+function sH(ok,ri,k){ return '<span class="st '+(ok?'ok':'fl')+'" onclick="toggleIndicator('+ri+',\''+k+'\')">'+(ok?'✓':'✕')+'</span>'; }
 
 // ═══════════════════════════════════════
 // ACTIONS
