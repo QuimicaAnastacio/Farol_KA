@@ -786,6 +786,18 @@ function zeusUploadLogo(){
 }
 function zeusRemoveLogo(){ localStorage.removeItem("otif_logo"); document.getElementById("sbLogoWrap").style.display="none"; toast("Logo removido."); renderAll(); }
 
+
+// ═══ LARGURA DAS COLUNAS ═══
+function getIndWidth(key){
+  var widths = JSON.parse(localStorage.getItem("otif_col_widths")||"{}");
+  return widths[key] || 80;
+}
+function setIndWidth(key, w){
+  var widths = JSON.parse(localStorage.getItem("otif_col_widths")||"{}");
+  widths[key] = parseInt(w) || 80;
+  localStorage.setItem("otif_col_widths", JSON.stringify(widths));
+}
+
 // ═══════════════════════════════════════
 // MAIN RENDER
 // ═══════════════════════════════════════
