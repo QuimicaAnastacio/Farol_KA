@@ -146,6 +146,9 @@ tr.is{background:rgba(220,38,38,.02)}
 .th-arrows{display:flex;gap:2px;margin-top:3px}
 .th-arrow{background:none;border:none;cursor:pointer;color:#B0B8CC;font-size:9px;padding:1px 3px;border-radius:3px;line-height:1}
 .th-arrow:hover{background:var(--ab);color:var(--ac)}
+.tag-resp{display:inline-block;padding:1px 7px;border-radius:100px;font-size:8px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
+.tag-cliente{background:#EDE9FE;color:#7C3AED}
+.tag-anastacio{background:#DBEAFE;color:#1D4ED8}
 /* Zeus */
 .user-card{display:flex;align-items:center;gap:14px;padding:14px 18px;background:#fff;border:1px solid var(--bd);border-radius:12px;margin-bottom:8px}
 .uc-info{flex:1}
@@ -380,15 +383,15 @@ var NAV = [
 
 // DATA
 var IND=[
-  {key:"tabela_preco",  label:"Atualização da tabela de preço em vigência (trimestral)"},
-  {key:"analise_demanda",label:"Análise e retorno de atendimento da demanda no prazo esperado"},
-  {key:"agendamento",   label:"Confirmação de agendamento de entrega no prazo esperado"},
-  {key:"prazo_entrega", label:"Atendimento do prazo para entrega"},
-  {key:"qtd_entrega",   label:"Atendimento da quantidade para entrega"},
-  {key:"otif_ind",      label:"Indicador OTIF Anastácio"},
-  {key:"carga",         label:"Carga entregue atende as particularidades e políticas de fornecimento"},
-  {key:"comunicacao",   label:"Facilidade de comunicação (reclamações, elogios, sugestões e dúvidas)"},
-  {key:"forecast",      label:"Variação do forecast da demanda negociada em até 10%"},
+  {key:"tabela_preco",   label:"Atualização da tabela de preço em vigência (trimestral)",    resp:"anastacio"},
+  {key:"analise_demanda",label:"Análise e retorno de atendimento da demanda no prazo esperado", resp:"anastacio"},
+  {key:"agendamento",    label:"Confirmação de agendamento de entrega no prazo esperado",    resp:"anastacio"},
+  {key:"prazo_entrega",  label:"Atendimento do prazo para entrega",                          resp:"anastacio"},
+  {key:"qtd_entrega",    label:"Atendimento da quantidade para entrega",                     resp:"anastacio"},
+  {key:"otif_ind",       label:"Indicador OTIF Anastácio",                                   resp:"anastacio"},
+  {key:"carga",          label:"Carga entregue atende as particularidades e políticas de fornecimento", resp:"anastacio"},
+  {key:"comunicacao",    label:"Facilidade de comunicação (reclamações, elogios, sugestões e dúvidas)", resp:"cliente"},
+  {key:"forecast",       label:"Variação do forecast da demanda negociada em até 10%",       resp:"cliente"},
 ];
 var CLS=[{id:"kenvue",name:"Kenvue",logo:null,active:true}];
 var RCS=[];
@@ -788,6 +791,12 @@ function zeusRemoveLogo(){ localStorage.removeItem("otif_logo"); document.getEle
 
 
 // ═══ LARGURA DAS COLUNAS ═══
+
+function setIndResp(key, val){
+  var ind = IND.find(function(i){ return i.key===key; });
+  if(ind){ ind.resp = val; saveData(); renderAll(); }
+}
+
 function getIndWidth(key){
   var widths = JSON.parse(localStorage.getItem("otif_col_widths")||"{}");
   return widths[key] || 80;
@@ -824,14 +833,16 @@ function renderAll(){
     H+='<div class="kg"><div class="cd kp g"><div class="kl">OTIF Médio</div><div class="kv">'+avg+'%</div><div class="ks">Meta: 95%</div></div><div class="cd kp b"><div class="kl">Meses</div><div class="kv">'+rs.length+'</div><div class="ks">'+y+'</div></div><div class="cd kp g"><div class="kl">Conformidades</div><div class="kv">'+tO+'</div><div class="ks">de '+tE+' - '+cr+'%</div></div><div class="cd kp r"><div class="kl">Não Conformidades</div><div class="kv">'+tF+'</div><div class="ks">itens com falha</div></div></div>';
     H+='<div class="cg"><div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Evolução OTIF Mensal</div><div class="bw">'+(rs.map(function(r){ return '<div class="bc"><span class="bv">'+r.otif+'%</span><div class="br '+(r.otif===100?"f":"p")+'" style="height:'+Math.max(r.otif*1.2,5)+'%"></div><span class="bm">'+SH[r.m]+'</span></div>'; }).join("")||'<span style="color:var(--mt);padding:20px">Sem dados</span>')+'</div></div>';
     H+='<div class="cd cp"><div style="font-size:12px;font-weight:700;margin-bottom:10px">Conformidade</div><div class="dw"><div class="dr"><svg width="110" height="110" viewBox="0 0 110 110"><circle cx="55" cy="55" r="44" fill="none" stroke="#EEF1F6" stroke-width="11"/><circle cx="55" cy="55" r="44" fill="none" stroke="var(--gn)" stroke-width="11" stroke-dasharray="'+ci+'" stroke-dashoffset="'+of+'" stroke-linecap="round" style="transform:rotate(-90deg);transform-origin:center"/></svg><div class="dc"><span class="dv">'+cr+'%</span><span class="dl">Conforme</span></div></div><div class="lg"><span><i style="background:var(--gn)"></i>'+tO+'</span><span><i style="background:var(--rd)"></i>'+tF+'</span></div></div></div></div>';
-    H+='<div class="cd" style="overflow:hidden"><div class="th">Detalhamento</div><div style="overflow-x:auto"><table><thead><tr><th>Mes</th>'+IND.map(function(i){ var w=getIndWidth(i.key); return '<th style="width:'+w+'px;min-width:'+w+'px;white-space:normal;text-align:center;vertical-align:middle;padding:6px 8px;font-size:8px;text-transform:uppercase;letter-spacing:.5px;color:var(--mt);font-weight:700">'+i.label+'</th>'; }).join("")+'</tr></thead><tbody>'+rs.map(function(r,ri){ return '<tr class="'+(IND.some(function(i){ return i.key!=="otif_ind"&&!r[i.key]; })||r.otif<100?"is":"")+'">'+'<td style="font-weight:700;color:var(--nv)">'+MS[r.m]+'</td>'+IND.map(function(i){ return i.key==="otif_ind"?'<td style="font-weight:800;color:'+(r.otif===100?"var(--gn)":(r.otif==="N/A"?"var(--mt)":"var(--yl)"))+'">'+(r.otif==="N/A"?"N/A":r.otif+'%')+'</td>':'<td style="text-align:center">'+sH(r[i.key],ri,i.key)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
+    H+='<div class="cd" style="overflow:hidden"><div class="th">Detalhamento</div><div style="overflow-x:auto"><table><thead><tr><th>Mes</th>'+IND.map(function(i){ var w=getIndWidth(i.key); var tag=i.resp==="cliente"?'<span class="tag-resp tag-cliente">Cliente</span>':'<span class="tag-resp tag-anastacio">Anastácio</span>'; return '<th style="width:'+w+'px;min-width:'+w+'px;white-space:normal;text-align:center;vertical-align:top;padding:6px 8px"><div style="display:flex;flex-direction:column;align-items:center;gap:2px">'+tag+'<span style="font-size:8px;text-transform:uppercase;letter-spacing:.5px;color:var(--mt);font-weight:700;line-height:1.2">'+i.label+'</span></div></th>'; }).join("")+'</tr></thead><tbody>'+rs.map(function(r,ri){ return '<tr class="'+(IND.some(function(i){ return i.key!=="otif_ind"&&!r[i.key]; })||r.otif<100?"is":"")+'">'+'<td style="font-weight:700;color:var(--nv)">'+MS[r.m]+'</td>'+IND.map(function(i){ return i.key==="otif_ind"?'<td style="font-weight:800;color:'+(r.otif===100?"var(--gn)":(r.otif==="N/A"?"var(--mt)":"var(--yl)"))+'">'+(r.otif==="N/A"?"N/A":r.otif+'%')+'</td>':'<td style="text-align:center">'+sH(r[i.key],ri,i.key)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
   }
 
   // PREENCHIMENTO
   if(P==="form"){
     H='<div class="ph"><div><h1>Preenchimento — '+(cl?cl.name:"")+'</h1><p>Faróis nas linhas · Meses nas colunas</p></div></div>';
     H+='<div class="cd" style="overflow:hidden"><div class="th"><span>'+(cl?cl.name:"")+" - "+y+'</span><div style="display:flex;gap:4px;flex-wrap:wrap"><button class="bt bo" onclick="addMonthCol()">+ Mes</button><button class="bt bo" onclick="openAddInd()">+ Farol</button><button class="bt bo" onclick="openEditInd()">Editar Faróis</button><button class="bt bo" onclick="exportExcel()">Excel</button></div></div>';
-    H+='<div style="overflow-x:auto"><table class="ft"><thead><tr><th style="text-align:left;min-width:200px">Indicador</th>'+rs.map(function(r){ return '<th>'+SH[r.m]+'<br><span class="mc" onclick="deleteMonthCol('+r.m+')" style="font-size:7px;padding:1px 5px;margin-top:3px;color:var(--rd);border-color:var(--rr);cursor:pointer">x</span></th>'; }).join("")+'</tr></thead><tbody>'+IND.map(function(ind){ return '<tr><td class="inn">'+ind.label+'</td>'+rs.map(function(r,ri){ return ind.key==="otif_ind"?'<td><input type="text" class="oe '+(r.otif===100?"ok":"lo")+'" value="'+r.otif+'" placeholder="0-100 ou N/A" onchange="editOtif('+ri+',this.value)"></td>':'<td>'+sH(r[ind.key],ri,ind.key)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
+    H+='<div style="overflow-x:auto"><table class="ft"><thead><tr><th style="text-align:left;min-width:200px">Indicador</th><th style="text-align:center;min-width:110px">Responsabilidade</th>'+rs.map(function(r){ return '<th>'+SH[r.m]+'<br><span class="mc" onclick="deleteMonthCol('+r.m+')" style="font-size:7px;padding:1px 5px;margin-top:3px;color:var(--rd);border-color:var(--rr);cursor:pointer">x</span></th>'; }).join("")+'</tr></thead><tbody>'+IND.map(function(ind){ var respTag = ind.resp==="cliente"?'<span class="tag-resp tag-cliente">Cliente</span>':'<span class="tag-resp tag-anastacio">Anastácio</span>';
+      var respSel = '<select onchange="setIndResp(\"'+ind.key+'\",this.value)" style="font-size:10px;padding:3px 6px;border-radius:6px;border:1px solid #E5E7EB;background:#fff;cursor:pointer"><option value="anastacio"'+(ind.resp!=="cliente"?" selected":"")+'>Anastácio</option><option value="cliente"'+(ind.resp==="cliente"?" selected":"")+'>Cliente</option></select>';
+      return '<tr><td class="inn">'+ind.label+'</td><td style="text-align:center">'+(_isZeus||_userRole==="admin"?respSel:respTag)+'</td>'+rs.map(function(r,ri){ return ind.key==="otif_ind"?'<td><input type="text" class="oe '+(r.otif===100?"ok":"lo")+'" value="'+r.otif+'" placeholder="0-100 ou N/A" onchange="editOtif('+ri+',this.value)"></td>':'<td>'+sH(r[ind.key],ri,ind.key)+'</td>'; }).join("")+'</tr>'; }).join("")+'</tbody></table></div></div>';
   }
 
   // CONSOLIDADO
