@@ -794,14 +794,24 @@ function saveSysName(){
 function zeusUploadRelLogo(){
   var inp=document.createElement("input"); inp.type="file"; inp.accept="image/*";
   inp.onchange=function(e){ var f=e.target.files[0]; if(!f)return; var r=new FileReader(); r.onload=function(ev){
-    localStorage.setItem("otif_rel_logo", ev.target.result);
-    toast("✓ Logo do relatório salvo!"); renderAll();
+    var logoData = ev.target.result;
+    localStorage.setItem("otif_rel_logo", logoData);
+    // Salvar no Supabase para todos verem
+    fetch(SUPABASE_URL + "/rest/v1/configuracoes", {
+      method: "POST",
+      headers: sbHeaders({"Prefer":"resolution=merge-duplicates"}),
+      body: JSON.stringify([{chave:"rel_logo", valor:{data: logoData}}])
+    }).then(function(){ toast("✓ Logo salvo para todos!"); }).catch(function(){ toast("✓ Logo salvo localmente"); });
+    renderAll();
   }; r.readAsDataURL(f); };
   inp.click();
 }
 
 function zeusRemoveRelLogo(){
   localStorage.removeItem("otif_rel_logo");
+  fetch(SUPABASE_URL + "/rest/v1/configuracoes?chave=eq.rel_logo", {
+    method: "DELETE", headers: sbHeaders()
+  }).catch(function(){});
   toast("Logo do relatório removido."); renderAll();
 }
 
@@ -822,13 +832,23 @@ function getIndWidth(key){
 
 async function loadColWidths(){
   try {
-    var r = await sbGet("configuracoes?chave=eq.col_widths");
-    if(r && r.length && r[0].valor) {
-      _colWidths = r[0].valor;
+    // Carregar larguras e logo do relatório de uma vez
+    var results = await Promise.all([
+      sbGet("configuracoes?chave=eq.col_widths"),
+      sbGet("configuracoes?chave=eq.rel_logo")
+    ]);
+    var widthsData = results[0], logoData = results[1];
+
+    if(widthsData && widthsData.length && widthsData[0].valor) {
+      _colWidths = widthsData[0].valor;
       localStorage.setItem("otif_col_widths", JSON.stringify(_colWidths));
     } else {
       var ls = localStorage.getItem("otif_col_widths");
       if(ls) _colWidths = JSON.parse(ls);
+    }
+
+    if(logoData && logoData.length && logoData[0].valor && logoData[0].valor.data) {
+      localStorage.setItem("otif_rel_logo", logoData[0].valor.data);
     }
   } catch(e) {
     var ls = localStorage.getItem("otif_col_widths");
