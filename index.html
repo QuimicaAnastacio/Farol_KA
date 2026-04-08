@@ -367,7 +367,12 @@ function deleteUserRemote(id) {
 // ═══════════════════════════════════════
 var MS  = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 var SH  = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+var _curYear = new Date().getFullYear();
 var YRS = [2023,2024,2025,2026];
+// Garantir que ano atual e próximo estão na lista
+if(YRS.indexOf(_curYear) === -1) YRS.push(_curYear);
+if(YRS.indexOf(_curYear+1) === -1) YRS.push(_curYear+1);
+YRS.sort(function(a,b){ return a-b; });
 var NAV = [
   {id:"dashboard",  zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>', lbl:"Dashboard"},
   {id:"form",       zeus:false, icon:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>', lbl:"Preenchimento"},
@@ -550,7 +555,7 @@ async function saveData() {
 // ═══════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════
-function gY(){ return parseInt(document.getElementById("yearSel").value)||2025; }
+function gY(){ return parseInt(document.getElementById("yearSel").value)||new Date().getFullYear(); }
 function gC(){ return CLS.find(function(c){ return c.id===window._selC; }) || CLS[0]; }
 function gR(){ return RCS.filter(function(r){ return r.cid===window._selC && r.y===gY() && window._selMs.has(r.m); }).sort(function(a,b){ return a.m-b.m; }); }
 var _tt;
@@ -799,7 +804,20 @@ function zeusRemoveLogo(){ localStorage.removeItem("otif_logo"); document.getEle
 
 function setIndResp(key, val){
   var ind = IND.find(function(i){ return i.key===key; });
-  if(ind){ ind.resp = val; saveData(); renderAll(); }
+  if(!ind) return;
+  ind.resp = val;
+  // Salvar localStorage imediatamente
+  localStorage.setItem("otif_ind", JSON.stringify(IND));
+  // Salvar no Supabase imediatamente (sem delay)
+  fetch(SUPABASE_URL + "/rest/v1/indicadores?key=eq." + key, {
+    method: "PATCH",
+    headers: sbHeaders(),
+    body: JSON.stringify({resp: val})
+  }).then(function(r){
+    if(r.ok) toast("✓ Responsabilidade salva!");
+    else toast("Erro ao salvar responsabilidade");
+  }).catch(function(){ toast("Salvo localmente"); });
+  renderAll();
 }
 
 function getIndWidth(key){
@@ -897,7 +915,7 @@ function renderAll(){
   // COPIAR RELATORIO
   if(P==="copy"){
     var lg=cl&&cl.logo?'<img src="'+cl.logo+'" style="height:50px;margin-bottom:8px" crossorigin="anonymous">':'';
-    var tbl='<table style="width:100%;border-collapse:collapse"><thead><tr><th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:left;border-bottom:1px solid #EEF1F6;background:#F8F9FC">Mes</th>'+IND.filter(function(i){ return i.key!=="otif_ind"; }).map(function(i){ return '<th style="padding:8px;font-size:7px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:center;border-bottom:1px solid #EEF1F6;background:#F8F9FC;max-width:80px;white-space:normal;line-height:1.2">'+i.label+'</th>'; }).join("")+'<th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:right;border-bottom:1px solid #EEF1F6;background:#F8F9FC">OTIF</th></tr></thead><tbody>';
+    var tbl='<table style="width:100%;border-collapse:collapse"><thead><tr><th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:left;border-bottom:1px solid #EEF1F6;background:#F8F9FC">Mes</th>'+IND.filter(function(i){ return i.key!=="otif_ind"; }).map(function(i){ var tag=i.resp==="cliente"?'<span style="display:inline-block;padding:1px 6px;border-radius:100px;font-size:7px;font-weight:700;background:#EDE9FE;color:#7C3AED;margin-bottom:2px">Cliente</span>':'<span style="display:inline-block;padding:1px 6px;border-radius:100px;font-size:7px;font-weight:700;background:#DBEAFE;color:#1D4ED8;margin-bottom:2px">Anastácio</span>'; return '<th style="padding:8px;font-size:7px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:center;border-bottom:1px solid #EEF1F6;background:#F8F9FC;max-width:80px;white-space:normal;line-height:1.2"><div style="display:flex;flex-direction:column;align-items:center;gap:1px">'+tag+i.label+'</div></th>'; }).join("")+'<th style="padding:8px;font-size:8px;text-transform:uppercase;color:#8690A8;font-weight:700;text-align:right;border-bottom:1px solid #EEF1F6;background:#F8F9FC">OTIF</th></tr></thead><tbody>';
     rs.forEach(function(r){ tbl+='<tr style="border-bottom:1px solid #EEF1F6"><td style="padding:8px;font-weight:700;color:#0D2240;font-size:11px">'+MS[r.m]+'</td>'+IND.filter(function(i){ return i.key!=="otif_ind"; }).map(function(i){ return '<td style="padding:8px;text-align:center"><span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:12px;font-weight:700;background:'+(r[i.key]?"#DCFCE7":"#FEE2E2")+';color:'+(r[i.key]?"#16A34A":"#DC2626")+'">'+(r[i.key]?"✓":"✕")+'</span></td>'; }).join("")+'<td style="padding:8px;text-align:right;font-weight:800;font-size:13px;color:'+(r.otif===100?"#16A34A":"#D97706")+'">'+r.otif+'%</td></tr>'; });
     tbl+='</tbody></table>';
     H='<div class="ph"><div><h1>Copiar Relatório — '+(cl?cl.name:"")+'</h1><p>Copie a imagem para colar no email</p></div></div>';
@@ -1067,7 +1085,8 @@ async function initApp() {
   var ys = document.getElementById("yearSel");
   ys.innerHTML = "";
   YRS.forEach(function(y){ var o=document.createElement("option"); o.value=y; o.textContent=y; ys.appendChild(o); });
-  ys.value = new Date().getFullYear().toString();
+  var _yrNow = new Date().getFullYear().toString();
+  ys.value = YRS.indexOf(parseInt(_yrNow)) >= 0 ? _yrNow : YRS[YRS.length-1].toString();
 
   // Data
   document.getElementById("dateNow").textContent = new Date().toLocaleDateString("pt-BR");
