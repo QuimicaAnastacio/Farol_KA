@@ -1,6 +1,7 @@
 // ═══════════════════════════════════════════════════════
 //  supabase-storage.js — Química Anastácio · Sistema OTIF
 //  Substitui o github-storage.js
+//  Felipe Guimarães 
 // ═══════════════════════════════════════════════════════
 
 // ▶ CONFIGURE AQUI com seus dados do Supabase:
